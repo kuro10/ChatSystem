@@ -57,26 +57,27 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        boutonFermer = new javax.swing.JButton();
+        disconnectButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         chatBox = new javax.swing.JTextArea();
         message = new javax.swing.JTextField();
-        buttonEnvoyer = new javax.swing.JButton();
+        sendButton = new javax.swing.JButton();
         targetPort = new javax.swing.JTextField();
-        buttonTarget = new javax.swing.JButton();
+        targetButton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         nicknameField = new javax.swing.JLabel();
         hostField = new javax.swing.JLabel();
         portField = new javax.swing.JLabel();
         ipDistantField = new javax.swing.JTextField();
+        renameButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        boutonFermer.setText("Disconnect");
-        boutonFermer.addActionListener(new java.awt.event.ActionListener() {
+        disconnectButton.setText("Disconnect");
+        disconnectButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                boutonFermerActionPerformed(evt);
+                disconnectButtonActionPerformed(evt);
             }
         });
 
@@ -84,10 +85,10 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
         chatBox.setRows(5);
         jScrollPane1.setViewportView(chatBox);
 
-        buttonEnvoyer.setText("Envoyer");
-        buttonEnvoyer.addActionListener(new java.awt.event.ActionListener() {
+        sendButton.setText("Send");
+        sendButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonEnvoyerActionPerformed(evt);
+                sendButtonActionPerformed(evt);
             }
         });
 
@@ -98,10 +99,10 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
             }
         });
 
-        buttonTarget.setText("Target");
-        buttonTarget.addActionListener(new java.awt.event.ActionListener() {
+        targetButton.setText("Target");
+        targetButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonTargetActionPerformed(evt);
+                targetButtonActionPerformed(evt);
             }
         });
 
@@ -121,6 +122,8 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
             }
         });
 
+        renameButton.setText("Rename");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -133,7 +136,9 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ipDistantField, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(buttonTarget))
+                        .addComponent(targetButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(renameButton))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(nicknameField, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -141,14 +146,14 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
                         .addGap(18, 18, 18)
                         .addComponent(portField, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(boutonFermer))
+                        .addComponent(disconnectButton))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(message, javax.swing.GroupLayout.PREFERRED_SIZE, 505, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(buttonEnvoyer))
+                        .addComponent(sendButton))
                     .addComponent(jScrollPane1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -162,19 +167,20 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
                                 .addComponent(nicknameField)
                                 .addComponent(hostField)
                                 .addComponent(portField))
-                            .addComponent(boutonFermer))
+                            .addComponent(disconnectButton))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(buttonEnvoyer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(sendButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(message, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(targetPort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(buttonTarget, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(ipDistantField))
+                    .addComponent(targetButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ipDistantField)
+                    .addComponent(renameButton))
                 .addContainerGap())
         );
 
@@ -183,7 +189,7 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
     
     int target;
     String ipDistant;
-    private void buttonTargetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonTargetActionPerformed
+    private void targetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_targetButtonActionPerformed
       target = Integer.parseInt(this.targetPort.getText());
       ipDistant = this.ipDistantField.getText();
       System.out.println("Target to "+ ipDistant + " : " + target);
@@ -195,9 +201,9 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
           l = history.getMessageLog(sourceport, target);
       }
 
-    }//GEN-LAST:event_buttonTargetActionPerformed
+    }//GEN-LAST:event_targetButtonActionPerformed
 
-    private void buttonEnvoyerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEnvoyerActionPerformed
+    private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
         //TransfererMessage trans = new TransfererMessage(message.getText(), hostField.getText(), Integer.parseInt(portCible.getText()));
         //trans.start();
         try {
@@ -209,20 +215,20 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
         } catch (Exception ex) {
             Logger.getLogger(ChatWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_buttonEnvoyerActionPerformed
+    }//GEN-LAST:event_sendButtonActionPerformed
 
     private void targetPortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_targetPortActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_targetPortActionPerformed
 
-    private void boutonFermerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boutonFermerActionPerformed
+    private void disconnectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_disconnectButtonActionPerformed
 
         // Close the chat window
         this.setVisible(false);
         Login loginWindow = new Login(node);
         loginWindow.setTitre("You have disconnected.");
         loginWindow.display();     
-    }//GEN-LAST:event_boutonFermerActionPerformed
+    }//GEN-LAST:event_disconnectButtonActionPerformed
 
     private void ipDistantFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ipDistantFieldActionPerformed
         // TODO add your handling code here:
@@ -277,10 +283,8 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton boutonFermer;
-    private javax.swing.JButton buttonEnvoyer;
-    private javax.swing.JButton buttonTarget;
     private javax.swing.JTextArea chatBox;
+    private javax.swing.JButton disconnectButton;
     private javax.swing.JLabel hostField;
     private javax.swing.JTextField ipDistantField;
     private javax.swing.JScrollPane jScrollPane1;
@@ -289,6 +293,9 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
     private javax.swing.JTextField message;
     private javax.swing.JLabel nicknameField;
     private javax.swing.JLabel portField;
+    private javax.swing.JButton renameButton;
+    private javax.swing.JButton sendButton;
+    private javax.swing.JButton targetButton;
     private javax.swing.JTextField targetPort;
     // End of variables declaration//GEN-END:variables
 

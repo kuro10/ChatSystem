@@ -31,7 +31,9 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="ipDistantField" min="-2" pref="145" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="buttonTarget" min="-2" max="-2" attributes="0"/>
+                      <Component id="targetButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="renameButton" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="nicknameField" min="-2" pref="119" max="-2" attributes="0"/>
@@ -40,17 +42,17 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="portField" min="-2" pref="88" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="boutonFermer" min="-2" max="-2" attributes="0"/>
+                      <Component id="disconnectButton" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <Component id="message" min="-2" pref="505" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="buttonEnvoyer" min="-2" max="-2" attributes="0"/>
+                      <Component id="sendButton" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane2" pref="225" max="32767" attributes="0"/>
+              <Component id="jScrollPane2" pref="245" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -67,13 +69,13 @@
                               <Component id="hostField" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="portField" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="boutonFermer" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="disconnectButton" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jScrollPane1" min="-2" pref="294" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="buttonEnvoyer" alignment="3" max="32767" attributes="0"/>
+                          <Component id="sendButton" alignment="3" max="32767" attributes="0"/>
                           <Component id="message" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -82,8 +84,9 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="targetPort" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="buttonTarget" alignment="3" max="32767" attributes="0"/>
+                  <Component id="targetButton" alignment="3" max="32767" attributes="0"/>
                   <Component id="ipDistantField" max="32767" attributes="0"/>
+                  <Component id="renameButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
@@ -91,12 +94,12 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JButton" name="boutonFermer">
+    <Component class="javax.swing.JButton" name="disconnectButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Disconnect"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="boutonFermerActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="disconnectButtonActionPerformed"/>
       </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
@@ -116,12 +119,12 @@
     </Container>
     <Component class="javax.swing.JTextField" name="message">
     </Component>
-    <Component class="javax.swing.JButton" name="buttonEnvoyer">
+    <Component class="javax.swing.JButton" name="sendButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Envoyer"/>
+        <Property name="text" type="java.lang.String" value="Send"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonEnvoyerActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="sendButtonActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="targetPort">
@@ -132,12 +135,12 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="targetPortActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="buttonTarget">
+    <Component class="javax.swing.JButton" name="targetButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Target"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonTargetActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="targetButtonActionPerformed"/>
       </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane2">
@@ -174,6 +177,11 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ipDistantFieldActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="renameButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Rename"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>
