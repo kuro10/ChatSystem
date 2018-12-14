@@ -23,14 +23,14 @@ public class ChatHistory {
         this.history.add(l);
     }
     
-//    public boolean existHistory(int port1, int port2) {
-//        int i = 0;
-//        boolean found = false;
-//        while (i < this.history.size() && found == false) {
-//            found = (this.history.get(i).getPort1() == port1 && this.history.get(i).getPort2() == port2);
-//        }
-//        return found;
-//    }
+    public boolean existHistory(int port1, int port2) {
+        int i = 0;
+        boolean found = false;
+        while (i < this.history.size() && found == false) {
+            found = (this.history.get(i).getPort1() == port1 && this.history.get(i).getPort2() == port2);
+        }
+        return found;
+    }
     
     public MessageLog getMessageLog(int port1, int port2) {
         MessageLog res = null;

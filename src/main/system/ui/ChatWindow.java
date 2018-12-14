@@ -18,8 +18,9 @@ import main.system.data.*;
 public class ChatWindow extends javax.swing.JFrame implements WritableUI {
     
 	private Node node;
-    public static ChatHistory history = new ChatHistory();
-    private MessageLog l;
+        public static ChatHistory history = new ChatHistory();
+        private MessageLog l;
+        int sourceport;
         
     /**
      * Creates new form Chat Window
@@ -34,7 +35,7 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
         this.nicknameField.setText("Pseudo : " + node.getPeer().getPseudonyme());
         this.hostField.setText("Host : " + node.getPeer().getHost());
         this.portField.setText("Port : " + node.getPeer().getPort());
-          
+        sourceport = node.getPeer().getPort();
         //listen = new Thread(new TCPListenerHandler(this.node,this));  
         //listen.start();
     }
@@ -186,14 +187,12 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
       target = Integer.parseInt(this.targetPort.getText());
       ipDistant = this.ipDistantField.getText();
       System.out.println("Target to "+ ipDistant + " : " + target);
-      int sourceport = Integer.parseInt(portField.getText());
-      
-//      if (history.getMessageLog(sourceport, target) == null) {
-//        l = new MessageLog(sourceport, target);
-//        history.addHistory(l);
-//        chatBox.setText("");
-//      } else {
+//      if (history.existHistory(sourceport, target)) {
 //          l = history.getMessageLog(sourceport, target);
+//  
+//          l = new MessageLog(sourceport, target);
+//          history.addHistory(l);
+//          chatBox.setText("");
 //      }
 
     }//GEN-LAST:event_buttonTargetActionPerformed
@@ -203,8 +202,8 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
         //trans.start();
         try {
             String msg = "[" + node.getPeer().getPseudonyme() + "] : " + message.getText();
-            new TCPSenderService().sendMessageTo("localhost",target,msg);
-            //new TCPSenderService().sendMessageTo(ipDistant,target,msg);
+            //new TCPSenderService().sendMessageTo("localhost",target,msg);
+            new TCPSenderService().sendMessageTo(ipDistant,target,sourceport,msg);
             this.write(msg);
             message.setText("");
         } catch (Exception ex) {
