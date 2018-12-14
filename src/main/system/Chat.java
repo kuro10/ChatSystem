@@ -5,6 +5,9 @@
  */
 package main.system;
 
+import java.net.InetAddress;
+import main.system.model.Node;
+import main.system.model.Peer;
 import main.system.ui.Login;
 
 /**
@@ -14,10 +17,15 @@ public class Chat {
 
     /**
      * @param args the command line arguments
+     * @throws java.lang.Exception
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
-        Login loginWindow = new Login();
+        String ip = InetAddress.getLocalHost().getHostAddress();
+        //String ip = this.getAddressIP();
+        Node node = new Node(new Peer(ip));
+        
+        Login loginWindow = new Login(node);
         loginWindow.setLocationRelativeTo(null); 
         loginWindow.setVisible(true);
         
@@ -25,4 +33,10 @@ public class Chat {
         //chatWindow.setVisible(true);
     }
     
+    public static String getAddressIP() {
+        
+        
+        
+        return null;
+    }
 }
