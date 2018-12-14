@@ -26,11 +26,10 @@ public class Chat {
         Node node = new Node(new Peer(ip));
         
         Login loginWindow = new Login(node);
-        loginWindow.setLocationRelativeTo(null); 
-        loginWindow.setVisible(true);
+        loginWindow.display();
         
         //ChatWindow chatWindow = new ChatWindow();
-        //chatWindow.setVisible(true);
+        //chatWindow.display();
     }
     
     public static String getAddressIP() {

@@ -3,6 +3,7 @@ package main.system.connection.handler;
 import main.system.model.Peer;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.net.Socket;
 
 public class TCPSenderHandler implements Runnable  {
@@ -22,7 +23,7 @@ public class TCPSenderHandler implements Runnable  {
 		this.message = message;
 	}	
 	
-    public TCPSenderHandler(String host, int port, String message) throws IOException {
+        public TCPSenderHandler(String host, int port, String message) throws IOException {
 		this.host = host;
 		this.port = port;
 		// Treatment the message
@@ -32,8 +33,9 @@ public class TCPSenderHandler implements Runnable  {
 	@Override
 	public void run() {
 		try {			
-			
+
 			// Request a connection to the given peer
+                        //InetAddress ip = InetAddress.getByName(host);
 			chatSocket = new Socket(host,port);  
 			// Initialization the output channel
 			this.out = new PrintWriter( chatSocket.getOutputStream() );

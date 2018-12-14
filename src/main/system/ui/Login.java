@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
+import main.system.connection.handler.TCPListenerHandler;
 
 
 
@@ -19,8 +21,9 @@ import java.util.logging.Logger;
  * @author th_tran
  */
 public class Login extends javax.swing.JFrame {
-
+    
     private Node node;
+    private Thread listen = null;
     
     /**
      * Creates new form Login
@@ -34,7 +37,23 @@ public class Login extends javax.swing.JFrame {
         this.node = node;
         hostField.setText(node.getPeer().getHost());
     }
+    
+    public Login(Node node,Thread listen){
+        initComponents();
+        this.node = node;
+        this.listen = listen;
+        hostField.setText(node.getPeer().getHost());
+    }
 
+    public void display(){
+        this.setLocationRelativeTo(null); 
+        this.setVisible(true);
+    }
+    
+    public void setTitre(String titre){
+        titreLabel.setText(titre);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -44,22 +63,22 @@ public class Login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        hostLabel = new javax.swing.JLabel();
+        nicknameLabel = new javax.swing.JLabel();
+        portLabel = new javax.swing.JLabel();
         nicknameField = new javax.swing.JTextField();
         hostField = new javax.swing.JTextField();
         portField = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        titreLabel = new javax.swing.JLabel();
+        logInButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Your host :");
+        hostLabel.setText("Your host :");
 
-        jLabel2.setText("Your nickname :");
+        nicknameLabel.setText("Your nickname :");
 
-        jLabel3.setText("Port :");
+        portLabel.setText("Port :");
 
         nicknameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -69,12 +88,14 @@ public class Login extends javax.swing.JFrame {
 
         hostField.setText("localhost");
 
-        jLabel4.setText("Welcome !!!");
+        titreLabel.setForeground(new java.awt.Color(255, 1, 1));
+        titreLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titreLabel.setText("Welcome !!!");
 
-        jButton1.setText("Log in");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        logInButton.setText("Log in");
+        logInButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                logInButtonActionPerformed(evt);
             }
         });
 
@@ -87,41 +108,39 @@ public class Login extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(21, 21, 21)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
+                            .addComponent(nicknameLabel)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel3)
-                                .addComponent(jLabel1)
+                                .addComponent(portLabel)
+                                .addComponent(hostLabel)
                                 .addComponent(nicknameField)
                                 .addComponent(hostField)
-                                .addComponent(portField, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(66, 66, 66)
-                        .addComponent(jLabel4))
+                                .addComponent(portField, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE))
+                            .addComponent(titreLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(71, 71, 71)
-                        .addComponent(jButton1)))
+                        .addComponent(logInButton)))
                 .addContainerGap(25, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(5, 5, 5)
-                .addComponent(jLabel4)
+                .addComponent(titreLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
+                .addComponent(nicknameLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(nicknameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel1)
+                .addComponent(hostLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(hostField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
+                .addComponent(portLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(portField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addComponent(logInButton)
+                .addGap(51, 51, 51))
         );
 
         pack();
@@ -133,22 +152,28 @@ public class Login extends javax.swing.JFrame {
         
     }//GEN-LAST:event_nicknameFieldActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void logInButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logInButtonActionPerformed
         // TODO add your handling code here:
         try {
             Peer peer = new Peer(nicknameField.getText(), hostField.getText(), Integer.parseInt(portField.getText()));
             this.node =  new Node(peer);
+            
             ChatWindow chatWindow = new ChatWindow(node);
-            chatWindow.setLocationRelativeTo(null); 
-            chatWindow.setVisible(true);
+            chatWindow.display();
             this.setVisible(false);
-      
+            
+            System.out.println("start listening ... ");
+            if (listen == null)
+                listen = new Thread(new TCPListenerHandler(this.node,chatWindow));  
+            listen.start();
+            chatWindow.setThread(listen);
+           
         } catch (UnknownHostException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_logInButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -187,13 +212,13 @@ public class Login extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField hostField;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel hostLabel;
+    private javax.swing.JButton logInButton;
     private javax.swing.JTextField nicknameField;
+    private javax.swing.JLabel nicknameLabel;
     private javax.swing.JTextField portField;
+    private javax.swing.JLabel portLabel;
+    private javax.swing.JLabel titreLabel;
     // End of variables declaration//GEN-END:variables
 }
 
