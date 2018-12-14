@@ -187,13 +187,13 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
       target = Integer.parseInt(this.targetPort.getText());
       ipDistant = this.ipDistantField.getText();
       System.out.println("Target to "+ ipDistant + " : " + target);
-//      if (history.existHistory(sourceport, target)) {
-//          l = history.getMessageLog(sourceport, target);
-//  
-//          l = new MessageLog(sourceport, target);
-//          history.addHistory(l);
-//          chatBox.setText("");
-//      }
+      if (history.existHistory(sourceport, target)) {
+          l = new MessageLog(sourceport, target);
+          history.addHistory(l);
+          chatBox.setText("");
+      } else {
+          l = history.getMessageLog(sourceport, target);
+      }
 
     }//GEN-LAST:event_buttonTargetActionPerformed
 
@@ -203,7 +203,7 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
         try {
             String msg = "[" + node.getPeer().getPseudonyme() + "] : " + message.getText();
             //new TCPSenderService().sendMessageTo("localhost",target,msg);
-            new TCPSenderService().sendMessageTo(ipDistant,target,sourceport,msg);
+            new TCPSenderService().sendMessageTo(ipDistant,target,msg);
             this.write(msg);
             message.setText("");
         } catch (Exception ex) {

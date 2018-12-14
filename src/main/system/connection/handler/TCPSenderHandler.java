@@ -47,9 +47,10 @@ public class TCPSenderHandler implements Runnable  {
 
 			// Request a connection to the given peer
                     
-			//chatSocket = new Socket(host,port); 
-                        InetAddress ip = InetAddress.getByName(host);
-                        chatSocket = new Socket(ip,port,InetAddress.getLocalHost(),localPort);
+			chatSocket = new Socket(host,port); 
+                        System.out.println(host + " - " + port);
+                        //InetAddress ip = InetAddress.getByName(host);
+                        //chatSocket = new Socket(ip,port,InetAddress.getLocalHost(),localPort);
 			// Initialization the output channel
 			this.out = new PrintWriter( chatSocket.getOutputStream() );
 			
