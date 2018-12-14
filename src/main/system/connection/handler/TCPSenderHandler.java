@@ -31,26 +31,13 @@ public class TCPSenderHandler implements Runnable  {
 		this.message = message;
 	}
         
-        public TCPSenderHandler(String host, int port, int localPort, String message) throws IOException {
-		this.host = host;
-		this.port = port;
-                this.localPort = localPort;
-		// Treatment the message
-		this.message = message;
-	}
-        
-        
-        
+     
 	@Override
 	public void run() {
 		try {			
 
-			// Request a connection to the given peer
-                    
+			// Request a connection to the given peer            
 			chatSocket = new Socket(host,port); 
-                        System.out.println(host + " - " + port);
-                        //InetAddress ip = InetAddress.getByName(host);
-                        //chatSocket = new Socket(ip,port,InetAddress.getLocalHost(),localPort);
 			// Initialization the output channel
 			this.out = new PrintWriter( chatSocket.getOutputStream() );
 			
