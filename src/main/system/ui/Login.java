@@ -159,15 +159,18 @@ public class Login extends javax.swing.JFrame {
             this.node =  new Node(peer);
             
             ChatWindow chatWindow = new ChatWindow(node);
-            chatWindow.display();
+
             this.setVisible(false);
-            
-            System.out.println("start listening ... ");
-            if (listen == null)
+ 
+            System.out.println("start listening ...");
+            if (listen == null){
                 listen = new Thread(new TCPListenerHandler(this.node,chatWindow));  
-            listen.start();
-            chatWindow.setThread(listen);
-           
+                listen.start();
+            }else{
+                listen.resume();
+            }
+            chatWindow.setThread(listen); 
+            chatWindow.display();
         } catch (UnknownHostException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
