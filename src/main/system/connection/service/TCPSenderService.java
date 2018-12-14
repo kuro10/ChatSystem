@@ -17,4 +17,8 @@ public class TCPSenderService implements SenderService {
 		t.start();
 	}
 
+        public void sendMessageTo (String host, int port, int localPort, String message) throws Exception {
+		Thread t = new Thread( new TCPSenderHandler(host,port,localPort,message));
+		t.start();
+	}
 }
