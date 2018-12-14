@@ -9,6 +9,7 @@ import com.sun.glass.events.KeyEvent;
 import main.system.model.Node;
 import main.system.connection.service.TCPSenderService;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import main.system.data.*;
@@ -73,7 +74,7 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
         ipDistantField = new javax.swing.JTextField();
         renameButton = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        historyBox = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
@@ -140,9 +141,9 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
 
         renameButton.setText("Rename");
 
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane3.setViewportView(jTextArea2);
+        historyBox.setColumns(20);
+        historyBox.setRows(5);
+        jScrollPane3.setViewportView(historyBox);
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("ChatHistory");
@@ -227,13 +228,26 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
       target = Integer.parseInt(this.targetPort.getText());
       ipDistant = this.ipDistantField.getText();
       System.out.println("Target to "+ ipDistant + " : " + target);
-      if (history.existHistory(sourceport, target)) {
+      if (history.existHistory(sourceport, target) == false) {
           l = new MessageLog(sourceport, target);
           history.addHistory(l);
           chatBox.setText("");
-      } else {
-          l = history.getMessageLog(sourceport, target);
+          historyBox.append(l.toString() + System.lineSeparator());
       }
+//      else {
+//          chatBox.setText("");
+//          l = history.getMessageLog(sourceport, target);
+//          for (String m : l.getLog()) {
+//              chatBox.append(m + System.lineSeparator());
+//          }
+//      }
+//      if (history.existHistory(sourceport, target)) {
+//          l = new MessageLog(sourceport, target);
+//          history.addHistory(l);
+//          chatBox.setText("");
+//      } else {
+//          l = history.getMessageLog(sourceport, target);
+//      }
 
     }//GEN-LAST:event_targetButtonActionPerformed
 
@@ -338,6 +352,7 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea chatBox;
     private javax.swing.JButton disconnectButton;
+    private javax.swing.JTextArea historyBox;
     private javax.swing.JLabel hostField;
     private javax.swing.JTextField ipDistantField;
     private javax.swing.JLabel jLabel1;
@@ -346,7 +361,6 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextField message;
     private javax.swing.JLabel nicknameField;
     private javax.swing.JLabel portField;

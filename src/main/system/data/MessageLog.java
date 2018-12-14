@@ -51,4 +51,9 @@ public class MessageLog {
         return this.port2;
     } 
     
+    @Override
+    public String toString() {
+        return "[" + this.port1 + " | " + this.port2 + "]";
+    }
+    
 }
