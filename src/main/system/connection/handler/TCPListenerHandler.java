@@ -14,39 +14,46 @@ public class TCPListenerHandler implements Runnable {
 	private ServerSocket serverSocket = null;
 	private Socket chatSocket;
 	//private BufferedReader in;
-	private final WritableUI ui;
+	private WritableUI ui=null;
+        private volatile boolean running = true;
+
         
 	// this handler is used at a node of the network
 	public TCPListenerHandler (Node node, WritableUI ui) throws IOException {	
-                this.node = node;
-		this.ui = ui;
-                if (serverSocket != null)
-                    serverSocket.close();
-		this.serverSocket = new ServerSocket(node.getPeer().getPort());
-		System.out.println(node.getPeer().getPseudonyme() + " is listening at port " + node.getPeer().getPort() + "...");
+            this.node = node;
+            this.ui = ui;
+            this.serverSocket = new ServerSocket(node.getPeer().getPort());
 	}
-	
-
+        
+        
+        public void terminate() throws IOException {
+            running = false;
+            this.serverSocket.close();
+            //this.chatSocket.close();
+        }
+            
 	@Override
 	public void run() {
-            try {
-                while(true) {
-                    this.chatSocket = this.serverSocket.accept();
-                    BufferedReader in = new BufferedReader(new InputStreamReader(chatSocket.getInputStream()));
+            while(running) {
+                try {
+                        System.out.println(node.getPeer().getPseudonyme() + " is listening at port " + node.getPeer().getPort() + "...");
+                        this.chatSocket = this.serverSocket.accept();
+                        BufferedReader in = new BufferedReader(new InputStreamReader(chatSocket.getInputStream()));
 
-                    System.out.println("CALL IN TCP Listner handler run");
-                    // Print the message received from a node distant
-                    String msgDistant = in.readLine();
+                        System.out.println("CALL IN TCP Listner handler run");
+                        // Print the message received from a node distant
+                        String msgDistant = in.readLine();
 
-                    if(msgDistant != null) {
-                    ui.write(msgDistant);
-                    //System.out.println(msgDistant);
-                    }
-                    // Close the socket
-                    //serverSocket.close();
-               }
-            } catch(IOException e) {
-                    e.printStackTrace();
+                        if(msgDistant != null) {
+                            ui.write(msgDistant);
+                            System.out.println(msgDistant);
+                        }
+                        // Close the socket
+                        //chatSocket.close();
+                   
+                } catch(Exception e) {
+                        e.printStackTrace();
+                }
             }
 		
 	}

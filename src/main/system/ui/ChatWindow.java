@@ -6,7 +6,6 @@
 package main.system.ui;
 
 import main.system.model.Node;
-import main.system.connection.handler.TCPListenerHandler;
 import main.system.connection.service.TCPSenderService;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -18,8 +17,8 @@ import java.util.logging.Logger;
 public class ChatWindow extends javax.swing.JFrame implements WritableUI {
     
 	private Node node;
-	private Thread listen;
-	/**
+        
+    /**
      * Creates new form Chat Window
      */
     public ChatWindow() {
@@ -38,7 +37,8 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
     }
     
     public String getPseudo() {return this.node.getPeer().getPseudonyme();} 
-    public void setThread(Thread listen) {this.listen = listen;}
+    
+    
     public void display(){
         this.setLocationRelativeTo(null); 
         this.setVisible(true);
@@ -207,15 +207,12 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
 
     private void boutonFermerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boutonFermerActionPerformed
             
-        try {
-            // Close threads...
-            Thread.sleep(1000);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(ChatWindow.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        // Stop thread running
+        
+        
         // Close the chat window
         this.setVisible(false);
-        Login loginWindow = new Login(node,listen);
+        Login loginWindow = new Login(node);
         loginWindow.setTitre("You have disconnected.");
         loginWindow.display();     
     }//GEN-LAST:event_boutonFermerActionPerformed
@@ -224,7 +221,7 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
         // TODO add your handling code here:
     }//GEN-LAST:event_ipDistantFieldActionPerformed
 
-    
+
     /**
      * @param args the command line arguments
      */

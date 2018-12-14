@@ -23,7 +23,8 @@ import main.system.connection.handler.TCPListenerHandler;
 public class Login extends javax.swing.JFrame {
     
     private Node node;
-    private Thread listen = null;
+    static Thread listen = null;
+    static TCPListenerHandler runnable = null;    
     
     /**
      * Creates new form Login
@@ -38,12 +39,6 @@ public class Login extends javax.swing.JFrame {
         hostField.setText(node.getPeer().getHost());
     }
     
-    public Login(Node node,Thread listen){
-        initComponents();
-        this.node = node;
-        this.listen = listen;
-        hostField.setText(node.getPeer().getHost());
-    }
 
     public void display(){
         this.setLocationRelativeTo(null); 
@@ -159,21 +154,26 @@ public class Login extends javax.swing.JFrame {
             this.node =  new Node(peer);
             
             ChatWindow chatWindow = new ChatWindow(node);
-
-            this.setVisible(false);
- 
-            System.out.println("start listening ...");
-            if (listen == null){
-                listen = new Thread(new TCPListenerHandler(this.node,chatWindow));  
-                listen.start();
-            }else{
-                listen.resume();
-            }
-            chatWindow.setThread(listen); 
             chatWindow.display();
+            
+            this.setVisible(false);
+            
+            if (listen != null && runnable != null ){
+                runnable.terminate();
+                listen.join();
+                System.out.println(listen.getState());
+            }
+ 
+            runnable = new TCPListenerHandler(this.node,chatWindow); 
+            listen = new Thread(runnable);  
+            listen.start();
+            System.out.println(listen.getState());
+  
         } catch (UnknownHostException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InterruptedException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_logInButtonActionPerformed
