@@ -20,10 +20,10 @@ import main.system.data.*;
  */
 public class ChatWindow extends javax.swing.JFrame implements WritableUI {
     
-	private Node node;
-        public static ChatHistory history = new ChatHistory();
-        private MessageLog l;
-        int sourceport;
+    private Node node;
+    public static ChatHistory history = new ChatHistory();
+    private MessageLog l;
+    int sourceport;
         
     /**
      * Creates new form Chat Window
@@ -141,6 +141,11 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
         });
 
         renameButton.setText("Rename");
+        renameButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                renameButtonActionPerformed(evt);
+            }
+        });
 
         historyBox.setColumns(20);
         historyBox.setRows(5);
@@ -311,6 +316,14 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
             }
         }
     }//GEN-LAST:event_messageKeyPressed
+
+    private void renameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_renameButtonActionPerformed
+        // TODO add your handling code here: 
+        ChangeName changeNameWindow = new ChangeName(this.node);
+        changeNameWindow.display();
+        
+        // TODO update new nickname
+    }//GEN-LAST:event_renameButtonActionPerformed
     
     
 
