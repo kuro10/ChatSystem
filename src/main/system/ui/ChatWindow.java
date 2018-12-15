@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.WindowConstants;
 import main.system.data.*;
 
 /**
@@ -273,6 +274,8 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
 
         // Close the chat window
         this.setVisible(false);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.dispose();
         Login loginWindow = new Login(node);
         loginWindow.setTitre("You have disconnected.");
         loginWindow.display();     
