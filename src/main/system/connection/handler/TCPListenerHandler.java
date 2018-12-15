@@ -34,9 +34,9 @@ public class TCPListenerHandler implements Runnable {
             
 	@Override
 	public void run() {
-            while(running) {
                 try {
-                        System.out.println(node.getPeer().getPseudonyme() + " is listening at port " + node.getPeer().getPort() + "...");
+                    while(running) {
+                        System.out.println(node.getPeer().getPseudonyme() + " is listening by TCP at port " + node.getPeer().getPort() + "...");
                         this.chatSocket = this.serverSocket.accept();
                         BufferedReader in = new BufferedReader(new InputStreamReader(chatSocket.getInputStream()));
 
@@ -50,11 +50,11 @@ public class TCPListenerHandler implements Runnable {
                         }
                         // Close the socket
                         //chatSocket.close();
-                   
-                } catch(Exception e) {
-                        e.printStackTrace();
+                    }
+                } catch(IOException e) {
+                    e.printStackTrace();
                 }
-            }
+
 		
 	}
 
