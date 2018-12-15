@@ -5,6 +5,7 @@
  */
 package main.system.connection.service;
 
+import java.net.UnknownHostException;
 import main.system.connection.handler.UDPSenderHandler;
 import main.system.model.Node;
 import main.system.model.Peer;
@@ -27,7 +28,7 @@ public class UDPSenderService implements SenderService {
         t.start();
     }
     
-    public void sendBroadcast(Node node){
+    public void sendBroadcast(Node node) throws UnknownHostException{
         Thread t = new Thread (new UDPSenderHandler(node));
         t.start();
     }

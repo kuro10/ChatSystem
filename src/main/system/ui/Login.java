@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.WindowConstants;
 import main.system.connection.handler.TCPListenerHandler;
+import main.system.connection.handler.UDPListenerHandler;
 
 
 
@@ -25,8 +26,8 @@ public class Login extends javax.swing.JFrame {
     
     private Node node;
     static Thread listen = null;
-    static TCPListenerHandler runnable = null;    
-    
+    static TCPListenerHandler runnableTCP = null;    
+    static UDPListenerHandler runnableUDP = null;
     /**
      * Creates new form Login
      */
@@ -167,14 +168,25 @@ public class Login extends javax.swing.JFrame {
             setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             this.dispose();
             
-            if (listen != null && runnable != null ){
-                runnable.terminate();
+//            if (listen != null && runnableTCP != null ){
+//                runnableTCP.terminate();
+//                listen.join();
+//                System.out.println(listen.getState());
+//            }
+// 
+//            runnableTCP = new TCPListenerHandler(this.node,chatWindow); 
+//            listen = new Thread(runnableTCP);  
+            
+            if (listen != null && runnableUDP != null ){
+                runnableUDP.terminate();
                 listen.join();
                 System.out.println(listen.getState());
             }
  
-            runnable = new TCPListenerHandler(this.node,chatWindow); 
-            listen = new Thread(runnable);  
+            runnableUDP = new UDPListenerHandler(this.node,chatWindow); 
+            listen = new Thread(runnableUDP);  
+            
+            
             listen.start();
             System.out.println(listen.getState());
   
@@ -196,18 +208,30 @@ public class Login extends javax.swing.JFrame {
                 chatWindow.display();
 
                 this.setVisible(false);
-
-                if (listen != null && runnable != null ){
-                    runnable.terminate();
-                    listen.join();
-                    System.out.println(listen.getState());
-                }
-
-                runnable = new TCPListenerHandler(this.node,chatWindow); 
-                listen = new Thread(runnable);  
-                listen.start();
+                setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+                this.dispose();
+                           
+//            if (listen != null && runnableTCP != null ){
+//                runnableTCP.terminate();
+//                listen.join();
+//                System.out.println(listen.getState());
+//            }
+// 
+//            runnableTCP = new TCPListenerHandler(this.node,chatWindow); 
+//            listen = new Thread(runnableTCP);  
+            
+            if (listen != null && runnableUDP != null ){
+                runnableUDP.terminate();
+                listen.join();
                 System.out.println(listen.getState());
-
+            }
+ 
+            runnableUDP = new UDPListenerHandler(this.node,chatWindow); 
+            listen = new Thread(runnableUDP);  
+               
+            listen.start();
+            System.out.println(listen.getState());
+            
             }catch (UnknownHostException ex) {
                 Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException | InterruptedException ex) {

@@ -32,20 +32,19 @@ public class UDPSenderHandler implements Runnable{
         this.message = message;
         outPacket = new DatagramPacket(message.getBytes(),message.length());
         outPacket.setAddress(InetAddress.getByName(peer.getHost()));
-        outPacket.setPort(Peer.PORT_UDP);
-
+        outPacket.setPort(peer.getPort());
     }
     
     public UDPSenderHandler(String host, int port, String message) throws UnknownHostException{
         this.message = message;
         outPacket = new DatagramPacket(message.getBytes(),message.length());
         outPacket.setAddress(InetAddress.getByName(host));
-        outPacket.setPort(Peer.PORT_UDP);
+        outPacket.setPort(port);
     }
 
     public UDPSenderHandler(Node node) throws UnknownHostException {
-        message = node.getPeer().getPseudonyme();
-        outPacket = new DatagramPacket(message.getBytes(),message.length());
+        this.message = node.getPeer().getHost();
+        outPacket = new DatagramPacket(this.message.getBytes(),this.message.length());
         outPacket.setAddress(InetAddress.getByName("255.255.255.255"));
         outPacket.setPort(Peer.PORT_UDP);
     }
@@ -57,6 +56,7 @@ public class UDPSenderHandler implements Runnable{
             this.dgramSocket = new DatagramSocket();
             System.out.println("CALL IN UDP Sender Handler : send ");
             dgramSocket.send(outPacket);
+            
             dgramSocket.close();
         } catch (SocketException ex) {
             Logger.getLogger(UDPSenderHandler.class.getName()).log(Level.SEVERE, null, ex);

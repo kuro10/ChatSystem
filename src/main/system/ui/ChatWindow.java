@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.WindowConstants;
+import main.system.connection.service.UDPSenderService;
 import main.system.data.*;
 
 /**
@@ -263,7 +264,8 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
         try {
             String msg = "[" + node.getPeer().getPseudonyme() + "] : " + message.getText();
             //new TCPSenderService().sendMessageTo("localhost",target,msg);
-            new TCPSenderService().sendMessageTo(ipDistant,target,msg);
+            //new TCPSenderService().sendMessageTo(ipDistant,target,msg);
+            new UDPSenderService().sendMessageTo(ipDistant,target,msg);
             this.write(msg);
             message.setText("");
         } catch (Exception ex) {
@@ -308,7 +310,8 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
             try {
                 String msg = "[" + node.getPeer().getPseudonyme() + "] : " + message.getText();
                 //new TCPSenderService().sendMessageTo("localhost",target,msg);
-                new TCPSenderService().sendMessageTo(ipDistant,target,msg);
+                //new TCPSenderService().sendMessageTo(ipDistant,target,msg);
+                new UDPSenderService().sendMessageTo(ipDistant,target,msg);
                 this.write(msg);
                 message.setText("");
             } catch (Exception ex) {
