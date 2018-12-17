@@ -44,6 +44,7 @@ public class UDPListenerHandler implements Runnable {
 
     public void terminate() throws IOException {
         running = false;
+        dgramSocket.close();
     }
         
     @Override
