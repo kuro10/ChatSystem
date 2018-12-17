@@ -235,12 +235,12 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
       target = Integer.parseInt(this.targetPort.getText());
       ipDistant = this.ipDistantField.getText();
       System.out.println("Target to "+ ipDistant + " : " + target);
-      if (history.existHistory(sourceport, target) == false) {
-          l = new MessageLog(sourceport, target);
-          history.addHistory(l);
-          chatBox.setText("");
-          historyBox.append(l.toString() + System.lineSeparator());
-      }
+//      if (history.existHistory(sourceport, target) == false) {
+//          l = new MessageLog(sourceport, target);
+//          history.addHistory(l);
+//          chatBox.setText("");
+//          historyBox.append(l.toString() + System.lineSeparator());
+//      }
 //      else {
 //          chatBox.setText("");
 //          l = history.getMessageLog(sourceport, target);
@@ -284,7 +284,7 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.dispose();
         Login loginWindow = new Login(node);
-        loginWindow.setTitre("You have disconnected.");
+        loginWindow.setTitle("You have disconnected.");
         loginWindow.display();     
     }//GEN-LAST:event_disconnectButtonActionPerformed
 

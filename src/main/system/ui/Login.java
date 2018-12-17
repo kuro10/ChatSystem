@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import javax.swing.WindowConstants;
 import main.system.connection.handler.TCPListenerHandler;
 import main.system.connection.handler.UDPListenerHandler;
+import main.system.connection.service.UDPSenderService;
 
 
 
@@ -47,8 +48,8 @@ public class Login extends javax.swing.JFrame {
         this.setVisible(true);
     }
     
-    public void setTitre(String titre){
-        titreLabel.setText(titre);
+    public void setTitle(String title){
+        titleLabel.setText(title);
     }
     
     /**
@@ -66,7 +67,7 @@ public class Login extends javax.swing.JFrame {
         nicknameField = new javax.swing.JTextField();
         hostField = new javax.swing.JTextField();
         portField = new javax.swing.JTextField();
-        titreLabel = new javax.swing.JLabel();
+        titleLabel = new javax.swing.JLabel();
         logInButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -91,9 +92,9 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
-        titreLabel.setForeground(new java.awt.Color(250, 0, 0));
-        titreLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titreLabel.setText("Welcome !!!");
+        titleLabel.setForeground(new java.awt.Color(250, 0, 0));
+        titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titleLabel.setText("Welcome !!!");
 
         logInButton.setText("Log in");
         logInButton.addActionListener(new java.awt.event.ActionListener() {
@@ -118,7 +119,7 @@ public class Login extends javax.swing.JFrame {
                                 .addComponent(nicknameField)
                                 .addComponent(hostField)
                                 .addComponent(portField, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE))
-                            .addComponent(titreLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(titleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(71, 71, 71)
                         .addComponent(logInButton)))
@@ -128,7 +129,7 @@ public class Login extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(5, 5, 5)
-                .addComponent(titreLabel)
+                .addComponent(titleLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(nicknameLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -180,7 +181,7 @@ public class Login extends javax.swing.JFrame {
             if (listen != null && runnableUDP != null ){
                 runnableUDP.terminate();
                 listen.join();
-                System.out.println(listen.getState());
+                //System.out.println(listen.getState());
             }
  
             runnableUDP = new UDPListenerHandler(this.node,chatWindow); 
@@ -188,8 +189,10 @@ public class Login extends javax.swing.JFrame {
             
             
             listen.start();
-            System.out.println(listen.getState());
-  
+            //System.out.println(listen.getState());
+            
+            //new UDPSenderService().sendBroadcast(this.node);
+            
         } catch (UnknownHostException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException | InterruptedException ex) {
@@ -220,18 +223,18 @@ public class Login extends javax.swing.JFrame {
 //            runnableTCP = new TCPListenerHandler(this.node,chatWindow); 
 //            listen = new Thread(runnableTCP);  
             
-            if (listen != null && runnableUDP != null ){
-                runnableUDP.terminate();
-                listen.join();
-                System.out.println(listen.getState());
-            }
- 
-            runnableUDP = new UDPListenerHandler(this.node,chatWindow); 
-            listen = new Thread(runnableUDP);  
-               
-            listen.start();
-            System.out.println(listen.getState());
-            
+                if (listen != null && runnableUDP != null ){
+                    runnableUDP.terminate();
+                    listen.join();
+                    //System.out.println(listen.getState());
+                }
+
+                runnableUDP = new UDPListenerHandler(this.node,chatWindow); 
+                listen = new Thread(runnableUDP);  
+
+                listen.start();
+                //System.out.println(listen.getState());
+
             }catch (UnknownHostException ex) {
                 Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException | InterruptedException ex) {
@@ -283,7 +286,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel nicknameLabel;
     private javax.swing.JTextField portField;
     private javax.swing.JLabel portLabel;
-    private javax.swing.JLabel titreLabel;
+    private javax.swing.JLabel titleLabel;
     // End of variables declaration//GEN-END:variables
 }
 

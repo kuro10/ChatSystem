@@ -51,7 +51,7 @@ public class UDPListenerHandler implements Runnable {
     public void run() {
         try {
             while(running){
-                System.out.print(node.getPeer().getPseudonyme() + " is listening by UDP at port " + Peer.PORT_UDP + "...");
+                System.out.print(node.getPeer().getPseudonyme() + " is listening by UDP at port " + node.getPeer().getPort() + "...");
                 this.dgramSocket.receive(this.inPacket);
                 System.out.println("CALL IN UDP Listener handler run" );
                 String host = inPacket.getAddress().getHostAddress();
