@@ -235,26 +235,19 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
       target = Integer.parseInt(this.targetPort.getText());
       ipDistant = this.ipDistantField.getText();
       System.out.println("Target to "+ ipDistant + " : " + target);
-//      if (history.existHistory(sourceport, target) == false) {
-//          l = new MessageLog(sourceport, target);
-//          history.addHistory(l);
-//          chatBox.setText("");
-//          historyBox.append(l.toString() + System.lineSeparator());
-//      }
-//      else {
-//          chatBox.setText("");
-//          l = history.getMessageLog(sourceport, target);
-//          for (String m : l.getLog()) {
-//              chatBox.append(m + System.lineSeparator());
-//          }
-//      }
-//      if (history.existHistory(sourceport, target)) {
-//          l = new MessageLog(sourceport, target);
-//          history.addHistory(l);
-//          chatBox.setText("");
-//      } else {
-//          l = history.getMessageLog(sourceport, target);
-//      }
+      l = new MessageLog(sourceport, target);
+//      MessageLog l1 = new MessageLog(sourceport, 2222);
+//      MessageLog l2 = new MessageLog(sourceport, 3333);
+      if (history.existHistory(l)) {
+          l = history.getMessageLog(target); 
+          chatBox.append(l.toString());
+      }
+      else {
+          history.addHistory(l);
+          chatBox.setText("New chat" + System.lineSeparator());
+          historyBox.setText("");
+          historyBox.append(history.toString());
+      }
 
     }//GEN-LAST:event_targetButtonActionPerformed
 
