@@ -14,23 +14,60 @@ import java.util.ArrayList;
 public class ChatHistory {
     
     private final ArrayList<MessageLog> history;
+    private static int current_index = 0;
     
     public ChatHistory() {
         this.history = new ArrayList<>(100);
     }
     
     public void addHistory(MessageLog l) {
-        this.history.add(l);
+        if (!this.existHistory(l)) {
+            this.history.add(l);
+            current_index++;
+        }
     }
     
-    public boolean existHistory(int port1, int port2) {
-        int i = 0;
-        boolean found = false;
-        while (i < this.history.size() && found == false) {
-            found = (this.history.get(i).getPort1() == port1 && this.history.get(i).getPort2() == port2);
+    public boolean existHistory(MessageLog l) {
+        boolean res = false;
+        for (int i = 0; i < current_index; i++) {
+            if (this.history.get(i).getPort2() == l.getPort2()) {
+                res = true;
+                break;
+            }
         }
-        return found;
+        return res;
     }
+    
+    public MessageLog getMessageLog(int port2) {
+        MessageLog res = null;
+        for (int i = 0; i < current_index; i++) {
+            if (this.history.get(i).getPort2() == port2) {
+                res = this.history.get(i);
+                break;
+            }
+        }
+        return res;
+    }
+    
+    
+    @Override 
+    public String toString() {
+        String res = "";
+        for (int i = 0; i < current_index; i++) {
+            res = res + "[" + this.history.get(i).getPort1() + " | " + this.history.get(i).getPort2() + "]" + System.lineSeparator();
+        }
+        return res;
+    }
+    
+    
+//    public boolean existHistory(int port1, int port2) {
+//        int i = 0;
+//        boolean found = false;
+//        while (i < this.history.size() && found == false) {
+//            found = (this.history.get(i).getPort1() == port1 && this.history.get(i).getPort2() == port2);
+//        }
+//        return found;
+//    }
     
     public MessageLog getMessageLog(int port1, int port2) {
         MessageLog res = null;

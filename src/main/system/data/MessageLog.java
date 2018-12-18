@@ -19,6 +19,7 @@ public class MessageLog {
     private int port1;
     private int port2;
     private ArrayList<String> log;
+    private int current_index = 0;
     
     public MessageLog(Peer p1, Peer p2) {
         // TODO
@@ -26,7 +27,7 @@ public class MessageLog {
         this.peer2 = p2;
         this.port1 = p1.getPort();
         this.port2 = p2.getPort();
-        this.log = new ArrayList<>(100);
+        this.log = new ArrayList<>(1000);
     }
     
     public MessageLog(int port1, int port2) {
@@ -37,6 +38,7 @@ public class MessageLog {
     
     public void addMessage(String message) {
         this.log.add(message);
+        current_index++;
     }
     
     public ArrayList<String> getLog() {
@@ -51,9 +53,18 @@ public class MessageLog {
         return this.port2;
     } 
     
-    @Override
+    
+    @Override 
     public String toString() {
-        return "[" + this.port1 + " | " + this.port2 + "]";
+        String res = "";
+        for (int i = 0; i < current_index; i++) {
+            res = res + this.log.get(i) + System.lineSeparator();
+        }
+        return res;
     }
+//    @Override
+//    public String toString() {
+//        return "[" + this.port1 + " | " + this.port2 + "]";
+//    }
     
 }
