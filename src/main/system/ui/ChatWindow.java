@@ -36,9 +36,9 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
     public ChatWindow(Node node) throws IOException {
         initComponents();       
         this.node = node;
-        this.nicknameField.setText("Pseudo : " + node.getPeer().getPseudonyme());
-        this.hostField.setText("Host : " + node.getPeer().getHost());
-        this.portField.setText("Port : " + node.getPeer().getPort());
+        this.nicknameLabel.setText("Pseudo : " + node.getPeer().getPseudonyme());
+        this.hostLabel.setText("Host : " + node.getPeer().getHost());
+        this.portLabel.setText("Port : " + node.getPeer().getPort());
         sourceport = node.getPeer().getPort();
         //listen = new Thread(new TCPListenerHandler(this.node,this));  
         //listen.start();
@@ -70,15 +70,16 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
         targetButton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
-        nicknameField = new javax.swing.JLabel();
-        hostField = new javax.swing.JLabel();
-        portField = new javax.swing.JLabel();
+        nicknameLabel = new javax.swing.JLabel();
+        hostLabel = new javax.swing.JLabel();
+        portLabel = new javax.swing.JLabel();
         ipDistantField = new javax.swing.JTextField();
         renameButton = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         historyBox = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        backButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -129,11 +130,11 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
         jTextArea1.setRows(5);
         jScrollPane2.setViewportView(jTextArea1);
 
-        nicknameField.setText("Nickname : ");
+        nicknameLabel.setText("Nickname : ");
 
-        hostField.setText("Host :");
+        hostLabel.setText("Host :");
 
-        portField.setText("Port :");
+        portLabel.setText("Port :");
 
         ipDistantField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -158,6 +159,13 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Friends Online");
 
+        backButton.setText("Back");
+        backButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -176,13 +184,15 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(targetButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(backButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(renameButton))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(nicknameField, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(nicknameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(hostField, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(hostLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(portField, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(portLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(disconnectButton))
                     .addGroup(layout.createSequentialGroup()
@@ -202,9 +212,9 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(disconnectButton)
-                    .addComponent(nicknameField)
-                    .addComponent(hostField)
-                    .addComponent(portField)
+                    .addComponent(nicknameLabel)
+                    .addComponent(hostLabel)
+                    .addComponent(portLabel)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -222,7 +232,8 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
                             .addComponent(renameButton)
                             .addComponent(targetButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(ipDistantField)
-                            .addComponent(targetPort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(targetPort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(backButton))))
                 .addContainerGap())
         );
 
@@ -322,6 +333,11 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
         
         // TODO update new nickname
     }//GEN-LAST:event_renameButtonActionPerformed
+
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+    }//GEN-LAST:event_backButtonActionPerformed
     
     
 
@@ -364,10 +380,11 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton backButton;
     private javax.swing.JTextArea chatBox;
     private javax.swing.JButton disconnectButton;
     private javax.swing.JTextArea historyBox;
-    private javax.swing.JLabel hostField;
+    private javax.swing.JLabel hostLabel;
     private javax.swing.JTextField ipDistantField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -376,8 +393,8 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField message;
-    private javax.swing.JLabel nicknameField;
-    private javax.swing.JLabel portField;
+    private javax.swing.JLabel nicknameLabel;
+    private javax.swing.JLabel portLabel;
     private javax.swing.JButton renameButton;
     private javax.swing.JButton sendButton;
     private javax.swing.JButton targetButton;

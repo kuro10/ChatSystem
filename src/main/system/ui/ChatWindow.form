@@ -38,14 +38,16 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="targetButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
+                      <Component id="backButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="renameButton" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="nicknameField" min="-2" pref="119" max="-2" attributes="0"/>
+                      <Component id="nicknameLabel" min="-2" pref="119" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="hostField" min="-2" pref="157" max="-2" attributes="0"/>
+                      <Component id="hostLabel" min="-2" pref="157" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="portField" min="-2" pref="88" max="-2" attributes="0"/>
+                      <Component id="portLabel" min="-2" pref="88" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="disconnectButton" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -71,9 +73,9 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="disconnectButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="nicknameField" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="hostField" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="portField" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="nicknameLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="hostLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="portLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
@@ -94,6 +96,7 @@
                           <Component id="targetButton" alignment="3" max="32767" attributes="0"/>
                           <Component id="ipDistantField" alignment="3" max="32767" attributes="0"/>
                           <Component id="targetPort" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="backButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -171,17 +174,17 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JLabel" name="nicknameField">
+    <Component class="javax.swing.JLabel" name="nicknameLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="Nickname : "/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="hostField">
+    <Component class="javax.swing.JLabel" name="hostLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="Host :"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="portField">
+    <Component class="javax.swing.JLabel" name="portLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="Port :"/>
       </Properties>
@@ -225,6 +228,14 @@
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="text" type="java.lang.String" value="Friends Online"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="backButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Back"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="backButtonActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

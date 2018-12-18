@@ -70,6 +70,7 @@ public class Login extends javax.swing.JFrame {
         portField = new javax.swing.JTextField();
         titleLabel = new javax.swing.JLabel();
         logInButton = new javax.swing.JButton();
+        chatButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -104,6 +105,13 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
+        chatButton.setText("Chat");
+        chatButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chatButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -123,7 +131,9 @@ public class Login extends javax.swing.JFrame {
                             .addComponent(titleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(71, 71, 71)
-                        .addComponent(logInButton)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(logInButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(chatButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(25, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -145,7 +155,9 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(portField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(logInButton)
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(chatButton)
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         pack();
@@ -162,43 +174,34 @@ public class Login extends javax.swing.JFrame {
         try {
             Peer peer = new Peer(nicknameField.getText(), hostField.getText(), Integer.parseInt(portField.getText()));
             this.node =  new Node(peer);
-            
-            ChatWindow chatWindow = new ChatWindow(node);
-            chatWindow.display();
+                        
+            Home home = new Home(node);
+            home.display();
             
             this.setVisible(false);
             setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             this.dispose();
             
-            // This thread is used to receive message
-            if (listenTCP != null && runnableTCP != null ){
-                runnableTCP.terminate();
-                listenTCP.join();
-                //System.out.println(listenTCP.getState());
-            }
- 
-            runnableTCP = new TCPListenerHandler(this.node,chatWindow); 
-            listenTCP = new Thread(runnableTCP);  
-            listenTCP.start();
-//            // This message is used to reveice le broadcast par UDP
-//            if (listenUDP != null && runnableUDP != null ){
-//                runnableUDP.terminate();
-//                listenUDP.join();
-//                //System.out.println(listenUDP.getState());
-//            }
-// 
-//            runnableUDP = new UDPListenerHandler(this.node,chatWindow); 
-//            listenUDP = new Thread(runnableUDP);  
-//            listenUDP.start();
-//            
-//            // Send a broadcast when log in
-//            new UDPSenderService().sendBroadcast(this.node);
+            //This thread is used to reveice le broadcast by UDP
+            if (listenUDP != null && runnableUDP != null ){
+                runnableUDP.terminate();
+                 listenUDP.join();
+             }
+            runnableUDP = new UDPListenerHandler(this.node); 
+            listenUDP = new Thread(runnableUDP);  
+            listenUDP.start();
+
+           // Send a broadcast when log in
+            new UDPSenderService().sendBroadcast(this.node);
+            
+            
+
             
         } catch (UnknownHostException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException | InterruptedException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } 
     }//GEN-LAST:event_logInButtonActionPerformed
 
     private void portFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_portFieldKeyPressed
@@ -215,7 +218,7 @@ public class Login extends javax.swing.JFrame {
 //                setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 //                this.dispose();
 //
-//                // This thread is used to receive message
+//                // This thread is used to receive message sent by TCP
 //                if (listenTCP != null && runnableTCP != null ){
 //                    runnableTCP.terminate();
 //                    listenTCP.join();
@@ -225,7 +228,7 @@ public class Login extends javax.swing.JFrame {
 //                runnableTCP = new TCPListenerHandler(this.node,chatWindow); 
 //                listenTCP = new Thread(runnableTCP);  
 //                listenTCP.start();
-//                 //This message is used to reveice le broadcast par UDP
+//                 //This thread is used to reveice le broadcast sent by UDP
 //                if (listenUDP != null && runnableUDP != null ){
 //                    runnableUDP.terminate();
 //                    listenUDP.join();
@@ -246,6 +249,36 @@ public class Login extends javax.swing.JFrame {
 //            }
 //        }
     }//GEN-LAST:event_portFieldKeyPressed
+
+    private void chatButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chatButtonActionPerformed
+        // TODO add your handling code here:
+        try {
+            Peer peer = new Peer(nicknameField.getText(), hostField.getText(), Integer.parseInt(portField.getText()));
+            this.node =  new Node(peer);
+            
+            ChatWindow chatWindow = new ChatWindow(node);
+            chatWindow.display();
+            
+            this.setVisible(false);
+            setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+            this.dispose();
+            
+            // This thread is used to receive message sent by TCP
+            if (listenTCP != null && runnableTCP != null ){
+                runnableTCP.terminate();
+                listenTCP.join();
+                //System.out.println(listenTCP.getState());
+            }
+ 
+            runnableTCP = new TCPListenerHandler(this.node,chatWindow); 
+            listenTCP = new Thread(runnableTCP);  
+            listenTCP.start();
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException | InterruptedException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_chatButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -283,6 +316,7 @@ public class Login extends javax.swing.JFrame {
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton chatButton;
     private javax.swing.JTextField hostField;
     private javax.swing.JLabel hostLabel;
     private javax.swing.JButton logInButton;
