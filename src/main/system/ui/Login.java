@@ -180,19 +180,19 @@ public class Login extends javax.swing.JFrame {
             runnableTCP = new TCPListenerHandler(this.node,chatWindow); 
             listenTCP = new Thread(runnableTCP);  
             listenTCP.start();
-            // This message is used to reveice le broadcast par UDP
-            if (listenUDP != null && runnableUDP != null ){
-                runnableUDP.terminate();
-                listenUDP.join();
-                //System.out.println(listenUDP.getState());
-            }
- 
-            runnableUDP = new UDPListenerHandler(this.node,chatWindow); 
-            listenUDP = new Thread(runnableUDP);  
-            listenUDP.start();
-            
-            // Send a broadcast when log in
-            new UDPSenderService().sendBroadcast(this.node);
+//            // This message is used to reveice le broadcast par UDP
+//            if (listenUDP != null && runnableUDP != null ){
+//                runnableUDP.terminate();
+//                listenUDP.join();
+//                //System.out.println(listenUDP.getState());
+//            }
+// 
+//            runnableUDP = new UDPListenerHandler(this.node,chatWindow); 
+//            listenUDP = new Thread(runnableUDP);  
+//            listenUDP.start();
+//            
+//            // Send a broadcast when log in
+//            new UDPSenderService().sendBroadcast(this.node);
             
         } catch (UnknownHostException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
@@ -226,15 +226,15 @@ public class Login extends javax.swing.JFrame {
                 listenTCP = new Thread(runnableTCP);  
                 listenTCP.start();
                 // This message is used to reveice le broadcast par UDP
-                if (listenUDP != null && runnableUDP != null ){
-                    runnableUDP.terminate();
-                    listenUDP.join();
-                    //System.out.println(listenUDP.getState());
-                }
-
-                runnableUDP = new UDPListenerHandler(this.node,chatWindow); 
-                listenUDP = new Thread(runnableUDP);  
-                listenUDP.start();
+//                if (listenUDP != null && runnableUDP != null ){
+//                    runnableUDP.terminate();
+//                    listenUDP.join();
+//                    //System.out.println(listenUDP.getState());
+//                }
+//
+//                runnableUDP = new UDPListenerHandler(this.node,chatWindow); 
+//                listenUDP = new Thread(runnableUDP);  
+//                listenUDP.start();
 
                 // Send a broadcast when log in
                 new UDPSenderService().sendBroadcast(this.node);

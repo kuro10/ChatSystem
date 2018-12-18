@@ -301,18 +301,18 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
 
     private void messageKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_messageKeyPressed
         // TODO add your handling code here:
-        if(evt.getKeyCode() ==KeyEvent.VK_ENTER){
-            try {
-                String msg = "[" + node.getPeer().getPseudonyme() + "] : " + message.getText();
-                //new TCPSenderService().sendMessageTo("localhost",target,msg);
-                //new TCPSenderService().sendMessageTo(ipDistant,target,msg);
-                new UDPSenderService().sendMessageTo(ipDistant,target,msg);
-                this.write(msg);
-                message.setText("");
-            } catch (Exception ex) {
-                Logger.getLogger(ChatWindow.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+//        if(evt.getKeyCode() ==KeyEvent.VK_ENTER){
+//            try {
+//                String msg = "[" + node.getPeer().getPseudonyme() + "] : " + message.getText();
+//                new TCPSenderService().sendMessageTo("localhost",target,msg);
+//                //new TCPSenderService().sendMessageTo(ipDistant,target,msg);
+//                //new UDPSenderService().sendMessageTo(ipDistant,target,msg);
+//                this.write(msg);
+//                message.setText("");
+//            } catch (Exception ex) {
+//                Logger.getLogger(ChatWindow.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
     }//GEN-LAST:event_messageKeyPressed
 
     private void renameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_renameButtonActionPerformed
