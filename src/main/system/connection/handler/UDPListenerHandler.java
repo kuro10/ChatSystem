@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import main.system.connection.service.UDPSenderService;
@@ -40,7 +39,7 @@ public class UDPListenerHandler implements Runnable {
     public UDPListenerHandler(Node node, WritableUI ui) throws SocketException{
         this.node = node;
         this.ui = ui;
-        this.dgramSocket = new DatagramSocket(node.getPeer().getPort());  // or node.getPeer().getPort() ???
+        this.dgramSocket = new DatagramSocket(Peer.PORT_UDP);  // or node.getPeer().getPort() ???
         byte[] buffer = new byte[256];
         this.inPacket = new DatagramPacket(buffer,buffer.length);
     }
@@ -54,14 +53,19 @@ public class UDPListenerHandler implements Runnable {
     public void run() {
         try {     
             while(running){
-                System.out.print(node.getPeer().getPseudonyme() + " is listening by UDP at port " + node.getPeer().getPort() + "...");
+                System.out.println(node.getPeer().getPseudonyme() + " is listening by UDP at port " + Peer.PORT_UDP + "...");
                 this.dgramSocket.receive(this.inPacket);
-                System.out.println("CALL IN UDP Listener handler run" );
+                System.out.println("CALL IN UDP Listener handler" );
                 String msg = new String(inPacket.getData(),0,inPacket.getLength());
                 String host = inPacket.getAddress().getHostAddress();
                 //ui.write(msg);
-                System.out.println(host + "has sent a " + msg);
-                new UDPSenderService().sendMessageTo(host,Peer.PORT_UDP,"OK.");
+                if (msg.equals("broadcast")){
+                    System.out.println(host + " sends a " + msg);
+                    new UDPSenderService().sendMessageTo(host,Peer.PORT_UDP,"OK.");
+                    System.out.println(node.getPeer().getHost() + " responds OK.");
+                }
+               
+                
             }
             
         } catch (IOException e){

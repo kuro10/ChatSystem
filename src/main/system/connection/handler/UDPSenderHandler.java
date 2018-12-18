@@ -43,10 +43,12 @@ public class UDPSenderHandler implements Runnable{
     }
 
     public UDPSenderHandler(Node node) throws UnknownHostException {
-        
+        this.peer = node.getPeer();
         this.message = "broadcast";
+        //System.out.println(node.getPeer().getBroadcast().getHostName());
         outPacket = new DatagramPacket(this.message.getBytes(),this.message.length());
-        outPacket.setAddress(node.getPeer().getBroadcast());
+        //outPacket.setAddress(node.getPeer().getBroadcast());
+        outPacket.setAddress(InetAddress.getByName("255.255.255.255"));
         outPacket.setPort(Peer.PORT_UDP);
     }
     
@@ -57,7 +59,6 @@ public class UDPSenderHandler implements Runnable{
             this.dgramSocket = new DatagramSocket();
             System.out.println("CALL IN UDP Sender Handler : send ");
             dgramSocket.send(outPacket);
-            
             dgramSocket.close();
         } catch (SocketException ex) {
             Logger.getLogger(UDPSenderHandler.class.getName()).log(Level.SEVERE, null, ex);

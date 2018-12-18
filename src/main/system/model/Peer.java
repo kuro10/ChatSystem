@@ -9,26 +9,26 @@ import java.util.List;
 
 public class Peer {
 	
-	public final static int PORT_TCP = 2222;
-	public final static int PORT_UDP = 4444;
-	
-	private String pseudonyme;
-	private String host;
-	private int port;
-	
-	//Constructors
-	
-	public Peer(String host) throws UnknownHostException{
-		this.host = host;
-		this.port = PORT_TCP;
-	}
-	
-	public Peer(String pseudo,String host) throws UnknownHostException{
-		this.pseudonyme = pseudo;
-		this.host = host;
-		this.port = PORT_TCP;
-	}
-	
+    public final static int PORT_TCP = 2222;
+    public final static int PORT_UDP = 4444;
+
+    private String pseudonyme;
+    private String host;
+    private int port;
+
+    //Constructors
+
+    public Peer(String host) throws UnknownHostException{
+            this.host = host;
+            this.port = PORT_TCP;
+    }
+
+    public Peer(String pseudo,String host) throws UnknownHostException{
+            this.pseudonyme = pseudo;
+            this.host = host;
+            this.port = PORT_TCP;
+    }
+
     public Peer(String pseudonyme, String host, int port) throws UnknownHostException {
         this.pseudonyme = pseudonyme;
         this.host = host;
@@ -55,6 +55,7 @@ public class Peer {
         return this.port;
     }
 
+    @Override
     public String toString(){
         return this.pseudonyme + " ("+ this.host+ " : "+ this.port+ ")";
     }
@@ -71,13 +72,11 @@ public class Peer {
             for (InterfaceAddress inetAddress : addresses) {
                 iAddr = inetAddress.getBroadcast();
             }
-            System.out.println("iAddr=" + iAddr);
+            System.out.println("Call in Peer.getBroadcast : " + iAddr);
             return iAddr;
 
         } catch (SocketException e) {
-
             e.printStackTrace();
-            System.out.println("getBroadcast" + e.getMessage());
         }
         return null;
     }
