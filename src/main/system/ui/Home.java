@@ -8,8 +8,11 @@ package main.system.ui;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.ListModel;
 import javax.swing.WindowConstants;
 import main.system.model.Node;
+import main.system.model.Peer;
 
 /**
  *
@@ -18,6 +21,7 @@ import main.system.model.Node;
 public class Home extends javax.swing.JFrame {
 
     private Node node;
+    DefaultListModel<String> listFriendsOnlineModel;
     /**
      * Creates new form Home
      */
@@ -26,8 +30,13 @@ public class Home extends javax.swing.JFrame {
     }
     
     public Home(Node node) {
-        initComponents();
         this.node = node;
+        this.listFriendsOnlineModel = new DefaultListModel<>();
+        //listFriendsOnlineModel.addElement("User");
+        for(Peer p : node.getOnlinePeers()){
+            listFriendsOnlineModel.addElement(p.getPseudonyme()+ " : "+ p.getHost());
+        }
+        initComponents();
         this.nicknameLabel.setText("Your nickname : " + node.getPeer().getPseudonyme());
     }
 
@@ -44,17 +53,11 @@ public class Home extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
         titleLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         friendsList = new javax.swing.JList<>();
         nicknameLabel = new javax.swing.JLabel();
         logOutButton = new javax.swing.JButton();
-
-        jMenuItem1.setText("jMenuItem1");
-
-        jMenuItem2.setText("jMenuItem2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -62,11 +65,7 @@ public class Home extends javax.swing.JFrame {
         titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         titleLabel.setText("HOME");
 
-        friendsList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "User1", "User2" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
+        friendsList.setModel(listFriendsOnlineModel);
         friendsList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         friendsList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -92,10 +91,11 @@ public class Home extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
-                    .addComponent(nicknameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(logOutButton)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(nicknameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(logOutButton))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -105,8 +105,8 @@ public class Home extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(titleLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(nicknameLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addComponent(nicknameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(logOutButton)
@@ -118,19 +118,22 @@ public class Home extends javax.swing.JFrame {
 
     private void friendsListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_friendsListMouseClicked
         // TODO add your handling code here:
-        int index = friendsList.getSelectedIndex();
-        String friend = friendsList.getSelectedValue();
-        System.out.println(friend);
         
-        // TODO : find a peer/node when we know his nickname...
-        
-        try {
-            ChatWindow chatWindow = new ChatWindow(node);
-            chatWindow.display();
-        } catch (IOException ex) {
-            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        if(!friendsList.isSelectionEmpty()){
+            int index = friendsList.getSelectedIndex();
+            String friend = friendsList.getSelectedValue();
+            System.out.println(index + ":" + friend);
+            
+            // TODO : find a peer/node when we know his nickname...
 
+            try {
+                ChatWindow chatWindow = new ChatWindow(node);
+                chatWindow.display();
+            } catch (IOException ex) {
+                Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
     }//GEN-LAST:event_friendsListMouseClicked
 
     private void logOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutButtonActionPerformed
@@ -182,8 +185,6 @@ public class Home extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> friendsList;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton logOutButton;
     private javax.swing.JLabel nicknameLabel;

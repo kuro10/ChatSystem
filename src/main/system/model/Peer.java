@@ -60,25 +60,4 @@ public class Peer {
         return this.pseudonyme + " ("+ this.host+ " : "+ this.port+ ")";
     }
     
-    public InetAddress getBroadcast() throws UnknownHostException {
-
-        InetAddress myIpAddress = InetAddress.getByName(this.host);
-        NetworkInterface temp;
-        InetAddress iAddr = null;
-        try {
-            temp = NetworkInterface.getByInetAddress(myIpAddress);
-            List<InterfaceAddress> addresses = temp.getInterfaceAddresses();
-
-            for (InterfaceAddress inetAddress : addresses) {
-                iAddr = inetAddress.getBroadcast();
-            }
-            System.out.println("Call in Peer.getBroadcast : " + iAddr);
-            return iAddr;
-
-        } catch (SocketException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-    
 }
