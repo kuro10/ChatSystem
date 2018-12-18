@@ -239,8 +239,10 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
 //      MessageLog l1 = new MessageLog(sourceport, 2222);
 //      MessageLog l2 = new MessageLog(sourceport, 3333);
       if (history.existHistory(l)) {
+          chatBox.setText("");
           l = history.getMessageLog(target); 
           chatBox.append(l.toString());
+          chatBox.append("------Old messages------");
       }
       else {
           history.addHistory(l);
@@ -385,5 +387,6 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
     @Override
     public void write(String s) {
         chatBox.append(s + System.lineSeparator());
+        l.addMessage(s);
     }
 }
