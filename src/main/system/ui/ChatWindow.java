@@ -242,7 +242,7 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
           chatBox.setText("");
           l = history.getMessageLog(target); 
           chatBox.append(l.toString());
-          chatBox.append("------Old messages------");
+          chatBox.append("------Old messages------\n");
       }
       else {
           history.addHistory(l);

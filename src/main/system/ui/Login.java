@@ -203,29 +203,29 @@ public class Login extends javax.swing.JFrame {
 
     private void portFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_portFieldKeyPressed
         // TODO add your handling code here:
-        if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            try {
-                Peer peer = new Peer(nicknameField.getText(), hostField.getText(), Integer.parseInt(portField.getText()));
-                this.node =  new Node(peer);
-
-                ChatWindow chatWindow = new ChatWindow(node);
-                chatWindow.display();
-
-                this.setVisible(false);
-                setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-                this.dispose();
-
-                // This thread is used to receive message
-                if (listenTCP != null && runnableTCP != null ){
-                    runnableTCP.terminate();
-                    listenTCP.join();
-                    //System.out.println(listenTCP.getState());
-                }
-
-                runnableTCP = new TCPListenerHandler(this.node,chatWindow); 
-                listenTCP = new Thread(runnableTCP);  
-                listenTCP.start();
-                // This message is used to reveice le broadcast par UDP
+//        if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+//            try {
+//                Peer peer = new Peer(nicknameField.getText(), hostField.getText(), Integer.parseInt(portField.getText()));
+//                this.node =  new Node(peer);
+//
+//                ChatWindow chatWindow = new ChatWindow(node);
+//                chatWindow.display();
+//
+//                this.setVisible(false);
+//                setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+//                this.dispose();
+//
+//                // This thread is used to receive message
+//                if (listenTCP != null && runnableTCP != null ){
+//                    runnableTCP.terminate();
+//                    listenTCP.join();
+//                    //System.out.println(listenTCP.getState());
+//                }
+//
+//                runnableTCP = new TCPListenerHandler(this.node,chatWindow); 
+//                listenTCP = new Thread(runnableTCP);  
+//                listenTCP.start();
+//                 //This message is used to reveice le broadcast par UDP
 //                if (listenUDP != null && runnableUDP != null ){
 //                    runnableUDP.terminate();
 //                    listenUDP.join();
@@ -236,15 +236,15 @@ public class Login extends javax.swing.JFrame {
 //                listenUDP = new Thread(runnableUDP);  
 //                listenUDP.start();
 
-                // Send a broadcast when log in
-                new UDPSenderService().sendBroadcast(this.node);
+//                // Send a broadcast when log in
+//                new UDPSenderService().sendBroadcast(this.node);
 
-            }catch (UnknownHostException ex) {
-                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException | InterruptedException ex) {
-                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+//            }catch (UnknownHostException ex) {
+//                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+//            } catch (IOException | InterruptedException ex) {
+//                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
     }//GEN-LAST:event_portFieldKeyPressed
 
     /**
