@@ -10,6 +10,9 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import main.system.connection.service.UDPSenderService;
 import main.system.model.Node;
 import main.system.model.Peer;
 import main.system.ui.WritableUI;
@@ -49,18 +52,22 @@ public class UDPListenerHandler implements Runnable {
         
     @Override
     public void run() {
-        try {
+        try {     
             while(running){
                 System.out.print(node.getPeer().getPseudonyme() + " is listening by UDP at port " + node.getPeer().getPort() + "...");
                 this.dgramSocket.receive(this.inPacket);
                 System.out.println("CALL IN UDP Listener handler run" );
+                String msg = new String(inPacket.getData(),0,inPacket.getLength());
                 String host = inPacket.getAddress().getHostAddress();
-                int port = inPacket.getPort();
-                System.out.println("Client is at " + host + ":" + port);
-                ui.write(new String(inPacket.getData(),0,inPacket.getLength()));
+                //ui.write(msg);
+                System.out.println(host + "has sent a " + msg);
+                new UDPSenderService().sendMessageTo(host,Peer.PORT_UDP,"OK.");
             }
+            
         } catch (IOException e){
             e.printStackTrace();
+        } catch (Exception ex) {
+            Logger.getLogger(UDPListenerHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

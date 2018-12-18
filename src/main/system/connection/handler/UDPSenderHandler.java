@@ -43,9 +43,10 @@ public class UDPSenderHandler implements Runnable{
     }
 
     public UDPSenderHandler(Node node) throws UnknownHostException {
-        this.message = node.getPeer().getHost() + " has sent a broadcast.";
+        
+        this.message = "broadcast";
         outPacket = new DatagramPacket(this.message.getBytes(),this.message.length());
-        outPacket.setAddress(InetAddress.getByName("255.255.255.255"));
+        outPacket.setAddress(node.getPeer().getBroadcast());
         outPacket.setPort(Peer.PORT_UDP);
     }
     

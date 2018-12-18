@@ -26,7 +26,8 @@ import main.system.connection.service.UDPSenderService;
 public class Login extends javax.swing.JFrame {
     
     private Node node;
-    static Thread listen = null;
+    static Thread listenTCP = null;
+    static Thread listenUDP = null;
     static TCPListenerHandler runnableTCP = null;    
     static UDPListenerHandler runnableUDP = null;
     /**
@@ -169,29 +170,29 @@ public class Login extends javax.swing.JFrame {
             setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             this.dispose();
             
-//            if (listen != null && runnableTCP != null ){
-//                runnableTCP.terminate();
-//                listen.join();
-//                System.out.println(listen.getState());
-//            }
-// 
-//            runnableTCP = new TCPListenerHandler(this.node,chatWindow); 
-//            listen = new Thread(runnableTCP);  
+            if (listenTCP != null && runnableTCP != null ){
+                runnableTCP.terminate();
+                listenTCP.join();
+                //System.out.println(listenTCP.getState());
+            }
+ 
+            runnableTCP = new TCPListenerHandler(this.node,chatWindow); 
+            listenTCP = new Thread(runnableTCP);  
             
-            if (listen != null && runnableUDP != null ){
+            if (listenUDP != null && runnableUDP != null ){
                 runnableUDP.terminate();
-                listen.join();
-                //System.out.println(listen.getState());
+                listenUDP.join();
+                //System.out.println(listenUDP.getState());
             }
  
             runnableUDP = new UDPListenerHandler(this.node,chatWindow); 
-            listen = new Thread(runnableUDP);  
+            listenUDP = new Thread(runnableUDP);  
             
-            
-            listen.start();
+            listenTCP.start();
+            listenUDP.start();
             //System.out.println(listen.getState());
             
-            //new UDPSenderService().sendBroadcast(this.node);
+            new UDPSenderService().sendBroadcast(this.node);
             
         } catch (UnknownHostException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
@@ -214,26 +215,28 @@ public class Login extends javax.swing.JFrame {
                 setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
                 this.dispose();
                            
-//            if (listen != null && runnableTCP != null ){
-//                runnableTCP.terminate();
-//                listen.join();
-//                System.out.println(listen.getState());
-//            }
-// 
-//            runnableTCP = new TCPListenerHandler(this.node,chatWindow); 
-//            listen = new Thread(runnableTCP);  
+            if (listenTCP != null && runnableTCP != null ){
+                runnableTCP.terminate();
+                listenTCP.join();
+                //System.out.println(listenTCP.getState());
+            }
+ 
+            runnableTCP = new TCPListenerHandler(this.node,chatWindow); 
+            listenTCP = new Thread(runnableTCP);  
             
-                if (listen != null && runnableUDP != null ){
-                    runnableUDP.terminate();
-                    listen.join();
-                    //System.out.println(listen.getState());
-                }
-
-                runnableUDP = new UDPListenerHandler(this.node,chatWindow); 
-                listen = new Thread(runnableUDP);  
-
-                listen.start();
-                //System.out.println(listen.getState());
+            if (listenUDP != null && runnableUDP != null ){
+                runnableUDP.terminate();
+                listenUDP.join();
+                //System.out.println(listenUDP.getState());
+            }
+ 
+            runnableUDP = new UDPListenerHandler(this.node,chatWindow); 
+            listenUDP = new Thread(runnableUDP);  
+            
+            listenTCP.start();
+            listenUDP.start();
+                
+            new UDPSenderService().sendBroadcast(node);
 
             }catch (UnknownHostException ex) {
                 Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);

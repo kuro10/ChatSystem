@@ -1,6 +1,11 @@
 package main.system.model;
 
+import java.net.InetAddress;
+import java.net.InterfaceAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.List;
 
 public class Peer {
 	
@@ -52,6 +57,29 @@ public class Peer {
 
     public String toString(){
         return this.pseudonyme + " ("+ this.host+ " : "+ this.port+ ")";
+    }
+    
+    public InetAddress getBroadcast() throws UnknownHostException {
+
+        InetAddress myIpAddress = InetAddress.getByName(this.host);
+        NetworkInterface temp;
+        InetAddress iAddr = null;
+        try {
+            temp = NetworkInterface.getByInetAddress(myIpAddress);
+            List<InterfaceAddress> addresses = temp.getInterfaceAddresses();
+
+            for (InterfaceAddress inetAddress : addresses) {
+                iAddr = inetAddress.getBroadcast();
+            }
+            System.out.println("iAddr=" + iAddr);
+            return iAddr;
+
+        } catch (SocketException e) {
+
+            e.printStackTrace();
+            System.out.println("getBroadcast" + e.getMessage());
+        }
+        return null;
     }
     
 }
