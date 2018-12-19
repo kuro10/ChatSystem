@@ -67,6 +67,7 @@ public class UDPListenerHandler implements Runnable {
                     System.out.println(host + " sends a " + msg);
                     new UDPSenderService().sendMessageTo(host,Peer.PORT_UDP,this.node.getPeer().getPseudonyme()+":OK");
                     this.node.updatePeersList(new Peer(pseudo,host));
+
                 }
                 
                 if (msg.equals("OK")){

@@ -158,7 +158,7 @@ public class Home extends javax.swing.JFrame {
         for(Peer p : node.getOnlinePeers()){
             listFriendsOnlineModel.addElement(p.getPseudonyme()+ " : "+ p.getHost());
         }
-        
+
     }//GEN-LAST:event_friendsListMouseEntered
 
     

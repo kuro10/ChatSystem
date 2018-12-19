@@ -55,6 +55,7 @@ public class Node {
 
         for (Peer peerInList : onlinePeers){
             if (peerInList.getHost().equals(peer1.getHost())){
+                System.out.println("Le peer est deja dans la liste");
                 if (peerInList.getPseudonyme().equals(peer1.getPseudonyme())) {
                     return;
                 }
@@ -64,6 +65,7 @@ public class Node {
                 }
             }
         }
+        System.out.println("New Peer: Host>"+peer1.getHost()+" Pseudo>"+peer1.getPseudonyme());
         this.addPeer(peer1);
     }
     
