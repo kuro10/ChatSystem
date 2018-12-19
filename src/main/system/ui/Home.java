@@ -34,7 +34,7 @@ public class Home extends javax.swing.JFrame {
         this.listFriendsOnlineModel = new DefaultListModel<>();
         //listFriendsOnlineModel.addElement("User");
         for(Peer p : node.getOnlinePeers()){
-            listFriendsOnlineModel.addElement(p.getPseudonyme()+ " : "+ p.getHost());
+            listFriendsOnlineModel.addElement(p.getPseudonyme()+ ":"+ p.getHost());
         }
         initComponents();
         this.nicknameLabel.setText("Your nickname : " + node.getPeer().getPseudonyme());
@@ -70,6 +70,9 @@ public class Home extends javax.swing.JFrame {
         friendsList.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 friendsListMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                friendsListMouseEntered(evt);
             }
         });
         jScrollPane1.setViewportView(friendsList);
@@ -123,11 +126,13 @@ public class Home extends javax.swing.JFrame {
             int index = friendsList.getSelectedIndex();
             String friend = friendsList.getSelectedValue();
             System.out.println(index + ":" + friend);
+            String seg[] = friend.split(":");
             
-            // TODO : find a peer/node when we know his nickname...
-
+            
+            // TODO : find a peer/node when we know his nickname..
             try {
-                ChatWindow chatWindow = new ChatWindow(node);
+                Node client = new Node(new Peer(seg[0],seg[1]));
+                ChatWindow chatWindow = new ChatWindow(node,client);
                 chatWindow.display();
             } catch (IOException ex) {
                 Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
@@ -146,6 +151,15 @@ public class Home extends javax.swing.JFrame {
         loginWindow.setTitle("You have disconnected.");
         loginWindow.display();   
     }//GEN-LAST:event_logOutButtonActionPerformed
+
+    private void friendsListMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_friendsListMouseEntered
+        // TODO add your handling code here:
+        listFriendsOnlineModel.removeAllElements();
+        for(Peer p : node.getOnlinePeers()){
+            listFriendsOnlineModel.addElement(p.getPseudonyme()+ " : "+ p.getHost());
+        }
+        
+    }//GEN-LAST:event_friendsListMouseEntered
 
     
 //    /**
