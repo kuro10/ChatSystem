@@ -55,6 +55,7 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
         this.portLabel.setText("Port : " + node.getPeer().getPort());
         sourceport = node.getPeer().getPort();
         this.clientLabel.setText("To : " + this.client.getPeer().getPseudonyme() + " at " + this.client.getPeer().getHost() );
+        this.l = new MessageLog(node.getPeer(), client.getPeer());
     }
     
     public String getPseudo() {return this.node.getPeer().getPseudonyme();} 
@@ -425,7 +426,6 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
 
     @Override
     public void write(String s) {
-
         String msg = Emoji.replaceInText(s);
         chatBox.append(msg + System.lineSeparator());
         l.addMessage(msg);

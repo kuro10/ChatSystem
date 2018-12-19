@@ -140,7 +140,7 @@ public class Home extends javax.swing.JFrame {
                 ChatWindow chatWindow = new ChatWindow(node,client);
                 chatWindow.display();
                 
-                           // This thread is used to receive message sent by TCP
+            // This thread is used to receive message sent by TCP
             if (listenTCP != null && runnableTCP != null ){
                 runnableTCP.terminate();
                 listenTCP.join();
