@@ -157,7 +157,7 @@ public class Home extends javax.swing.JFrame {
                     //historyBox.setText("");
                     //historyBox.append(history.toString());
                 }
-                ChatWindow chatWindow = new ChatWindow(node,client);
+                ChatWindow chatWindow = new ChatWindow(node,client,l);
                 chatWindow.display();
                 runnableTCP = new TCPListenerHandler(this.node,chatWindow); 
                 listenTCP = new Thread(runnableTCP);  

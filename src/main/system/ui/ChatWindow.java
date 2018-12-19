@@ -46,9 +46,6 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
     }
 
     ChatWindow(Node node, Node client) {
-        if (l != null) {
-            chatBox.setText(l.toString());
-        }
         initComponents();
         this.node = node;
         this.client = client;
@@ -445,7 +442,6 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
     public void write(String s) {
         String msg = Emoji.replaceInText(s);
         chatBox.append(msg + System.lineSeparator());
-        l.addMessage(msg);
-
+        this.l.addMessage(msg);
     }
 }
