@@ -57,19 +57,21 @@ public class UDPListenerHandler implements Runnable {
                 this.dgramSocket.receive(this.inPacket);
                 System.out.println("CALL IN UDP Listener handler" );
                 String msg = new String(inPacket.getData(),0,inPacket.getLength());
+                String seg[] = msg.split(":");
+                String pseudo = seg[0];
+                msg = seg[1];
                 String host = inPacket.getAddress().getHostAddress();
                 //ui.write(msg);
                 
                 if (msg.equals("broadcast") && !host.equals(node.getPeer().getHost())){
                     System.out.println(host + " sends a " + msg);
-                    new UDPSenderService().sendMessageTo(host,Peer.PORT_UDP,"OK");
-                    this.node.addPeer(new Peer(host));
+                    new UDPSenderService().sendMessageTo(host,Peer.PORT_UDP,this.node.getPeer().getPseudonyme()+":OK");
+                    this.node.updatePeersList(new Peer(pseudo, host));
                 }
                 
                 if (msg.equals("OK")){
                     System.out.println(host + " responds " + msg);
-                    new UDPSenderService().sendMessageTo(host,Peer.PORT_UDP,"OK");
-                    this.node.addPeer(new Peer(host));
+                    this.node.updatePeersList(new Peer(pseudo,host));
                 }
                
                 

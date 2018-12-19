@@ -71,6 +71,9 @@ public class Home extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 friendsListMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                friendsListMouseEntered(evt);
+            }
         });
         jScrollPane1.setViewportView(friendsList);
 
@@ -146,6 +149,14 @@ public class Home extends javax.swing.JFrame {
         loginWindow.setTitle("You have disconnected.");
         loginWindow.display();   
     }//GEN-LAST:event_logOutButtonActionPerformed
+
+    private void friendsListMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_friendsListMouseEntered
+        // TODO add your handling code here:
+        listFriendsOnlineModel.removeAllElements();
+        for(Peer p : node.getOnlinePeers()){
+            listFriendsOnlineModel.addElement(p.getPseudonyme()+ " : "+ p.getHost());
+        }
+    }//GEN-LAST:event_friendsListMouseEntered
 
     
 //    /**
