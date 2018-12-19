@@ -11,8 +11,10 @@ import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.ListModel;
 import javax.swing.WindowConstants;
+import main.system.connection.handler.TCPListenerHandler;
 import main.system.model.Node;
 import main.system.model.Peer;
+import static main.system.ui.Login.listenTCP;
 
 /**
  *
@@ -22,6 +24,8 @@ public class Home extends javax.swing.JFrame {
 
     private Node node;
     DefaultListModel<String> listFriendsOnlineModel;
+    static Thread listenTCP = null;
+    static TCPListenerHandler runnableTCP = null;   
     /**
      * Creates new form Home
      */
@@ -34,13 +38,14 @@ public class Home extends javax.swing.JFrame {
         this.listFriendsOnlineModel = new DefaultListModel<>();
         //listFriendsOnlineModel.addElement("User");
         for(Peer p : node.getOnlinePeers()){
-            listFriendsOnlineModel.addElement(p.getPseudonyme()+ ":"+ p.getHost());
+            listFriendsOnlineModel.addElement(p.getPseudonyme()+ ":"+ p.getHost()+":"+p.getPort());
         }
         initComponents();
         this.nicknameLabel.setText("Your nickname : " + node.getPeer().getPseudonyme());
     }
 
     public void display(){
+        
         this.setLocationRelativeTo(null); 
         this.setVisible(true);
     }
@@ -131,10 +136,24 @@ public class Home extends javax.swing.JFrame {
             
             // TODO : find a peer/node when we know his nickname..
             try {
-                Node client = new Node(new Peer(seg[0],seg[1]));
+                Node client = new Node(new Peer(seg[0],seg[1],Integer.parseInt(seg[2])));
                 ChatWindow chatWindow = new ChatWindow(node,client);
                 chatWindow.display();
+                
+                           // This thread is used to receive message sent by TCP
+            if (listenTCP != null && runnableTCP != null ){
+                runnableTCP.terminate();
+                listenTCP.join();
+                //System.out.println(listenTCP.getState());
+            }
+ 
+            runnableTCP = new TCPListenerHandler(this.node,chatWindow); 
+            listenTCP = new Thread(runnableTCP);  
+            listenTCP.start();
+                
             } catch (IOException ex) {
+                Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InterruptedException ex) {
                 Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -156,9 +175,9 @@ public class Home extends javax.swing.JFrame {
         // TODO add your handling code here:
         listFriendsOnlineModel.removeAllElements();
         for(Peer p : node.getOnlinePeers()){
-            listFriendsOnlineModel.addElement(p.getPseudonyme()+ " : "+ p.getHost());
+            listFriendsOnlineModel.addElement(p.getPseudonyme()+ ":"+ p.getHost()+":"+p.getPort());
         }
-
+        
     }//GEN-LAST:event_friendsListMouseEntered
 
     

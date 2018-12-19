@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Peer {
 	
-    public final static int PORT_TCP = 2222;
+    public final static int PORT_TCP = 9999;
     public final static int PORT_UDP = 4444;
 
     private String pseudonyme;

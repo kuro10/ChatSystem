@@ -49,7 +49,7 @@ public class TCPSenderHandler implements Runnable  {
 			out.flush();
 			//System.out.println("Envoie a " + host +"(" + port + "): " + message );
 			// Close the socket
-			//chatSocket.close();
+			chatSocket.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
