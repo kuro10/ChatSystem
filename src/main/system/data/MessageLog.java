@@ -14,27 +14,38 @@ import main.system.model.*;
  */
 public class MessageLog {
     
-    private Peer peer1;
-    private Peer peer2;
-    private int port1;
-    private int port2;
+    //private Peer peer1;
+    private Peer target;
+    //private int port1;
+    private int portTarget;
+    //private String host1;
+    private String hostTarget;
     private ArrayList<String> log;
     private int current_index = 0;
     
-    public MessageLog(Peer p1, Peer p2) {
-        // TODO
-        this.peer1 = p1;
-        this.peer2 = p2;
-        this.port1 = p1.getPort();
-        this.port2 = p2.getPort();
-        this.log = new ArrayList<>(1000);
-    }
+//    public MessageLog(Peer p1, Peer p2) {
+//        // TODO
+//        this.peer1 = p1;
+//        this.peer2 = p2;
+//        this.port1 = p1.getPort();
+//        this.port2 = p2.getPort();
+//        this.log = new ArrayList<>(1000);
+//    }
     
-    public MessageLog(int port1, int port2) {
-        this.port1 = port1;
-        this.port2 = port2;
-        this.log = new ArrayList<>(100);
-    }
+    public MessageLog(Peer target) {
+        // TODO
+        this.target = target;
+        this.hostTarget = target.getHost();
+        this.portTarget = target.getPort();
+        this.log = new ArrayList<>(1000);
+    }    
+    
+//    public MessageLog(int port1, int port2) {
+//        this.port1 = port1;
+//        this.port2 = port2;
+//        this.log = new ArrayList<>(100);
+//    }
+    
     
     public void addMessage(String message) {
         this.log.add(message);
@@ -45,13 +56,13 @@ public class MessageLog {
         return this.log;
     }
     
-    public int getPort1() {
-        return this.port1;
-    }
-    
-    public int getPort2() {
-        return this.port2;
+    public int getPortTarget() {
+        return this.portTarget;
     } 
+    
+    public String getHostTarget() {
+        return this.hostTarget;
+    }
     
     
     @Override 

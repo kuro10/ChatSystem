@@ -12,6 +12,8 @@ import javax.swing.DefaultListModel;
 import javax.swing.ListModel;
 import javax.swing.WindowConstants;
 import main.system.connection.handler.TCPListenerHandler;
+import main.system.data.ChatHistory;
+import main.system.data.MessageLog;
 import main.system.model.Node;
 import main.system.model.Peer;
 import static main.system.ui.Login.listenTCP;
@@ -25,7 +27,8 @@ public class Home extends javax.swing.JFrame {
     private Node node;
     DefaultListModel<String> listFriendsOnlineModel;
     static Thread listenTCP = null;
-    static TCPListenerHandler runnableTCP = null;   
+    static TCPListenerHandler runnableTCP = null;
+    public static ChatHistory history = new ChatHistory();
     /**
      * Creates new form Home
      */
@@ -137,19 +140,29 @@ public class Home extends javax.swing.JFrame {
             // TODO : find a peer/node when we know his nickname..
             try {
                 Node client = new Node(new Peer(seg[0],seg[1],Integer.parseInt(seg[2])));
+                
+                // This thread is used to receive message sent by TCP
+                if (listenTCP != null && runnableTCP != null ){
+                    runnableTCP.terminate();
+                    listenTCP.join();
+                    //System.out.println(listenTCP.getState());
+                }
+                MessageLog l = new MessageLog(client.getPeer());
+                if (history.existHistory(l)) {
+                    l = history.getMessageLog(client.getPeer().getHost());
+                }
+                else {
+                    history.addHistory(l);
+                    //chatBox.setText("New chat" + System.lineSeparator());
+                    //historyBox.setText("");
+                    //historyBox.append(history.toString());
+                }
                 ChatWindow chatWindow = new ChatWindow(node,client);
                 chatWindow.display();
-                
-            // This thread is used to receive message sent by TCP
-            if (listenTCP != null && runnableTCP != null ){
-                runnableTCP.terminate();
-                listenTCP.join();
-                //System.out.println(listenTCP.getState());
-            }
- 
-            runnableTCP = new TCPListenerHandler(this.node,chatWindow); 
-            listenTCP = new Thread(runnableTCP);  
-            listenTCP.start();
+                runnableTCP = new TCPListenerHandler(this.node,chatWindow); 
+                listenTCP = new Thread(runnableTCP);  
+
+                listenTCP.start();
                 
             } catch (IOException ex) {
                 Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);

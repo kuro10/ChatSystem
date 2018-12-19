@@ -24,7 +24,6 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
     
     private Node node;
     private Node client;
-    public static ChatHistory history = new ChatHistory();
     private MessageLog l;
     int sourceport;
         
@@ -47,6 +46,9 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
     }
 
     ChatWindow(Node node, Node client) {
+        if (l != null) {
+            chatBox.setText(l.toString());
+        }
         initComponents();
         this.node = node;
         this.client = client;
@@ -55,7 +57,22 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
         this.portLabel.setText("Port : " + node.getPeer().getPort());
         sourceport = node.getPeer().getPort();
         this.clientLabel.setText("To : " + this.client.getPeer().getPseudonyme() + " at " + this.client.getPeer().getHost() );
-        this.l = new MessageLog(node.getPeer(), client.getPeer());
+        //this.l = new MessageLog(node.getPeer(), client.getPeer());
+    }
+
+    ChatWindow(Node node, Node client, MessageLog l) {
+        initComponents();
+        this.l = l;
+        if (this.l != null) {
+            chatBox.setText(this.l.toString());
+        }
+        this.node = node;
+        this.client = client;
+        this.nicknameLabel.setText("Pseudo : " + node.getPeer().getPseudonyme());
+        this.hostLabel.setText("Host : " + node.getPeer().getHost());
+        this.portLabel.setText("Port : " + node.getPeer().getPort());
+        sourceport = node.getPeer().getPort();
+        this.clientLabel.setText("To : " + this.client.getPeer().getPseudonyme() + " at " + this.client.getPeer().getHost() );
     }
     
     public String getPseudo() {return this.node.getPeer().getPseudonyme();} 
@@ -264,24 +281,24 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
     int target;
     String ipDistant;
     private void targetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_targetButtonActionPerformed
-      target = Integer.parseInt(this.targetPort.getText());
-      ipDistant = this.ipDistantField.getText();
-      System.out.println("Target to "+ ipDistant + " : " + target);
-      l = new MessageLog(sourceport, target);
-//      MessageLog l1 = new MessageLog(sourceport, 2222);
-//      MessageLog l2 = new MessageLog(sourceport, 3333);
-      if (history.existHistory(l)) {
-          chatBox.setText("");
-          l = history.getMessageLog(target); 
-          chatBox.append(l.toString());
-          chatBox.append("------Old messages------\n");
-      }
-      else {
-          history.addHistory(l);
-          chatBox.setText("New chat" + System.lineSeparator());
-          historyBox.setText("");
-          historyBox.append(history.toString());
-      }
+//      target = Integer.parseInt(this.targetPort.getText());
+//      ipDistant = this.ipDistantField.getText();
+//      System.out.println("Target to "+ ipDistant + " : " + target);
+//      l = new MessageLog(sourceport, target);
+////      MessageLog l1 = new MessageLog(sourceport, 2222);
+////      MessageLog l2 = new MessageLog(sourceport, 3333);
+//      if (history.existHistory(l)) {
+//          chatBox.setText("");
+//          l = history.getMessageLog(target); 
+//          chatBox.append(l.toString());
+//          chatBox.append("------Old messages------\n");
+//      }
+//      else {
+//          history.addHistory(l);
+//          chatBox.setText("New chat" + System.lineSeparator());
+//          historyBox.setText("");
+//          historyBox.append(history.toString());
+//      }
 
     }//GEN-LAST:event_targetButtonActionPerformed
 

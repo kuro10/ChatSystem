@@ -27,10 +27,21 @@ public class ChatHistory {
         }
     }
     
-    public boolean existHistory(MessageLog l) {
+//    public boolean existHistory(MessageLog l) {
+//        boolean res = false;
+//        for (int i = 0; i < current_index; i++) {
+//            if (this.history.get(i).getPortTarget() == l.getPortTarget()) {
+//                res = true;
+//                break;
+//            }
+//        }
+//        return res;
+//    }
+    
+     public boolean existHistory(MessageLog l) {
         boolean res = false;
         for (int i = 0; i < current_index; i++) {
-            if (this.history.get(i).getPort2() == l.getPort2()) {
+            if (this.history.get(i).getHostTarget().equals(l.getHostTarget())) {
                 res = true;
                 break;
             }
@@ -38,10 +49,21 @@ public class ChatHistory {
         return res;
     }
     
-    public MessageLog getMessageLog(int port2) {
+//    public MessageLog getMessageLog(int target) {
+//        MessageLog res = null;
+//        for (int i = 0; i < current_index; i++) {
+//            if (this.history.get(i).getPortTarget() == target) {
+//                res = this.history.get(i);
+//                break;
+//            }
+//        }
+//        return res;
+//    }
+     
+     public MessageLog getMessageLog(String target) {
         MessageLog res = null;
         for (int i = 0; i < current_index; i++) {
-            if (this.history.get(i).getPort2() == port2) {
+            if (this.history.get(i).getHostTarget().equals(target)) {
                 res = this.history.get(i);
                 break;
             }
@@ -50,14 +72,15 @@ public class ChatHistory {
     }
     
     
-    @Override 
-    public String toString() {
-        String res = "";
-        for (int i = 0; i < current_index; i++) {
-            res = res + "[" + this.history.get(i).getPort1() + " | " + this.history.get(i).getPort2() + "]" + System.lineSeparator();
-        }
-        return res;
-    }
+    
+//    @Override 
+//    public String toString() {
+//        String res = "";
+//        for (int i = 0; i < current_index; i++) {
+//            res = res + "[" + this.history.get(i).getPort1() + " | " + this.history.get(i).getPort2() + "]" + System.lineSeparator();
+//        }
+//        return res;
+//    }
     
     
 //    public boolean existHistory(int port1, int port2) {
@@ -69,17 +92,17 @@ public class ChatHistory {
 //        return found;
 //    }
     
-    public MessageLog getMessageLog(int port1, int port2) {
-        MessageLog res = null;
-        int i = 0;
-        boolean found = false;
-        while (i < this.history.size() && found == false) {
-            if(this.history.get(i).getPort1() == port1 && this.history.get(i).getPort2() == port2) {
-                res = this.history.get(i);
-                found = true;
-            }
-        }
-        return res;
-    }
+//    public MessageLog getMessageLog(int port1, int port2) {
+//        MessageLog res = null;
+//        int i = 0;
+//        boolean found = false;
+//        while (i < this.history.size() && found == false) {
+//            if(this.history.get(i).getPort1() == port1 && this.history.get(i).getPort2() == port2) {
+//                res = this.history.get(i);
+//                found = true;
+//            }
+//        }
+//        return res;
+//    }
     
 }
