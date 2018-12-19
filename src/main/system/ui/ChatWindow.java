@@ -289,7 +289,7 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
         try {
             String msg = "[" + node.getPeer().getPseudonyme() + "] : " + message.getText();
             //new TCPSenderService().sendMessageTo("localhost",target,msg);
-            new TCPSenderService().sendMessageTo(ipDistant,target,msg);
+            new TCPSenderService().sendMessageTo(this.client.getPeer().getHost(),this.client.getPeer().getPort(),msg);
             //new UDPSenderService().sendMessageTo(ipDistant,target,msg);
             this.write(msg);
             message.setText("");
