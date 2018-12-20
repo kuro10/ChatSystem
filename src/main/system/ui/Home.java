@@ -236,13 +236,9 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_friendsListMouseClicked
 
     private void logOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutButtonActionPerformed
-        try {
-            // TODO add your handling code here:
-            // Close the chat window
-            new UDPSenderService().sendDisconnect(this.node);
-        } catch (UnknownHostException ex) {
-            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
-        }
+// TODO add your handling code here:
+        // Close the chat window
+        //new UDPSenderService().sendDisconnect(this.node);
         this.setVisible(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.dispose();
@@ -255,6 +251,7 @@ public class Home extends javax.swing.JFrame {
         // TODO add your handling code here:
         listFriendsOnlineModel.removeAllElements();
         for(Peer p : node.getOnlinePeers()){
+            if (!this.node.getPeer().getPseudonyme().equals(p.getPseudonyme())) 
             listFriendsOnlineModel.addElement(p.getPseudonyme()+ ":"+ p.getHost()+":"+p.getPort());
         }
         
