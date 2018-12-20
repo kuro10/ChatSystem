@@ -69,6 +69,9 @@ public class Node {
                     System.out.println(" Name change "+ peerInList.getPseudonyme()+" > "+peer1.getPseudonyme());
                     peerInList.setPseudonyme(peer1.getPseudonyme());
                 }
+                if (peerInList.getStatusDisconnect() == peer1.getStatusDisconnect()) {
+                    return;
+                }               
                 if (peerInList.getPort()==peer1.getPort()) {
                     return;
                 }

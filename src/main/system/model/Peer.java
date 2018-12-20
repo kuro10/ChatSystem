@@ -15,25 +15,28 @@ public class Peer {
     private String pseudonyme;
     private String host;
     private int port;
-    private boolean disco = false;
+    private boolean disco;
 
     //Constructors
 
     public Peer(String host) throws UnknownHostException{
             this.host = host;
             this.port = PORT_TCP;
+            this.disco = false;
     }
 
     public Peer(String pseudo,String host) throws UnknownHostException{
             this.pseudonyme = pseudo;
             this.host = host;
             this.port = PORT_TCP;
+            this.disco = false;            
     }
 
     public Peer(String pseudonyme, String host, int port) throws UnknownHostException {
         this.pseudonyme = pseudonyme;
         this.host = host;
         this.port = port;
+        this.disco = false;        
     }
 
     public Peer() {

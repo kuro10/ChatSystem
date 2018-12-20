@@ -237,6 +237,7 @@ public class Home extends javax.swing.JFrame {
 
     private void logOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutButtonActionPerformed
         this.node.getPeer().setDisco(true);
+        System.out.println(this.node.getPeer().getStatusDisconnect());
         this.setVisible(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.dispose();
@@ -249,8 +250,10 @@ public class Home extends javax.swing.JFrame {
         // TODO add your handling code here:
         listFriendsOnlineModel.removeAllElements();
         for(Peer p : node.getOnlinePeers()){
-            if (!(this.node.getPeer().getPseudonyme().equals(p.getPseudonyme())) && p.getStatusDisconnect() == false) 
-            listFriendsOnlineModel.addElement(p.getPseudonyme()+ ":"+ p.getHost()+":"+p.getPort());
+            if (!(this.node.getPeer().getPseudonyme().equals(p.getPseudonyme())) && p.getStatusDisconnect() == false){
+                listFriendsOnlineModel.addElement(p.getPseudonyme()+ ":"+ p.getHost()+":"+p.getPort());
+                System.out.println(p.getPseudonyme() + p.getStatusDisconnect());
+            }
         }
         
         
