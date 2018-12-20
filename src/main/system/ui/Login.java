@@ -180,7 +180,7 @@ public class Login extends javax.swing.JFrame {
             this.node =  new Node(peer);
                         
             Home home = new Home(node);
-            //if (home.checkNameUniq()) {
+            if (home.checkNameUniq()) {
                 home.display();
 
                 this.setVisible(false);
@@ -208,21 +208,13 @@ public class Login extends javax.swing.JFrame {
                 runnableUDP = new UDPListenerHandler(this.node); 
                 listenUDP = new Thread(runnableUDP);  
                 listenUDP.start();
-                //This thread is used to reveice le broadcast by UDP
-                if (listenUDP != null && runnableUDP != null ){
-                    runnableUDP.terminate();
-                     listenUDP.join();
-                 }
-                runnableUDP = new UDPListenerHandler(this.node); 
-                listenUDP = new Thread(runnableUDP);  
-                listenUDP.start();
 
                // Send a broadcast when log in
                 new UDPSenderService().sendBroadcast(this.node);
-            //}
-            //else {
-                //this.setTitle("WARNING : This name has been used !");
-            //}
+            }
+            else {
+                this.setTitle("WARNING : This name has been used !");
+            }
             
             
 //                // This thread is used to receive message sent by TCP

@@ -30,11 +30,11 @@ public class ChangeName extends javax.swing.JFrame {
         this.node = node;
     }
 
-    public ChangeName(Node node, ChatWindow ui) {
-        initComponents();
-        this.node = node;
-        this.ui = ui;
-    }
+//    public ChangeName(Node node, ChatWindow ui) {
+//        initComponents();
+//        this.node = node;
+//        this.ui = ui;
+//    }
     
     public ChangeName(Node node, Home home) {
         initComponents();
@@ -126,12 +126,11 @@ public class ChangeName extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void confirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmButtonActionPerformed
-        // TODO add your handling code here:
+        String oldName = this.node.getPeer().getPseudonyme();
         this.node.getPeer().setPseudonyme(nicknameField.getText());
-        //this.ui.setNicknameLabel("Pseudo : " + nicknameField.getText());
-        this.home.setNicknameLabel("Your Nickname : " + nicknameField.getText());
+        this.home.setNicknameLabel("Your nickname : " + nicknameField.getText());
         this.confirm = true;
-        // TODO inform to others users that this node has changed his nickname
+        //TODO Inform other users ?
         this.setVisible(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.dispose();
