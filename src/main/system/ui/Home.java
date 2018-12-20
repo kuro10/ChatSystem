@@ -28,7 +28,7 @@ public class Home extends javax.swing.JFrame {
     DefaultListModel<String> listFriendsOnlineModel;
     static Thread listenTCP = null;
     static TCPListenerHandler runnableTCP = null;
-    public static ChatHistory history = new ChatHistory();
+    public static ChatHistory history ;
     /**
      * Creates new form Home
      */
@@ -38,6 +38,18 @@ public class Home extends javax.swing.JFrame {
     
     public Home(Node node) {
         this.node = node;
+        this.listFriendsOnlineModel = new DefaultListModel<>();
+        //listFriendsOnlineModel.addElement("User");
+        for(Peer p : node.getOnlinePeers()){
+            listFriendsOnlineModel.addElement(p.getPseudonyme()+ ":"+ p.getHost()+":"+p.getPort());
+        }
+        initComponents();
+        this.nicknameLabel.setText("Your nickname : " + node.getPeer().getPseudonyme());
+    }
+
+    Home(Node node, ChatHistory history) {
+        this.node = node;
+        this.history = history;
         this.listFriendsOnlineModel = new DefaultListModel<>();
         //listFriendsOnlineModel.addElement("User");
         for(Peer p : node.getOnlinePeers()){
@@ -195,27 +207,22 @@ public class Home extends javax.swing.JFrame {
             try {
 //                Node client = new Node(new Peer(seg[0],seg[1],Integer.parseInt(seg[2])));
                 Node client = new Node(new Peer(seg[0],seg[1]));
-                // This thread is used to receive message sent by TCP
-                if (listenTCP != null && runnableTCP != null ){
-                    runnableTCP.terminate();
-                    listenTCP.join();
-                    //System.out.println(listenTCP.getState());
-                }
-                MessageLog l = new MessageLog(this.node.getPeer(), client.getPeer());
-                if (history.existHistory(l)) {
-                    l = history.getMessageLog(node.getPeer().getHost(), client.getPeer().getHost());
-                }
-                else {
-                    history.addHistory(l);
-                    //chatBox.setText("New chat" + System.lineSeparator());
-                    historyBox.setText("");
-                    historyBox.append(history.toString());
-                }
+
+                MessageLog l = history.getMessageLog(node.getPeer().getHost(), client.getPeer().getHost());
+//                if (history.existHistory(l)) {
+//                    l = history.getMessageLog(node.getPeer().getHost(), client.getPeer().getHost());
+//                }
+//                else {
+//                    history.addHistory(l);
+//                    //chatBox.setText("New chat" + System.lineSeparator());
+//                    historyBox.setText("");
+//                    historyBox.append(history.toString());
+//                }
                 ChatWindow chatWindow = new ChatWindow(node,client,l);
                 chatWindow.display();
                 
                 
-            } catch (IOException | InterruptedException ex) {
+            } catch (IOException ex) {
                 Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
+import main.system.data.ChatHistory;
+import main.system.data.MessageLog;
 import main.system.model.Peer;
 import main.system.ui.ChatWindow;
 
@@ -19,11 +21,20 @@ public class TCPListenerHandler implements Runnable {
 	private WritableUI ui=null;
         private volatile boolean running = true;
         static int num = 1;
-
+        public static ChatHistory history;
         
         // this handler is used at a node of the network
 	public TCPListenerHandler (Node node) throws IOException {	
             this.node = node;
+            //this.serverSocket = new ServerSocket(node.getPeer().getPort());
+            this.serverSocket = new ServerSocket(Peer.PORT_TCP);
+            this.node.getPeer().setPort(this.serverSocket.getLocalPort());
+	}
+        
+        // this handler is used at a node of the network
+	public TCPListenerHandler (Node node, ChatHistory history) throws IOException {	
+            this.node = node;
+            this.history = history;
             //this.serverSocket = new ServerSocket(node.getPeer().getPort());
             this.serverSocket = new ServerSocket(Peer.PORT_TCP);
             this.node.getPeer().setPort(this.serverSocket.getLocalPort());
@@ -59,7 +70,18 @@ public class TCPListenerHandler implements Runnable {
                         
                         // Create a chat window between this node and client
                         Node client = new Node (new Peer(chatSocket.getInetAddress().getHostAddress()));
-                        ChatWindow chatWindow = new ChatWindow(this.node, client);
+//                        ChatWindow chatWindow = new ChatWindow(this.node, client);
+                        MessageLog l = new MessageLog(this.node.getPeer(), client.getPeer());
+                        if (history.existHistory(l)) {
+                            l = history.getMessageLog(node.getPeer().getHost(), client.getPeer().getHost());
+                        }
+                        else {
+                            history.addHistory(l);
+                            //chatBox.setText("New chat" + System.lineSeparator());
+//                            historyBox.setText("");
+//                            historyBox.append(history.toString());
+                        }
+                        
 
                         // Write the message on this chat window
                         BufferedReader in = new BufferedReader(new InputStreamReader(chatSocket.getInputStream()));
@@ -68,7 +90,8 @@ public class TCPListenerHandler implements Runnable {
                         String msgDistant = in.readLine();
 
                         if(msgDistant != null) {
-                            chatWindow.write(msgDistant);
+//                            chatWindow.write(msgDistant);
+                            l.addMessage(msgDistant);
                             System.out.println(msgDistant);
                         }
                         

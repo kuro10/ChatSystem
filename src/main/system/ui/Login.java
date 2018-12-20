@@ -16,6 +16,7 @@ import javax.swing.WindowConstants;
 import main.system.connection.handler.TCPListenerHandler;
 import main.system.connection.handler.UDPListenerHandler;
 import main.system.connection.service.UDPSenderService;
+import main.system.data.ChatHistory;
 
 
 
@@ -30,6 +31,7 @@ public class Login extends javax.swing.JFrame {
     static Thread listenUDP = null;
     static TCPListenerHandler runnableTCP = null;    
     static UDPListenerHandler runnableUDP = null;
+    public static ChatHistory history = new ChatHistory();
     /**
      * Creates new form Login
      */
@@ -188,7 +190,7 @@ public class Login extends javax.swing.JFrame {
                     //System.out.println(listenTCP.getState());
                 }
 
-                runnableTCP = new TCPListenerHandler(this.node); 
+                runnableTCP = new TCPListenerHandler(this.node, this.history); 
                 listenTCP = new Thread(runnableTCP);  
                 listenTCP.start();
 
@@ -203,7 +205,7 @@ public class Login extends javax.swing.JFrame {
                // Send a broadcast when log in
                 new UDPSenderService().sendBroadcast(this.node);
             
-            Home home = new Home(node);
+            Home home = new Home(node,this.history);
             if (home.checkNameUniq()) {
                 home.display();
                 this.setVisible(false);
