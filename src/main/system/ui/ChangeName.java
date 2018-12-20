@@ -54,7 +54,7 @@ public class ChangeName extends javax.swing.JFrame {
         Boolean res = true;
         for (Peer p : this.home.getNode().getOnlinePeers()) {
             System.out.println(p.getPseudonyme());
-            if (this.node.getPeer().getPseudonyme().equals(p.getPseudonyme())) {
+            if (p.getPseudonyme().equals(name)) {
                 res = false;
             }
         }
@@ -130,7 +130,7 @@ public class ChangeName extends javax.swing.JFrame {
                     .addComponent(confirmButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(warningLabel)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         pack();

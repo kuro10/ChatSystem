@@ -37,4 +37,9 @@ public class UDPSenderService implements SenderService {
         Thread t = new Thread (new UDPSenderHandler(node, "disconnect"));
         t.start();
     }
+    
+    public void sendRename(Node node) throws UnknownHostException{
+        Thread t = new Thread (new UDPSenderHandler(node, "rename"));
+        t.start();
+    }    
 }
