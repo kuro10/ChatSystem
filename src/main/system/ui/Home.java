@@ -47,7 +47,7 @@ public class Home extends javax.swing.JFrame {
         this.nicknameLabel.setText("Your nickname : " + node.getPeer().getPseudonyme());
     }
 
-    Home(Node node, ChatHistory history) {
+    public Home(Node node, ChatHistory history) {
         this.node = node;
         this.history = history;
         this.listFriendsOnlineModel = new DefaultListModel<>();
@@ -78,9 +78,9 @@ public class Home extends javax.swing.JFrame {
         return res;
     }
     
-//    public updatefrList() {
-//        
-//    }
+    public void removeFromList(Peer p) {
+        this.listFriendsOnlineModel.removeElement(p.getPseudonyme()+ ":"+ p.getHost()+":"+p.getPort());
+    }
 
     public void display(){
         
