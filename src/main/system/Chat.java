@@ -6,10 +6,13 @@
 package main.system;
 
 import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.InterfaceAddress;
+import java.net.SocketException;
 import main.system.model.Node;
 import main.system.model.Peer;
 import main.system.ui.Login;
-
+import java.util.Enumeration;
 /**
  *
  */
@@ -21,7 +24,7 @@ public class Chat {
      */
     public static void main(String[] args) throws Exception {
 
-        String ip = InetAddress.getLocalHost().getHostAddress();
+        String ip = getLocalAddress().getHostAddress();
         //String ip = this.getAddressIP();
         Node node = new Node(new Peer(ip));
         
@@ -30,6 +33,20 @@ public class Chat {
         
         //ChatWindow chatWindow = new ChatWindow();
         //chatWindow.display();
+    }
+    
+    private static InetAddress getLocalAddress(){
+        try {
+            Enumeration<NetworkInterface> b = NetworkInterface.getNetworkInterfaces();
+            while( b.hasMoreElements()){
+                for ( InterfaceAddress f : b.nextElement().getInterfaceAddresses())
+                    if ( f.getAddress().isSiteLocalAddress())
+                        return f.getAddress();
+            }
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
     
     public static String getAddressIP() {

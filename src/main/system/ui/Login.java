@@ -86,6 +86,7 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
+        hostField.setEditable(false);
         hostField.setText("localhost");
 
         portField.addKeyListener(new java.awt.event.KeyAdapter() {
