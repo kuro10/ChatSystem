@@ -213,8 +213,7 @@ public class Login extends javax.swing.JFrame {
                 this.dispose();
             }
             else {
-                home.dispose();
-                //new UDPSenderService().sendDisconnect(this.node);
+                new UDPSenderService().sendDisconnect(this.node);
                 this.setTitle("WARNING : This name has been used !");
             }
             

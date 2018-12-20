@@ -241,7 +241,6 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_friendsListMouseClicked
 
     private void logOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutButtonActionPerformed
-        this.node.getPeer().setDisco(true);
         try {
             new UDPSenderService().sendDisconnect(this.node);
         } catch (UnknownHostException ex) {
@@ -250,7 +249,7 @@ public class Home extends javax.swing.JFrame {
         System.out.println(this.node.getPeer().getStatusDisconnect());
         this.setVisible(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        //this.dispose();
+        this.dispose();
         Login loginWindow = new Login(node);
         loginWindow.setTitle("You have disconnected.");
         loginWindow.display();   
