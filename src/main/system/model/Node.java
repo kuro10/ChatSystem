@@ -80,8 +80,9 @@ public class Node {
                     return;
                 }
                 else {
-                    System.out.println(" Status change "+ peerInList.getStatusDisconnect()+" > true");
-                    peerInList.setDisco(true);                    
+                    System.out.println(" Status change ");
+                    peerInList.setDisco(!peerInList.getStatusDisconnect());
+                    return;
                 }
             }
         }
