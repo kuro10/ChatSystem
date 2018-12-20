@@ -178,14 +178,6 @@ public class Login extends javax.swing.JFrame {
             //Peer peer = new Peer(nicknameField.getText(), hostField.getText(), Integer.parseInt(portField.getText()));
             Peer peer = new Peer(nicknameField.getText(), hostField.getText()); // port = portTCP = 9999
             this.node =  new Node(peer);
-                        
-            Home home = new Home(node);
-            if (home.checkNameUniq()) {
-                home.display();
-
-                this.setVisible(false);
-                setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-                this.dispose();
 
     //            ChatWindow chatWindow = new ChatWindow(node);
 
@@ -210,6 +202,13 @@ public class Login extends javax.swing.JFrame {
                 listenUDP.start();
                // Send a broadcast when log in
                 new UDPSenderService().sendBroadcast(this.node);
+            
+            Home home = new Home(node);
+            if (home.checkNameUniq()) {
+                home.display();
+                this.setVisible(false);
+                setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+                this.dispose();
             }
             else {
                 this.setTitle("WARNING : This name has been used !");
