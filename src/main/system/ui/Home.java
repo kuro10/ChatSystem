@@ -61,7 +61,6 @@ public class Home extends javax.swing.JFrame {
             System.out.println(p.getPseudonyme());
             if (this.node.getPeer().getPseudonyme().equals(p.getPseudonyme())) {
                 res = false;
-                break;
             }
         }
         return res;
