@@ -59,14 +59,14 @@ public class Node {
                 if (peerInList.getPseudonyme().equals(peer1.getPseudonyme())) {
                 }
                 else{
-                    System.out.println(" Name change > "+peer1.getPseudonyme());
+                    System.out.println(" Name change "+ peerInList.getPseudonyme()+" > "+peer1.getPseudonyme());
                     peerInList.setPseudonyme(peer1.getPseudonyme());
                 }
                 if (peerInList.getPort()==peer1.getPort()) {
                     return;
                 }
                 else{
-                    System.out.println(" Port change > "+peer1.getPort());
+                    System.out.println(" Port change "+ peerInList.getPort()+" > "+peer1.getPort());
                     peerInList.setPort(peer1.getPort());
                     return;
                 }
