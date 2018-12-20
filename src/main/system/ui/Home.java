@@ -65,6 +65,10 @@ public class Home extends javax.swing.JFrame {
         }
         return res;
     }
+    
+//    public updatefrList() {
+//        
+//    }
 
     public void display(){
         
