@@ -70,8 +70,11 @@ public class Node {
                     peerInList.setPseudonyme(peer1.getPseudonyme());
                 }
                 if (peerInList.getStatusDisconnect() == peer1.getStatusDisconnect()) {
-                    return;
-                }               
+                }
+                else {
+                    System.out.println(" Status change "+ peerInList.getStatusDisconnect()+" > "+peer1.getStatusDisconnect());
+                    peerInList.setDisco(peer1.getStatusDisconnect());                    
+                }
                 if (peerInList.getPort()==peer1.getPort()) {
                     return;
                 }
