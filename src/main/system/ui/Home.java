@@ -6,12 +6,14 @@
 package main.system.ui;
 
 import java.io.IOException;
+import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.ListModel;
 import javax.swing.WindowConstants;
 import main.system.connection.handler.TCPListenerHandler;
+import main.system.connection.service.UDPSenderService;
 import main.system.data.ChatHistory;
 import main.system.data.MessageLog;
 import main.system.model.Node;
@@ -234,8 +236,13 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_friendsListMouseClicked
 
     private void logOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutButtonActionPerformed
-        // TODO add your handling code here:
-        // Close the chat window
+        try {
+            // TODO add your handling code here:
+            // Close the chat window
+            new UDPSenderService().sendDisconnect(this.node);
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.setVisible(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.dispose();

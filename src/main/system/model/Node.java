@@ -43,9 +43,11 @@ public class Node {
     }
     
     public void removePeer (Peer peer) {
-        for (Peer p : this.onlinePeers) {
-            if (p.getHost().equals(peer.getHost()) && p.getPort() == peer.getPort() && p.getPseudonyme().equals(peer.getPseudonyme())) {
-                this.onlinePeers.remove(p);
+        if (this.onlinePeers != null) {
+            for (Peer p : this.onlinePeers) {
+                if (p.getHost().equals(peer.getHost()) && p.getPort() == peer.getPort() && p.getPseudonyme().equals(peer.getPseudonyme())) {
+                    this.onlinePeers.remove(p);
+                }
             }
         }
         //this.onlinePeers.remove(peer);
