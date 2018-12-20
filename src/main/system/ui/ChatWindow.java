@@ -278,8 +278,11 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
             new TCPSenderService().sendMessageTo(this.client.getPeer().getHost(),Peer.PORT_TCP,msg);
 //            System.out.println("Client port : " + this.client.getPeer().getPort());
             //new UDPSenderService().sendMessageTo(ipDistant,target,msg);
-            this.write(msg);
-            
+//            this.write(msg);
+            this.setVisible(false);
+            ChatWindow chatWindow = new ChatWindow(node,client,l);
+            chatWindow.write(msg);
+            chatWindow.display();
         } catch (Exception ex) {
             Logger.getLogger(ChatWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
