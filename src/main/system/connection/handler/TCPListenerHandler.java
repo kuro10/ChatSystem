@@ -22,7 +22,9 @@ public class TCPListenerHandler implements Runnable {
 	public TCPListenerHandler (Node node, WritableUI ui) throws IOException {	
             this.node = node;
             this.ui = ui;
-            this.serverSocket = new ServerSocket(node.getPeer().getPort());
+            //this.serverSocket = new ServerSocket(node.getPeer().getPort());
+            this.serverSocket = new ServerSocket(0);
+            this.node.getPeer().setPort(this.serverSocket.getLocalPort());
 	}
         
         
@@ -37,6 +39,7 @@ public class TCPListenerHandler implements Runnable {
                 try {
                     while(running) {
                         System.out.println(node.getPeer().getPseudonyme() + " is listening by TCP at port " + node.getPeer().getPort() + "...");
+                        //System.out.println(node.getPeer().getPseudonyme() + " is listening by TCP at port " + this.serverSocket.getLocalPort() + "...");
                         this.chatSocket = this.serverSocket.accept();
                         BufferedReader in = new BufferedReader(new InputStreamReader(chatSocket.getInputStream()));
 
