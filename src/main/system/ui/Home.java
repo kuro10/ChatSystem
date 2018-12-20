@@ -30,7 +30,7 @@ public class Home extends javax.swing.JFrame {
     DefaultListModel<String> listFriendsOnlineModel;
     static Thread listenTCP = null;
     static TCPListenerHandler runnableTCP = null;
-    public static ChatHistory history ;
+    public static ChatHistory history = new ChatHistory();
     /**
      * Creates new form Home
      */
@@ -263,15 +263,15 @@ public class Home extends javax.swing.JFrame {
             if (!(this.node.getPeer().getPseudonyme().equals(p.getPseudonyme())) && p.getStatusDisconnect() == false){
                 listFriendsOnlineModel.addElement(p.getPseudonyme()+ ":"+ p.getHost()+":"+p.getPort());
                     if (!this.node.existChatWindow(p)) {
-                    MessageLog l = history.getMessageLog(node.getPeer().getHost(), p.getHost());
+                    MessageLog l = new MessageLog(node.getPeer(), p);
                     if (history.existHistory(l)) {
                         l = history.getMessageLog(node.getPeer().getHost(), p.getHost());
                     }
                     else {
                         history.addHistory(l);
                         //chatBox.setText("New chat" + System.lineSeparator());
-                        historyBox.setText("");
-                        historyBox.append(history.toString());
+//                        historyBox.setText("");
+//                        historyBox.append(history.toString());
                     }
                     ChatWindow chatWindow = new ChatWindow(this.node, new Node(p), l);
                     this.node.setChatWindowForPeer(p, chatWindow);
