@@ -49,7 +49,7 @@ public class TCPListenerHandler implements Runnable {
 	public void run() {
                 try {
                     while(running) {
-                        System.out.println(node.getPeer().getPseudonyme() + " is listening by TCP at port " + node.getPeer().getPort() + "...");
+                        System.out.println("[TCP] " + node.getPeer().getPseudonyme() + " is listening by TCP at port " + node.getPeer().getPort() + "...");
                         //System.out.println(node.getPeer().getPseudonyme() + " is listening by TCP at port " + this.serverSocket.getLocalPort() + "...");
                         this.chatSocket = this.serverSocket.accept();
                         

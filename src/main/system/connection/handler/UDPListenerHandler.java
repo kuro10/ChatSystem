@@ -52,8 +52,8 @@ public class UDPListenerHandler implements Runnable {
     @Override
     public void run() {
         try {     
+            System.out.println("[UDP] "+node.getPeer().getPseudonyme() + " is listening by UDP at port " + Peer.PORT_UDP + "...");
             while(running){
-                System.out.println(node.getPeer().getPseudonyme() + " is listening by UDP at port " + Peer.PORT_UDP + "...");
                 this.dgramSocket.receive(this.inPacket);
                 String msg = new String(inPacket.getData(),0,inPacket.getLength());
                 String seg[] = msg.split(":");
@@ -64,7 +64,7 @@ public class UDPListenerHandler implements Runnable {
                 //ui.write(msg);
                 
                 if (msg.equals("broadcast") && !host.equals(node.getPeer().getHost())){
-                    System.out.println(host + " sends a " + msg);
+                    System.out.println("[bcst] "+host + " sends a " + msg);
                     new UDPSenderService().sendMessageTo(host,Peer.PORT_UDP,this.node.getPeer().getPseudonyme()+ ":" + this.node.getPeer().getPort() + ":OK");
 //                    this.node.updatePeersList(new Peer(pseudo,host,port));
                     this.node.updatePeersList(new Peer(pseudo,host));
@@ -72,7 +72,7 @@ public class UDPListenerHandler implements Runnable {
                 }
                 
                 if (msg.equals("OK")){
-                    System.out.println(host + " responds " + msg);
+                    System.out.println("[bcst] "+host + " responds " + msg);
 //                    this.node.updatePeersList(new Peer(pseudo,host,port));
                     this.node.updatePeersList(new Peer(pseudo,host));
                 }
