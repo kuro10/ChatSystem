@@ -73,20 +73,21 @@ public class Node {
                     System.out.println(" Name change "+ peerInList.getPseudonyme()+" > "+peer1.getPseudonyme());
                     peerInList.setPseudonyme(peer1.getPseudonyme());
                 }
-                if (peerInList.getPort()==peer1.getPort()) {
-                }
-                else{
-                    System.out.println(" Port change "+ peerInList.getPort()+" > "+peer1.getPort());
-                    peerInList.setPort(peer1.getPort());
-                }
+//                if (peerInList.getPort()==peer1.getPort()) {
+//                }
+//                else{
+//                    System.out.println(" Port change "+ peerInList.getPort()+" > "+peer1.getPort());
+//                    peerInList.setPort(peer1.getPort());
+//                }
                 if (peer1.getStatusDisconnect() == false) {
-                    return;
+                    System.out.println(" Status : connected ");
+                    peerInList.setDisco(false);
                 }
                 else {
-                    System.out.println(" Status change ");
+                    System.out.println(" Status : disconnected ");
                     peerInList.setDisco(true);
-                    return;
                 }
+                return;
             }
         }
         System.out.println("[peer] New Peer: Host>"+peer1.getHost()+" Pseudo>"+peer1.getPseudonyme());

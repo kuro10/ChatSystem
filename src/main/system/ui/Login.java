@@ -207,6 +207,7 @@ public class Login extends javax.swing.JFrame {
             
             Home home = new Home(node,this.history);
             if (home.checkNameUniq()) {
+                new UDPSenderService().sendRename(this.node);
                 home.display();
                 this.setVisible(false);
                 setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

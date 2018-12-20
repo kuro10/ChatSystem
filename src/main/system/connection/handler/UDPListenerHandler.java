@@ -66,15 +66,17 @@ public class UDPListenerHandler implements Runnable {
                 if (msg.equals("broadcast") && !host.equals(node.getPeer().getHost())){
                     System.out.println("[bcst] "+host + " sends a " + msg);
                     new UDPSenderService().sendMessageTo(host,Peer.PORT_UDP,this.node.getPeer().getPseudonyme()+ ":" + this.node.getPeer().getPort() + ":OK");
-//                    this.node.updatePeersList(new Peer(pseudo,host,port));
                     this.node.updatePeersList(new Peer(pseudo,host));
+//                    Peer p = new Peer(pseudo,host);
+//                    p.setDisco(false);
+//                    this.node.updatePeersList(p);
                 }
                 
                 if (msg.equals("disconnect") && !host.equals(node.getPeer().getHost())){
                     System.out.println("[dis] "+host + " sends a " + msg);
                     //new UDPSenderService().sendMessageTo(host,Peer.PORT_UDP,this.node.getPeer().getPseudonyme()+ ":" + this.node.getPeer().getPort() + ":DISCONNECTED");
-                    Peer p = new Peer(pseudo,host,port);
-                    p.setDisco(running);
+                    Peer p = new Peer(pseudo,host);
+                    p.setDisco(true);
                     this.node.updatePeersList(p);
 //                    this.node.removePeer(new Peer(pseudo,host));
                 }
@@ -82,7 +84,7 @@ public class UDPListenerHandler implements Runnable {
                 if (msg.equals("rename") && !host.equals(node.getPeer().getHost())){
                     System.out.println("[rnm] "+host + " sends a " + msg);
                     //new UDPSenderService().sendMessageTo(host,Peer.PORT_UDP,this.node.getPeer().getPseudonyme()+ ":" + this.node.getPeer().getPort() + ":DISCONNECTED");
-                    this.node.updatePeersList(new Peer(pseudo,host,port));
+                    this.node.updatePeersList(new Peer(pseudo,host));
 //                    this.node.removePeer(new Peer(pseudo,host));
                 }                
                 
