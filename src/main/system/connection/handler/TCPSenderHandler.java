@@ -38,7 +38,8 @@ public class TCPSenderHandler implements Runnable  {
 
 			// Request a connection to the given peer  
                         System.out.println("connecting to port "+port+" and host "+host);
-			chatSocket = new Socket(host,port); 
+//			chatSocket = new Socket(host,port);
+                        chatSocket = new Socket(host,Peer.PORT_TCP);
 			// Initialization the output channel
 			this.out = new PrintWriter( chatSocket.getOutputStream() );
 			

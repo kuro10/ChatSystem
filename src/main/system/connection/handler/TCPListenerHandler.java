@@ -25,7 +25,7 @@ public class TCPListenerHandler implements Runnable {
 	public TCPListenerHandler (Node node) throws IOException {	
             this.node = node;
             //this.serverSocket = new ServerSocket(node.getPeer().getPort());
-            this.serverSocket = new ServerSocket(0);
+            this.serverSocket = new ServerSocket(Peer.PORT_TCP);
             this.node.getPeer().setPort(this.serverSocket.getLocalPort());
 	}
         
@@ -59,7 +59,7 @@ public class TCPListenerHandler implements Runnable {
                         // Create a chat window between this node and client
                         Node client = new Node (new Peer(chatSocket.getInetAddress().getHostAddress()));
                         ChatWindow chatWindow = new ChatWindow(this.node, client);
-                      
+
                         // Write the message on this chat window
                         BufferedReader in = new BufferedReader(new InputStreamReader(chatSocket.getInputStream()));
                         
