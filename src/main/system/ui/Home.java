@@ -83,10 +83,6 @@ public class Home extends javax.swing.JFrame {
     public void removeFromList(Peer p) {
         this.listFriendsOnlineModel.removeElement(p.getPseudonyme()+ ":"+ p.getHost()+":"+p.getPort());
     }
-    
-    public boolean getStatus() {
-        return this.disco;
-    }
 
     public void display(){
         
