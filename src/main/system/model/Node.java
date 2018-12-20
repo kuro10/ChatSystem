@@ -72,7 +72,7 @@ public class Node {
                 }
             }
         }
-        System.out.println("New Peer: Host>"+peer1.getHost()+" Pseudo>"+peer1.getPseudonyme());
+        System.out.println("[peer] New Peer: Host>"+peer1.getHost()+" Pseudo>"+peer1.getPseudonyme());
         this.addPeer(peer1);
     }
     
