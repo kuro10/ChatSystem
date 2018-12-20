@@ -69,19 +69,19 @@ public class Node {
                     System.out.println(" Name change "+ peerInList.getPseudonyme()+" > "+peer1.getPseudonyme());
                     peerInList.setPseudonyme(peer1.getPseudonyme());
                 }
-                if (peerInList.getStatusDisconnect() == peer1.getStatusDisconnect()) {
-                }
-                else {
-                    System.out.println(" Status change "+ peerInList.getStatusDisconnect()+" > "+peer1.getStatusDisconnect());
-                    peerInList.setDisco(peer1.getStatusDisconnect());                    
-                }
                 if (peerInList.getPort()==peer1.getPort()) {
-                    return;
                 }
                 else{
                     System.out.println(" Port change "+ peerInList.getPort()+" > "+peer1.getPort());
                     peerInList.setPort(peer1.getPort());
                     return;
+                }
+                if (peer1.getStatusDisconnect()) {
+                    return;
+                }
+                else {
+                    System.out.println(" Status change "+ peerInList.getStatusDisconnect()+" > true");
+                    peerInList.setDisco(true);                    
                 }
             }
         }
