@@ -403,6 +403,6 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
     public void write(String s) {
         String msg = timeStamp() + Emoji.replaceInText(s);
         chatBox.append(msg + System.lineSeparator());
-//        this.l.addMessage(msg);
+        this.l.addMessage(msg);
     }
 }
