@@ -80,8 +80,10 @@ public class UDPListenerHandler implements Runnable {
             }
             
         } catch (IOException e){
+            System.out.println("ERROR: Connection failure with: "+inPacket.getAddress().getHostAddress());
             e.printStackTrace();
         } catch (Exception ex) {
+            System.out.println("ERROR: Connection failure with: "+inPacket.getAddress().getHostAddress());
             Logger.getLogger(UDPListenerHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
