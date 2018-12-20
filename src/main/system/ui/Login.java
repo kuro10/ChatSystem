@@ -49,6 +49,7 @@ public class Login extends javax.swing.JFrame {
         this.setVisible(true);
     }
     
+    @Override
     public void setTitle(String title){
         titleLabel.setText(title);
     }
@@ -179,36 +180,50 @@ public class Login extends javax.swing.JFrame {
             this.node =  new Node(peer);
                         
             Home home = new Home(node);
-            home.display();
-            
-            this.setVisible(false);
-            setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-            this.dispose();
-            
-//            ChatWindow chatWindow = new ChatWindow(node);
+            //if (home.checkNameUniq()) {
+                home.display();
 
-            // start a thread server to listen 
-            if (listenTCP != null && runnableTCP != null ){
-                runnableTCP.terminate();
-                listenTCP.join();
-                //System.out.println(listenTCP.getState());
-            }
- 
-            runnableTCP = new TCPListenerHandler(this.node); 
-            listenTCP = new Thread(runnableTCP);  
-            listenTCP.start();
-            
-            //This thread is used to reveice le broadcast by UDP
-            if (listenUDP != null && runnableUDP != null ){
-                runnableUDP.terminate();
-                 listenUDP.join();
-             }
-            runnableUDP = new UDPListenerHandler(this.node); 
-            listenUDP = new Thread(runnableUDP);  
-            listenUDP.start();
+                this.setVisible(false);
+                setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+                this.dispose();
 
-           // Send a broadcast when log in
-            new UDPSenderService().sendBroadcast(this.node);
+    //            ChatWindow chatWindow = new ChatWindow(node);
+
+                // start a thread server to listen 
+                if (listenTCP != null && runnableTCP != null ){
+                    runnableTCP.terminate();
+                    listenTCP.join();
+                    //System.out.println(listenTCP.getState());
+                }
+
+                runnableTCP = new TCPListenerHandler(this.node); 
+                listenTCP = new Thread(runnableTCP);  
+                listenTCP.start();
+
+                //This thread is used to reveice le broadcast by UDP
+                if (listenUDP != null && runnableUDP != null ){
+                    runnableUDP.terminate();
+                     listenUDP.join();
+                 }
+                runnableUDP = new UDPListenerHandler(this.node); 
+                listenUDP = new Thread(runnableUDP);  
+                listenUDP.start();
+                //This thread is used to reveice le broadcast by UDP
+                if (listenUDP != null && runnableUDP != null ){
+                    runnableUDP.terminate();
+                     listenUDP.join();
+                 }
+                runnableUDP = new UDPListenerHandler(this.node); 
+                listenUDP = new Thread(runnableUDP);  
+                listenUDP.start();
+
+               // Send a broadcast when log in
+                new UDPSenderService().sendBroadcast(this.node);
+            //}
+            //else {
+                //this.setTitle("WARNING : This name has been used !");
+            //}
+            
             
 //                // This thread is used to receive message sent by TCP
 //                if (listenTCP != null && runnableTCP != null ){

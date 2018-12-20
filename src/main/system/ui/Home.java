@@ -46,6 +46,20 @@ public class Home extends javax.swing.JFrame {
         initComponents();
         this.nicknameLabel.setText("Your nickname : " + node.getPeer().getPseudonyme());
     }
+    
+    public void setNicknameLabel(String s) {
+        nicknameLabel.setText(s);
+    }
+    
+    public Boolean checkNameUniq() {
+        Boolean res = true;
+        for (Peer p : this.node.getOnlinePeers()) {
+            if (this.node.getPeer().getPseudonyme().equals(p.getPseudonyme())) {
+                res = false;
+            }
+        }
+        return res;
+    }
 
     public void display(){
         
@@ -69,6 +83,7 @@ public class Home extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         historyBox = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
+        renameButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -103,6 +118,13 @@ public class Home extends javax.swing.JFrame {
 
         jLabel1.setText("History");
 
+        renameButton.setLabel("Rename");
+        renameButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                renameButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -112,6 +134,8 @@ public class Home extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(logOutButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(renameButton)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -143,7 +167,9 @@ public class Home extends javax.swing.JFrame {
                     .addComponent(jScrollPane2)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(logOutButton)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(logOutButton)
+                    .addComponent(renameButton))
                 .addGap(18, 18, 18))
         );
 
@@ -212,6 +238,13 @@ public class Home extends javax.swing.JFrame {
         
     }//GEN-LAST:event_friendsListMouseEntered
 
+    private void renameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_renameButtonActionPerformed
+        // TODO add your handling code here:
+        ChangeName changeNameWindow = new ChangeName(this.node, this);
+        changeNameWindow.display();
+        System.out.println(this.node.getPeer().getPseudonyme());
+    }//GEN-LAST:event_renameButtonActionPerformed
+
     
 //    /**
 //     * @param args the command line arguments
@@ -256,6 +289,7 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JButton logOutButton;
     private javax.swing.JLabel nicknameLabel;
+    private javax.swing.JButton renameButton;
     private javax.swing.JLabel titleLabel;
     // End of variables declaration//GEN-END:variables
 }

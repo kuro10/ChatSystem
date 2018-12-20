@@ -97,7 +97,7 @@ public class Node {
 
     @Override
     public String toString(){
-    String str = new String ("This peer is " + this.peer.toString()+  " and his friends list :\n" );
+    String str = "This peer is " + this.peer.toString()+  " and his friends list :\n";
     for (Peer p : onlinePeers) {
         str += "- " + p.toString()+"\n";
     } 

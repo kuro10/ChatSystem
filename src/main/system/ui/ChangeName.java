@@ -13,7 +13,8 @@ import main.system.model.Node;
  * @author Kuro10
  */
 public class ChangeName extends javax.swing.JFrame {
-   
+    private ChatWindow ui;
+    private Home home;
     private Node node;
     private Boolean confirm = false;
     
@@ -29,6 +30,18 @@ public class ChangeName extends javax.swing.JFrame {
         this.node = node;
     }
 
+    public ChangeName(Node node, ChatWindow ui) {
+        initComponents();
+        this.node = node;
+        this.ui = ui;
+    }
+    
+    public ChangeName(Node node, Home home) {
+        initComponents();
+        this.node = node;
+        this.home = home;
+    }    
+    
     public String getNewNickname(){
         if (this.confirm)
             return nicknameField.getText();
@@ -115,6 +128,8 @@ public class ChangeName extends javax.swing.JFrame {
     private void confirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmButtonActionPerformed
         // TODO add your handling code here:
         this.node.getPeer().setPseudonyme(nicknameField.getText());
+        //this.ui.setNicknameLabel("Pseudo : " + nicknameField.getText());
+        this.home.setNicknameLabel("Your Nickname : " + nicknameField.getText());
         this.confirm = true;
         // TODO inform to others users that this node has changed his nickname
         this.setVisible(false);

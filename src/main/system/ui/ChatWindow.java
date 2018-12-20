@@ -9,7 +9,9 @@ import com.sun.glass.events.KeyEvent;
 import main.system.model.Node;
 import main.system.connection.service.TCPSenderService;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.WindowConstants;
@@ -75,6 +77,10 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
 
     
     public String getPseudo() {return this.node.getPeer().getPseudonyme();} 
+    
+    public void setNicknameLabel (String s) {
+        this.nicknameLabel.setText(s);
+    }
     
     
     public void display(){
@@ -338,9 +344,9 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
 
     private void renameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_renameButtonActionPerformed
         // TODO add your handling code here: 
-        ChangeName changeNameWindow = new ChangeName(this.node);
+        ChangeName changeNameWindow = new ChangeName(this.node, this);
         changeNameWindow.display();
-        
+        //System.out.println(this.node.getPeer().getPseudonyme());
         // TODO update new nickname
     }//GEN-LAST:event_renameButtonActionPerformed
 
@@ -406,9 +412,15 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
     private javax.swing.JTextField targetPort;
     // End of variables declaration//GEN-END:variables
 
+    public String timeStamp() {
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("[HH:mm, dd/MM/yyyy] - ");
+        return sdf.format(cal.getTime());
+    }
+    
     @Override
     public void write(String s) {
-        String msg = Emoji.replaceInText(s);
+        String msg = timeStamp() + Emoji.replaceInText(s);
         chatBox.append(msg + System.lineSeparator());
 //        this.l.addMessage(msg);
     }
