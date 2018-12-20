@@ -89,6 +89,7 @@ public class Login extends javax.swing.JFrame {
         hostField.setEditable(false);
         hostField.setText("localhost");
 
+        portField.setEditable(false);
         portField.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 portFieldKeyPressed(evt);
@@ -173,7 +174,8 @@ public class Login extends javax.swing.JFrame {
     private void logInButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logInButtonActionPerformed
         // TODO add your handling code here:
         try {
-            Peer peer = new Peer(nicknameField.getText(), hostField.getText(), Integer.parseInt(portField.getText()));
+            //Peer peer = new Peer(nicknameField.getText(), hostField.getText(), Integer.parseInt(portField.getText()));
+            Peer peer = new Peer(nicknameField.getText(), hostField.getText());
             this.node =  new Node(peer);
                         
             Home home = new Home(node);
@@ -263,11 +265,12 @@ public class Login extends javax.swing.JFrame {
     private void chatButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chatButtonActionPerformed
         // TODO add your handling code here:
         try {
-            Peer peer = new Peer(nicknameField.getText(), hostField.getText(), Integer.parseInt(portField.getText()));
+            //Peer peer = new Peer(nicknameField.getText(), hostField.getText(), Integer.parseInt(portField.getText()));
+            Peer peer = new Peer(nicknameField.getText(), hostField.getText());
             this.node =  new Node(peer);
             
             ChatWindow chatWindow = new ChatWindow(node);
-            chatWindow.display();
+
             
             this.setVisible(false);
             setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -283,6 +286,8 @@ public class Login extends javax.swing.JFrame {
             runnableTCP = new TCPListenerHandler(this.node,chatWindow); 
             listenTCP = new Thread(runnableTCP);  
             listenTCP.start();
+            
+            chatWindow.display();
         } catch (UnknownHostException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException | InterruptedException ex) {

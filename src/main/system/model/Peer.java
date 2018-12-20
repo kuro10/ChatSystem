@@ -26,7 +26,7 @@ public class Peer {
     public Peer(String pseudo,String host) throws UnknownHostException{
             this.pseudonyme = pseudo;
             this.host = host;
-            this.port = PORT_TCP;
+            //this.port = PORT_TCP;
     }
 
     public Peer(String pseudonyme, String host, int port) throws UnknownHostException {
@@ -58,6 +58,10 @@ public class Peer {
     @Override
     public String toString(){
         return this.pseudonyme + " ("+ this.host+ " : "+ this.port+ ")";
+    }
+
+    public void setPort(int localPort) {
+       this.port = localPort;
     }
     
 }
