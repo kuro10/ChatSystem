@@ -15,6 +15,7 @@ public class Peer {
     private String pseudonyme;
     private String host;
     private int port;
+    private boolean disco = false;
 
     //Constructors
 
@@ -42,6 +43,14 @@ public class Peer {
     //Methods
     
     public void setPseudonyme(String pseudo) {this.pseudonyme = pseudo;}
+    
+    public void setDisco(boolean status) {
+        this.disco = status;
+    }
+    
+    public boolean getStatusDisconnect() {
+        return this.disco;
+    }
     
     public String getPseudonyme() {
         return pseudonyme;
