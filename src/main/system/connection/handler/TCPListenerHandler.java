@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
+import main.system.ui.ChatWindow;
 
 public class TCPListenerHandler implements Runnable {
 
@@ -41,6 +42,12 @@ public class TCPListenerHandler implements Runnable {
                         System.out.println(node.getPeer().getPseudonyme() + " is listening by TCP at port " + node.getPeer().getPort() + "...");
                         //System.out.println(node.getPeer().getPseudonyme() + " is listening by TCP at port " + this.serverSocket.getLocalPort() + "...");
                         this.chatSocket = this.serverSocket.accept();
+                        
+                        ChatWindow chatWindow = new ChatWindow(node);
+                        TCPListenerHandler runnableTCP = new TCPListenerHandler(this.node,chatWindow); 
+                        Thread listenTCP = new Thread(runnableTCP);  
+                        listenTCP.start();
+                        
                         BufferedReader in = new BufferedReader(new InputStreamReader(chatSocket.getInputStream()));
 
                         System.out.println("CALL IN TCP Listner handler run");

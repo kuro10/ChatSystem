@@ -185,6 +185,19 @@ public class Login extends javax.swing.JFrame {
             setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             this.dispose();
             
+            ChatWindow chatWindow = new ChatWindow(node);
+
+            
+            if (listenTCP != null && runnableTCP != null ){
+                runnableTCP.terminate();
+                listenTCP.join();
+                //System.out.println(listenTCP.getState());
+            }
+ 
+            runnableTCP = new TCPListenerHandler(this.node,chatWindow); 
+            listenTCP = new Thread(runnableTCP);  
+            listenTCP.start();
+            
             //This thread is used to reveice le broadcast by UDP
             if (listenUDP != null && runnableUDP != null ){
                 runnableUDP.terminate();

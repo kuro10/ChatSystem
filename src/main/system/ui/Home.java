@@ -163,7 +163,7 @@ public class Home extends javax.swing.JFrame {
             // TODO : find a peer/node when we know his nickname..
             try {
                 Node client = new Node(new Peer(seg[0],seg[1],Integer.parseInt(seg[2])));
-                
+                //Node client = new Node(new Peer(seg[0],seg[1]);
                 // This thread is used to receive message sent by TCP
                 if (listenTCP != null && runnableTCP != null ){
                     runnableTCP.terminate();
@@ -212,6 +212,7 @@ public class Home extends javax.swing.JFrame {
         for(Peer p : node.getOnlinePeers()){
             listFriendsOnlineModel.addElement(p.getPseudonyme()+ ":"+ p.getHost()+":"+p.getPort());
         }
+        
         
     }//GEN-LAST:event_friendsListMouseEntered
 
