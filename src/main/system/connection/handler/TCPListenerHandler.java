@@ -63,7 +63,6 @@ public class TCPListenerHandler implements Runnable {
                         // Write the message on this chat window
                         BufferedReader in = new BufferedReader(new InputStreamReader(chatSocket.getInputStream()));
                         
-                        System.out.println("CALL IN TCP Listner handler run");
                         // Print the message received from a node distant
                         String msgDistant = in.readLine();
 

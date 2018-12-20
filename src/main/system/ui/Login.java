@@ -208,15 +208,7 @@ public class Login extends javax.swing.JFrame {
                 runnableUDP = new UDPListenerHandler(this.node); 
                 listenUDP = new Thread(runnableUDP);  
                 listenUDP.start();
-                //This thread is used to reveice le broadcast by UDP
-                if (listenUDP != null && runnableUDP != null ){
-                    runnableUDP.terminate();
-                     listenUDP.join();
-                 }
-                runnableUDP = new UDPListenerHandler(this.node); 
-                listenUDP = new Thread(runnableUDP);  
-                listenUDP.start();
-
+                
                // Send a broadcast when log in
                 new UDPSenderService().sendBroadcast(this.node);
             //}

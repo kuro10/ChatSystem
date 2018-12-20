@@ -55,7 +55,6 @@ public class UDPListenerHandler implements Runnable {
             while(running){
                 System.out.println(node.getPeer().getPseudonyme() + " is listening by UDP at port " + Peer.PORT_UDP + "...");
                 this.dgramSocket.receive(this.inPacket);
-                System.out.println("CALL IN UDP Listener handler" );
                 String msg = new String(inPacket.getData(),0,inPacket.getLength());
                 String seg[] = msg.split(":");
                 String pseudo = seg[0];
