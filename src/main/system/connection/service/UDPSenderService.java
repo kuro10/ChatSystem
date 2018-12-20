@@ -33,8 +33,8 @@ public class UDPSenderService implements SenderService {
         t.start();
     }
     
-//    public void sendDisconnect(Node node) throws UnknownHostException{
-//        Thread t = new Thread (new UDPSenderHandler(node, "disconnect"));
-//        t.start();
-//    }
+    public void sendDisconnect(Node node) throws UnknownHostException{
+        Thread t = new Thread (new UDPSenderHandler(node, "disconnect"));
+        t.start();
+    }
 }
