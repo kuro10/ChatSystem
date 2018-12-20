@@ -249,7 +249,7 @@ public class Home extends javax.swing.JFrame {
         // TODO add your handling code here:
         listFriendsOnlineModel.removeAllElements();
         for(Peer p : node.getOnlinePeers()){
-            if (!this.node.getPeer().getPseudonyme().equals(p.getPseudonyme()) || p.getStatusDisconnect() == false) 
+            if (!(this.node.getPeer().getPseudonyme().equals(p.getPseudonyme())) && p.getStatusDisconnect() == false) 
             listFriendsOnlineModel.addElement(p.getPseudonyme()+ ":"+ p.getHost()+":"+p.getPort());
         }
         
