@@ -211,6 +211,7 @@ public class Login extends javax.swing.JFrame {
                 this.dispose();
             }
             else {
+                home.dispose();
                 this.setTitle("WARNING : This name has been used !");
             }
             

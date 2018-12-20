@@ -46,20 +46,10 @@ public class Node {
         
     }
     
-    public Boolean existPeer(Peer peer) {
-        Boolean res = true;
-        for (Peer p : this.onlinePeers) {
-            if (p.getPseudonyme().equals(peer.getPseudonyme())) {
-                res = false;
-            }
-        }
-        return res;
-    }
-        
     /* Update list of Peers when a peer in the list has changed his nickname */
     public void updatePeersList(Peer peer1) {
     	// TODO
-        if (peer1.getHost().equals(this.peer.getHost())){ 
+        if (peer1.getHost().equals(this.peer.getHost())) {
             return;
         }
 
