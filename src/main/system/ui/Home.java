@@ -214,7 +214,7 @@ public class Home extends javax.swing.JFrame {
 //                Node client = new Node(new Peer(seg[0],seg[1],Integer.parseInt(seg[2])));
                 Node client = new Node(new Peer(seg[0],seg[1]));
 
-                MessageLog l = history.getMessageLog(node.getPeer().getHost(), client.getPeer().getHost());
+//                MessageLog l = history.getMessageLog(node.getPeer().getHost(), client.getPeer().getHost());
 //                if (history.existHistory(l)) {
 //                    l = history.getMessageLog(node.getPeer().getHost(), client.getPeer().getHost());
 //                }
@@ -224,9 +224,10 @@ public class Home extends javax.swing.JFrame {
 //                    historyBox.setText("");
 //                    historyBox.append(history.toString());
 //                }
-                ChatWindow chatWindow = new ChatWindow(node,client,l);
-                chatWindow.display();
-                
+//                ChatWindow chatWindow = new ChatWindow(node,client,l);
+//                chatWindow.display();
+                this.node.getChatWindowForPeer(client.getPeer().getHost()).display();
+               
                 
             } catch (IOException ex) {
                 Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);

@@ -71,16 +71,16 @@ public class TCPListenerHandler implements Runnable {
                         // Create a chat window between this node and client
                         Node client = new Node (new Peer(chatSocket.getInetAddress().getHostAddress()));
 //                        ChatWindow chatWindow = new ChatWindow(this.node, client);
-                        MessageLog l = new MessageLog(this.node.getPeer(), client.getPeer());
-                        if (history.existHistory(l)) {
-                            l = history.getMessageLog(node.getPeer().getHost(), client.getPeer().getHost());
-                        }
-                        else {
-                            history.addHistory(l);
-                            //chatBox.setText("New chat" + System.lineSeparator());
-//                            historyBox.setText("");
-//                            historyBox.append(history.toString());
-                        }
+//                        MessageLog l = new MessageLog(this.node.getPeer(), client.getPeer());
+//                        if (history.existHistory(l)) {
+//                            l = history.getMessageLog(node.getPeer().getHost(), client.getPeer().getHost());
+//                        }
+//                        else {
+//                            history.addHistory(l);
+//                            //chatBox.setText("New chat" + System.lineSeparator());
+////                            historyBox.setText("");
+////                            historyBox.append(history.toString());
+//                        }
                         
 
                         // Write the message on this chat window
@@ -91,7 +91,8 @@ public class TCPListenerHandler implements Runnable {
 
                         if(msgDistant != null) {
 //                            chatWindow.write(msgDistant);
-                            l.addMessage(msgDistant);
+//                            l.addMessage(msgDistant);
+                            this.node.getChatWindowForPeer(client.getPeer().getHost()).write(msgDistant);
                             System.out.println(msgDistant);
                         }
                         

@@ -6,18 +6,22 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import main.system.ui.ChatWindow;
 
 public class Node {
 
     private Peer peer;
     private ArrayList<Peer> onlinePeers;
+    private HashMap<String, ChatWindow> chatWindowForPeer;//String -> ipAddress
 
     //constructors
 
     public Node(Peer peer) {
             this.peer = peer;
             this.onlinePeers = new ArrayList();
+            this.chatWindowForPeer = new HashMap<>();
     }
 
     //methods
@@ -90,12 +94,20 @@ public class Node {
         this.addPeer(peer1);
     }
     
+    public void setChatWindowForPeer(Peer peer1,ChatWindow chatWindow) {
+        this.chatWindowForPeer.put(peer1.getHost(),chatWindow);
+    }
+
+    public ChatWindow getChatWindowForPeer(String ipAddress){
+        return this.chatWindowForPeer.get(ipAddress);
+}
+    
     public Peer findPeerByIPAddress (String ipAddress) {
     	// TODO
     	return null;
     }
      
-        public InetAddress getBroadcast() throws UnknownHostException {
+    public InetAddress getBroadcast() throws UnknownHostException {
 
         InetAddress myIpAddress = InetAddress.getByName(this.peer.getHost());
         NetworkInterface temp;
@@ -110,9 +122,9 @@ public class Node {
             System.out.println("Call in Peer.getBroadcast : " + iAddr);
             return iAddr;
 
-        } catch (SocketException e) {
-            e.printStackTrace();
-        }
+            } catch (SocketException e) {
+                e.printStackTrace();
+            }
         return null;
     }
 
