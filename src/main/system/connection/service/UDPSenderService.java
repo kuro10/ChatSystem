@@ -29,7 +29,12 @@ public class UDPSenderService implements SenderService {
     }
     
     public void sendBroadcast(Node node) throws UnknownHostException{
-        Thread t = new Thread (new UDPSenderHandler(node));
+        Thread t = new Thread (new UDPSenderHandler(node, "broadcast"));
+        t.start();
+    }
+    
+    public void sendDisconnect(Node node) throws UnknownHostException{
+        Thread t = new Thread (new UDPSenderHandler(node, "disconnect"));
         t.start();
     }
 }

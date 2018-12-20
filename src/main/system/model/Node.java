@@ -43,7 +43,7 @@ public class Node {
     }
     
     public void removePeer (Peer peer) {
-        
+        this.onlinePeers.remove(peer);
     }
     
     /* Update list of Peers when a peer in the list has changed his nickname */
