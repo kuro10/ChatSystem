@@ -41,7 +41,7 @@ public class ChatHistory {
      public boolean existHistory(MessageLog l) {
         boolean res = false;
         for (int i = 0; i < current_index; i++) {
-            if (this.history.get(i).getHostTarget().equals(l.getHostTarget())) {
+            if (this.history.get(i).getHostSource().equals(l.getHostSource()) && this.history.get(i).getHostTarget().equals(l.getHostTarget())) {
                 res = true;
                 break;
             }
@@ -60,10 +60,10 @@ public class ChatHistory {
 //        return res;
 //    }
      
-     public MessageLog getMessageLog(String target) {
+     public MessageLog getMessageLog(String source, String target) {
         MessageLog res = null;
         for (int i = 0; i < current_index; i++) {
-            if (this.history.get(i).getHostTarget().equals(target)) {
+            if (this.history.get(i).getHostSource().equals(source) && this.history.get(i).getHostTarget().equals(target)) {
                 res = this.history.get(i);
                 break;
             }
@@ -73,14 +73,14 @@ public class ChatHistory {
     
     
     
-//    @Override 
-//    public String toString() {
-//        String res = "";
-//        for (int i = 0; i < current_index; i++) {
-//            res = res + "[" + this.history.get(i).getPort1() + " | " + this.history.get(i).getPort2() + "]" + System.lineSeparator();
-//        }
-//        return res;
-//    }
+    @Override 
+    public String toString() {
+        String res = "";
+        for (int i = 0; i < current_index; i++) {
+            res = res + "[" + this.history.get(i).getHostSource() + " | " + this.history.get(i).getHostTarget() + "]" + System.lineSeparator();
+        }
+        return res;
+    }
     
     
 //    public boolean existHistory(int port1, int port2) {

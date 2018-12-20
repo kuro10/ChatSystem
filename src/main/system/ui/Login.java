@@ -194,9 +194,18 @@ public class Login extends javax.swing.JFrame {
            // Send a broadcast when log in
             new UDPSenderService().sendBroadcast(this.node);
             
+//                // This thread is used to receive message sent by TCP
+//                if (listenTCP != null && runnableTCP != null ){
+//                    runnableTCP.terminate();
+//                    listenTCP.join();
+//                    //System.out.println(listenTCP.getState());
+//                }
+//
+//                runnableTCP = new TCPListenerHandler(this.node); 
+//                listenTCP = new Thread(runnableTCP);  
+//                listenTCP.start();
             
 
-            
         } catch (UnknownHostException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException | InterruptedException ex) {

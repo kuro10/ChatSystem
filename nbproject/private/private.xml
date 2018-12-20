@@ -6,7 +6,9 @@
             <file>file:/home/lmtran/Chat/ChatSystem/src/main/system/ui/ChatWindow.java</file>
             <file>file:/home/lmtran/Chat/ChatSystem/src/main/system/TestUtilities.java</file>
             <file>file:/home/lmtran/Chat/ChatSystem/src/main/system/data/MessageLog.java</file>
+            <file>file:/home/lmtran/Chat/ChatSystem/src/main/system/connection/handler/TCPSenderHandler.java</file>
             <file>file:/home/lmtran/Chat/ChatSystem/src/main/system/ui/Login.java</file>
+            <file>file:/home/lmtran/Chat/ChatSystem/src/main/system/connection/handler/TCPListenerHandler.java</file>
             <file>file:/home/lmtran/Chat/ChatSystem/src/main/system/ui/Home.java</file>
             <file>file:/home/lmtran/Chat/ChatSystem/src/main/system/data/ChatHistory.java</file>
         </group>
