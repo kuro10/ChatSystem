@@ -43,7 +43,12 @@ public class Node {
     }
     
     public void removePeer (Peer peer) {
-        this.onlinePeers.remove(peer);
+        for (Peer p : this.onlinePeers) {
+            if (p.getHost().equals(peer.getHost()) && p.getPort() == peer.getPort() && p.getPseudonyme().equals(peer.getPseudonyme())) {
+                this.onlinePeers.remove(p);
+            }
+        }
+        //this.onlinePeers.remove(peer);
     }
     
     /* Update list of Peers when a peer in the list has changed his nickname */
