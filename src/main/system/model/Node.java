@@ -78,14 +78,13 @@ public class Node {
                 else{
                     System.out.println(" Port change "+ peerInList.getPort()+" > "+peer1.getPort());
                     peerInList.setPort(peer1.getPort());
-                    return;
                 }
-                if (peer1.getStatusDisconnect()) {
+                if (peer1.getStatusDisconnect() == false) {
                     return;
                 }
                 else {
                     System.out.println(" Status change ");
-                    peerInList.setDisco(!peerInList.getStatusDisconnect());
+                    peerInList.setDisco(true);
                     return;
                 }
             }

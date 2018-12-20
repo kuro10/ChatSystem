@@ -5,7 +5,11 @@
  */
 package main.system.ui;
 
+import java.net.UnknownHostException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.WindowConstants;
+import main.system.connection.service.UDPSenderService;
 import main.system.model.Node;
 import main.system.model.Peer;
 
@@ -149,6 +153,11 @@ public class ChangeName extends javax.swing.JFrame {
             this.node.getPeer().setPseudonyme(newName);
             this.home.setNicknameLabel("Your nickname : " + newName);
             this.confirm = true;
+            try {
+                new UDPSenderService().sendRename(node);
+            } catch (UnknownHostException ex) {
+                Logger.getLogger(ChangeName.class.getName()).log(Level.SEVERE, null, ex);
+            }
             //TODO Inform other users ?
             this.setVisible(false);
             setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
