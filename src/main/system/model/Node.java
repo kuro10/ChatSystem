@@ -57,10 +57,17 @@ public class Node {
             if (peerInList.getHost().equals(peer1.getHost())){
                 System.out.println("Le peer est deja dans la liste");
                 if (peerInList.getPseudonyme().equals(peer1.getPseudonyme())) {
+                }
+                else{
+                    System.out.println(" Name change > "+peer1.getPseudonyme());
+                    peerInList.setPseudonyme(peer1.getPseudonyme());
+                }
+                if (peerInList.getPort()==peer1.getPort()) {
                     return;
                 }
                 else{
-                    peerInList.setPseudonyme(peer1.getPseudonyme());
+                    System.out.println(" Port change > "+peer1.getPort());
+                    peerInList.setPort(peer1.getPort());
                     return;
                 }
             }

@@ -59,7 +59,6 @@ public class UDPSenderHandler implements Runnable{
         try {
             //Request a coonection to the given peer
             this.dgramSocket = new DatagramSocket();
-            System.out.println("CALL IN UDP Sender Handler : send ");
             dgramSocket.send(outPacket);
             dgramSocket.close();
         } catch (SocketException ex) {
