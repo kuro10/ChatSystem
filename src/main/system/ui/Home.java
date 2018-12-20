@@ -236,6 +236,11 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_friendsListMouseClicked
 
     private void logOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutButtonActionPerformed
+        try {
+            new UDPSenderService().sendDisconnect(this.node);
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.node.getPeer().setDisco(true);
         System.out.println(this.node.getPeer().getStatusDisconnect());
         this.setVisible(false);
