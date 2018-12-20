@@ -51,12 +51,17 @@ public class Home extends javax.swing.JFrame {
         nicknameLabel.setText(s);
     }
     
+    public Node getNode() {
+        return this.node;
+    }
+    
     public Boolean checkNameUniq() {
         Boolean res = true;
         for (Peer p : this.node.getOnlinePeers()) {
             System.out.println(p.getPseudonyme());
             if (this.node.getPeer().getPseudonyme().equals(p.getPseudonyme())) {
                 res = false;
+                break;
             }
         }
         return res;

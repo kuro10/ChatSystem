@@ -52,6 +52,9 @@ public class Node {
         if (peer1.getHost().equals(this.peer.getHost())) {
             return;
         }
+        if (peer1.getPseudonyme().equals(this.peer.getPseudonyme())) {
+            return;
+        }
 
         for (Peer peerInList : onlinePeers){
             if (peerInList.getHost().equals(peer1.getHost())){
