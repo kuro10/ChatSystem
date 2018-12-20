@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
+import main.system.model.Peer;
 import main.system.ui.ChatWindow;
 
 public class TCPListenerHandler implements Runnable {
@@ -17,7 +18,16 @@ public class TCPListenerHandler implements Runnable {
 	//private BufferedReader in;
 	private WritableUI ui=null;
         private volatile boolean running = true;
+        static int num = 1;
 
+        
+        // this handler is used at a node of the network
+	public TCPListenerHandler (Node node) throws IOException {	
+            this.node = node;
+            //this.serverSocket = new ServerSocket(node.getPeer().getPort());
+            this.serverSocket = new ServerSocket(0);
+            this.node.getPeer().setPort(this.serverSocket.getLocalPort());
+	}
         
 	// this handler is used at a node of the network
 	public TCPListenerHandler (Node node, WritableUI ui) throws IOException {	
@@ -43,21 +53,45 @@ public class TCPListenerHandler implements Runnable {
                         //System.out.println(node.getPeer().getPseudonyme() + " is listening by TCP at port " + this.serverSocket.getLocalPort() + "...");
                         this.chatSocket = this.serverSocket.accept();
                         
-                        ChatWindow chatWindow = new ChatWindow(node);
-                        TCPListenerHandler runnableTCP = new TCPListenerHandler(this.node,chatWindow); 
-                        Thread listenTCP = new Thread(runnableTCP);  
-                        listenTCP.start();
+                        System.out.println("Client number "+num + " at " + chatSocket.getInetAddress().getHostAddress() + ":" + chatSocket.getPort() + " has connected."); 
+                        num ++;
                         
+                        // Create a chat window between this node and client
+                        Node client = new Node (new Peer(chatSocket.getInetAddress().getHostAddress()));
+                        ChatWindow chatWindow = new ChatWindow(this.node, client);
+                      
+                        // Write the message on this chat window
                         BufferedReader in = new BufferedReader(new InputStreamReader(chatSocket.getInputStream()));
-
+                        
                         System.out.println("CALL IN TCP Listner handler run");
                         // Print the message received from a node distant
                         String msgDistant = in.readLine();
 
                         if(msgDistant != null) {
-                            ui.write(msgDistant);
+                            chatWindow.write(msgDistant);
                             System.out.println(msgDistant);
                         }
+                        
+//                        ChatWindow chatWindow = new ChatWindow(node);
+//                        TCPListenerHandler runnableTCP = new TCPListenerHandler(this.node,chatWindow); 
+//                        Thread listenTCP = new Thread(runnableTCP);  
+//                        listenTCP.start();
+//                        
+//                        BufferedReader in = new BufferedReader(new InputStreamReader(chatSocket.getInputStream()));
+//                        
+//                        System.out.println("CALL IN TCP Listner handler run");
+//                        // Print the message received from a node distant
+//                        String msgDistant = in.readLine();
+//
+//                        if(msgDistant != null) {
+//                            ui.write(msgDistant);
+//                            System.out.println(msgDistant);
+//                        }
+                         
+
+                        
+
+                    
                         // Close the socket
                         //chatSocket.close();
                     }

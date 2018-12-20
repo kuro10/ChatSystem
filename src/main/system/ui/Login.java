@@ -175,7 +175,7 @@ public class Login extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             //Peer peer = new Peer(nicknameField.getText(), hostField.getText(), Integer.parseInt(portField.getText()));
-            Peer peer = new Peer(nicknameField.getText(), hostField.getText());
+            Peer peer = new Peer(nicknameField.getText(), hostField.getText()); // port = portTCP = 9999
             this.node =  new Node(peer);
                         
             Home home = new Home(node);
@@ -185,16 +185,16 @@ public class Login extends javax.swing.JFrame {
             setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             this.dispose();
             
-            ChatWindow chatWindow = new ChatWindow(node);
+//            ChatWindow chatWindow = new ChatWindow(node);
 
-            
+            // start a thread server to listen 
             if (listenTCP != null && runnableTCP != null ){
                 runnableTCP.terminate();
                 listenTCP.join();
                 //System.out.println(listenTCP.getState());
             }
  
-            runnableTCP = new TCPListenerHandler(this.node,chatWindow); 
+            runnableTCP = new TCPListenerHandler(this.node); 
             listenTCP = new Thread(runnableTCP);  
             listenTCP.start();
             

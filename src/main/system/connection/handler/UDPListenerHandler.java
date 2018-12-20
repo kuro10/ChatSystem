@@ -67,13 +67,15 @@ public class UDPListenerHandler implements Runnable {
                 if (msg.equals("broadcast") && !host.equals(node.getPeer().getHost())){
                     System.out.println(host + " sends a " + msg);
                     new UDPSenderService().sendMessageTo(host,Peer.PORT_UDP,this.node.getPeer().getPseudonyme()+ ":" + this.node.getPeer().getPort() + ":OK");
-                    this.node.updatePeersList(new Peer(pseudo,host,port));
+//                    this.node.updatePeersList(new Peer(pseudo,host,port));
+                    this.node.updatePeersList(new Peer(pseudo,host));
 
                 }
                 
                 if (msg.equals("OK")){
                     System.out.println(host + " responds " + msg);
-                    this.node.updatePeersList(new Peer(pseudo,host,port));
+//                    this.node.updatePeersList(new Peer(pseudo,host,port));
+                    this.node.updatePeersList(new Peer(pseudo,host));
                 }
                
                 

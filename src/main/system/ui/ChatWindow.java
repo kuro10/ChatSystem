@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import javax.swing.WindowConstants;
 import main.system.connection.service.UDPSenderService;
 import main.system.data.*;
+import main.system.model.Peer;
 import main.system.utilities.Emoji;
 
 /**
@@ -45,7 +46,7 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
         //listen.start();
     }
 
-    ChatWindow(Node node, Node client) {
+    public ChatWindow(Node node, Node client) {
         initComponents();
         this.node = node;
         this.client = client;
@@ -57,7 +58,7 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
         //this.l = new MessageLog(node.getPeer(), client.getPeer());
     }
 
-    ChatWindow(Node node, Node client, MessageLog l) {
+    public ChatWindow(Node node, Node client, MessageLog l) {
         initComponents();
         this.l = l;
         if (this.l != null) {
@@ -71,6 +72,7 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
         sourceport = node.getPeer().getPort();
         this.clientLabel.setText("To : " + this.client.getPeer().getPseudonyme() + " at " + this.client.getPeer().getHost() );
     }
+
     
     public String getPseudo() {return this.node.getPeer().getPseudonyme();} 
     
@@ -273,13 +275,15 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
         //trans.start();
         try {
             String msg = "[" + node.getPeer().getPseudonyme() + "] : " + message.getText();
+            message.setText("");
             //new TCPSenderService().sendMessageTo("localhost",target,msg);
             //new TCPSenderService().sendMessageTo(ipDistant,target,msg);
-            new TCPSenderService().sendMessageTo(this.client.getPeer().getHost(),this.client.getPeer().getPort(),msg);
-            System.out.println("Client port : " + this.client.getPeer().getPort());
+//            new TCPSenderService().sendMessageTo(this.client.getPeer().getHost(),this.client.getPeer().getPort(),msg);
+            new TCPSenderService().sendMessageTo(this.client.getPeer().getHost(),Peer.PORT_TCP,msg);
+//            System.out.println("Client port : " + this.client.getPeer().getPort());
             //new UDPSenderService().sendMessageTo(ipDistant,target,msg);
             this.write(msg);
-            message.setText("");
+            
         } catch (Exception ex) {
             Logger.getLogger(ChatWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
