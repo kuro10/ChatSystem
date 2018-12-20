@@ -100,7 +100,12 @@ public class Node {
 
     public ChatWindow getChatWindowForPeer(String ipAddress){
         return this.chatWindowForPeer.get(ipAddress);
-}
+    }
+    
+    public boolean existChatWindow(Peer p) {
+        //boolean res = false;
+        return this.chatWindowForPeer.containsKey(p.getHost());
+    }
     
     public Peer findPeerByIPAddress (String ipAddress) {
     	// TODO

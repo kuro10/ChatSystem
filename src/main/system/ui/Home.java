@@ -56,8 +56,8 @@ public class Home extends javax.swing.JFrame {
         //listFriendsOnlineModel.addElement("User");
         for(Peer p : node.getOnlinePeers()){
             listFriendsOnlineModel.addElement(p.getPseudonyme()+ ":"+ p.getHost()+":"+p.getPort());
-            ChatWindow chatWindow = new ChatWindow(this.node, new Node(p));
-            this.node.setChatWindowForPeer(p, chatWindow);
+//            ChatWindow chatWindow = new ChatWindow(this.node, new Node(p));
+//            this.node.setChatWindowForPeer(p, chatWindow);
         }
         initComponents();
         this.nicknameLabel.setText("Your nickname : " + node.getPeer().getPseudonyme());
@@ -262,6 +262,10 @@ public class Home extends javax.swing.JFrame {
         for(Peer p : node.getOnlinePeers()){
             if (!(this.node.getPeer().getPseudonyme().equals(p.getPseudonyme())) && p.getStatusDisconnect() == false){
                 listFriendsOnlineModel.addElement(p.getPseudonyme()+ ":"+ p.getHost()+":"+p.getPort());
+                if (!this.node.existChatWindow(p)) {
+                    ChatWindow chatWindow = new ChatWindow(this.node, new Node(p));
+                    this.node.setChatWindowForPeer(p, chatWindow);
+                }
                 System.out.println(p.getPseudonyme() + p.getStatusDisconnect());
             }
         }
