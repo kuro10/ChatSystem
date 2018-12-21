@@ -10,7 +10,7 @@ public interface SenderService {
 	 * @param message 	the message is sent to peer 
 	 */
 	
-	 void sendMessageTo (Peer peer, String message) throws Exception;
+//	 void sendMessageTo (Peer peer, String message) throws Exception;
          
 	 void sendMessageTo (String host, int port, String message) throws Exception;
 	

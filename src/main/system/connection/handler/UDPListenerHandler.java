@@ -22,12 +22,19 @@ import main.system.ui.WritableUI;
  */
 public class UDPListenerHandler implements Runnable {
 
-    private Node node;
-    private DatagramSocket dgramSocket;
-    private DatagramPacket inPacket;
-    private WritableUI ui=null;
+    /**
+     * Attributs
+     */
+    private final Node node;
+    private final DatagramSocket dgramSocket;
+    private final DatagramPacket inPacket;
     private volatile boolean running = true;
     
+    /**
+     * Constructor
+     * @param node
+     * @throws SocketException 
+     */
     public UDPListenerHandler(Node node) throws SocketException{
         this.node = node;
         this.dgramSocket = new DatagramSocket(Peer.PORT_UDP);  // or node.getPeer().getPort() ???
@@ -35,15 +42,10 @@ public class UDPListenerHandler implements Runnable {
         this.inPacket = new DatagramPacket(buffer,buffer.length);
     }
     
-
-    public UDPListenerHandler(Node node, WritableUI ui) throws SocketException{
-        this.node = node;
-        this.ui = ui;
-        this.dgramSocket = new DatagramSocket(Peer.PORT_UDP);  // or node.getPeer().getPort() ???
-        byte[] buffer = new byte[256];
-        this.inPacket = new DatagramPacket(buffer,buffer.length);
-    }
-
+    /**
+     * Methods
+     */
+    
     public void terminate() throws IOException {
         running = false;
         dgramSocket.close();
@@ -54,6 +56,7 @@ public class UDPListenerHandler implements Runnable {
         try {     
             System.out.println("[UDP] "+node.getPeer().getPseudonyme() + " is listening by UDP at port " + Peer.PORT_UDP + "...");
             while(running){
+                /* Analyse the message broadcast */
                 this.dgramSocket.receive(this.inPacket);
                 String msg = new String(inPacket.getData(),0,inPacket.getLength());
                 String seg[] = msg.split(":");
@@ -61,7 +64,6 @@ public class UDPListenerHandler implements Runnable {
                 int port = Integer.parseInt(seg[1]);
                 msg = seg[2];
                 String host = inPacket.getAddress().getHostAddress();
-                //ui.write(msg);
                 
                 if (msg.equals("broadcast") && !host.equals(node.getPeer().getHost())){
                     System.out.println("[bcst] "+host + " sends a " + msg);
@@ -73,33 +75,27 @@ public class UDPListenerHandler implements Runnable {
                 }
                 
                 if (msg.equals("disconnect") && !host.equals(node.getPeer().getHost())){
-                    System.out.println("[dis] "+host + " sends a " + msg);
-                    //new UDPSenderService().sendMessageTo(host,Peer.PORT_UDP,this.node.getPeer().getPseudonyme()+ ":" + this.node.getPeer().getPort() + ":DISCONNECTED");
+                    System.out.println("[dis] "+host + " sends a " + msg);                   
                     Peer p = new Peer(pseudo,host);
                     p.setDisco(true);
                     this.node.updatePeersList(p);
-//                    this.node.removePeer(new Peer(pseudo,host));
                 }
                 
                 if (msg.equals("rename") && !host.equals(node.getPeer().getHost())){
                     System.out.println("[rnm] "+host + " sends a " + msg);
-                    //new UDPSenderService().sendMessageTo(host,Peer.PORT_UDP,this.node.getPeer().getPseudonyme()+ ":" + this.node.getPeer().getPort() + ":DISCONNECTED");
                     this.node.updatePeersList(new Peer(pseudo,host));
-//                    this.node.removePeer(new Peer(pseudo,host));
                 }                
                 
                 if (msg.equals("OK")){
                     System.out.println("[bcst] "+host + " responds " + msg);
-//                    this.node.updatePeersList(new Peer(pseudo,host,port));
                     this.node.updatePeersList(new Peer(pseudo,host));
                 }
-               
                 
             }
             
         } catch (IOException e){
             System.out.println("ERROR: Connection failure with: "+inPacket.getAddress().getHostAddress());
-            e.printStackTrace();
+            Logger.getLogger(UDPListenerHandler.class.getName()).log(Level.SEVERE, null, e);
         } catch (Exception ex) {
             System.out.println("ERROR: Connection failure with: "+inPacket.getAddress().getHostAddress());
             Logger.getLogger(UDPListenerHandler.class.getName()).log(Level.SEVERE, null, ex);

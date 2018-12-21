@@ -8,7 +8,6 @@ package main.system.connection.service;
 import java.net.UnknownHostException;
 import main.system.connection.handler.UDPSenderHandler;
 import main.system.model.Node;
-import main.system.model.Peer;
 
 /**
  *
@@ -16,18 +15,7 @@ import main.system.model.Peer;
  */
 public class UDPSenderService implements SenderService {
 
-    @Override
-    public void sendMessageTo(Peer peer, String message) throws Exception {
-        Thread t = new Thread (new UDPSenderHandler(peer,message));
-        t.start();
-    }
 
-    @Override
-    public void sendMessageTo(String host, int port, String message) throws Exception {
-        Thread t = new Thread (new UDPSenderHandler(host,port,message));
-        t.start();
-    }
-    
     public void sendBroadcast(Node node) throws UnknownHostException{
         Thread t = new Thread (new UDPSenderHandler(node, "broadcast"));
         t.start();
@@ -41,5 +29,17 @@ public class UDPSenderService implements SenderService {
     public void sendRename(Node node) throws UnknownHostException{
         Thread t = new Thread (new UDPSenderHandler(node, "rename"));
         t.start();
-    }    
+    }
+    
+//    @Override
+//    public void sendMessageTo(Peer peer, String message) throws Exception {
+//        Thread t = new Thread (new UDPSenderHandler(peer,message));
+//        t.start();
+//    }
+
+    @Override
+    public void sendMessageTo(String host, int port, String message) throws Exception {
+        Thread t = new Thread (new UDPSenderHandler(host,port,message));
+        t.start();
+    }
 }

@@ -22,18 +22,16 @@ import main.system.model.Peer;
  */
 public class UDPSenderHandler implements Runnable{
 
-    private Peer peer;
+    /*
+    * Attributs
+    */
     private DatagramSocket dgramSocket;
-    private DatagramPacket outPacket;
-    private String message;
+    private final DatagramPacket outPacket;
+    private final String message;
     
-    public UDPSenderHandler(Peer peer, String message) throws UnknownHostException{
-        this.peer = peer;
-        this.message = message;
-        outPacket = new DatagramPacket(message.getBytes(),message.length());
-        outPacket.setAddress(InetAddress.getByName(peer.getHost()));
-        outPacket.setPort(peer.getPort());
-    }
+    /*
+    *   Constructors
+    */
     
     public UDPSenderHandler(String host, int port, String message) throws UnknownHostException{
         this.message = message;
@@ -43,13 +41,10 @@ public class UDPSenderHandler implements Runnable{
     }
 
     public UDPSenderHandler(Node node, String msg) throws UnknownHostException {
-        this.peer = node.getPeer();
-
         this.message = node.getPeer().getPseudonyme() + ":" + node.getPeer().getPort() + ":" + msg;
-//        this.message = node.getPeer().getPseudonyme() + ":broadcast";
-        //System.out.println(node.getPeer().getBroadcast().getHostName());
+//        System.out.println(node.getPeer().getBroadcast().getHostName());
         outPacket = new DatagramPacket(this.message.getBytes(),this.message.length());
-        //outPacket.setAddress(node.getPeer().getBroadcast());
+//        outPacket.setAddress(node.getPeer().getBroadcast());
         outPacket.setAddress(InetAddress.getByName("255.255.255.255"));
         outPacket.setPort(Peer.PORT_UDP);
     }
