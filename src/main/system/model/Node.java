@@ -46,6 +46,10 @@ public class Node {
     public String getMsg() {
         return this.msg;
     }
+    
+    public void setMsg(String s) {
+        this.msg = s;
+    }
 
     public String userName(){
         return this.peer.getPseudonyme();

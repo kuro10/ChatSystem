@@ -121,9 +121,11 @@ public class ChangeName extends javax.swing.JFrame {
         
         /* First, check the new name */
         String newName = nicknameField.getText();
+        String oldName = this.node.getPeer().getPseudonyme();
         if (this.checkNameUniq(newName)) {
             this.node.getPeer().setPseudonyme(newName);
             this.home.setNicknameLabel("Your nickname : " + newName);
+            this.home.writeNoti(oldName + " has changed name to " + newName + System.lineSeparator());
             this.confirm = true;
             /* Ok, then sends a broadcast to inform */
             try {
