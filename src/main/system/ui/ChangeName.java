@@ -5,9 +5,11 @@
  */
 package main.system.ui;
 
+import java.awt.event.KeyEvent;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 import main.system.connection.service.UDPSenderService;
 import main.system.model.Node;
@@ -55,8 +57,19 @@ public class ChangeName extends javax.swing.JFrame {
         warningLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         titreLabel.setText(" Enter your new nickname : ");
+
+        nicknameField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                nicknameFieldKeyPressed(evt);
+            }
+        });
 
         cancelButton.setText("Cancel");
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
@@ -122,7 +135,7 @@ public class ChangeName extends javax.swing.JFrame {
         /* First, check the new name */
         String newName = nicknameField.getText();
         String oldName = this.node.getPeer().getPseudonyme();
-        if (this.checkNameUniq(newName)) {
+        if (this.checkNameUniq(newName) && !newName.equals("") && !newName.equals(oldName)) {
             this.node.getPeer().setPseudonyme(newName);
             this.home.setNicknameLabel("Your nickname : " + newName);
             this.home.writeNoti(oldName + " has changed name to " + newName + System.lineSeparator());
@@ -144,6 +157,43 @@ public class ChangeName extends javax.swing.JFrame {
             warningLabel.setText("This name has been used !");
         }
     }//GEN-LAST:event_confirmButtonActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        /* Close the rename window */
+        this.setVisible(false);
+        this.dispose();
+    }//GEN-LAST:event_formWindowClosing
+
+    private void nicknameFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nicknameFieldKeyPressed
+        // TODO add your handling code here:
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            String newName = nicknameField.getText();
+            String oldName = this.node.getPeer().getPseudonyme();
+            if (this.checkNameUniq(newName) && !newName.equals("") && !newName.equals(oldName)) {
+                this.node.getPeer().setPseudonyme(newName);
+                this.home.setNicknameLabel("Your nickname : " + newName);
+                this.home.writeNoti(oldName + " has changed name to " + newName + System.lineSeparator());
+                this.confirm = true;
+                /* Ok, then sends a broadcast to inform */
+                try {
+                    new UDPSenderService().sendRename(node);
+                } catch (UnknownHostException ex) {
+                    Logger.getLogger(ChangeName.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                //TODO Inform other users ?
+
+                /* Done and close */
+                this.setVisible(false);
+                setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+                this.dispose();
+            }
+            else {
+                warningLabel.setText("This name has been used !");
+            }
+        }
+    }//GEN-LAST:event_nicknameFieldKeyPressed
     
     /**
      * Creates new methods

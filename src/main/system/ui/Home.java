@@ -5,11 +5,13 @@
  */
 package main.system.ui;
 
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
 import javax.swing.ListModel;
 import javax.swing.WindowConstants;
 import main.system.connection.handler.TCPListenerHandler;
@@ -73,6 +75,11 @@ public class Home extends javax.swing.JFrame {
         renameButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         titleLabel.setForeground(new java.awt.Color(51, 51, 250));
         titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -243,6 +250,26 @@ public class Home extends javax.swing.JFrame {
 //        }
     }//GEN-LAST:event_notiBoxMouseEntered
 
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        /* Send a broadcast to inform a disconnection */
+        try {
+            new UDPSenderService().sendDisconnect(this.node);
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
+//        System.out.println(this.node.getPeer().getStatusDisconnect());
+
+        /* Then, close the homepage and back to login window */
+        this.node.closeAllChatWindow();
+        this.setVisible(false);
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        //this.dispose();
+        Login loginWindow = new Login(node);
+        loginWindow.setTitle("You have disconnected.");
+        loginWindow.display();   
+    }//GEN-LAST:event_formWindowClosing
+
 
     /**
      * Creates methods
@@ -256,16 +283,16 @@ public class Home extends javax.swing.JFrame {
         return this.node;
     }
     
-    public Boolean checkNameUniq() {
-        Boolean res = true;
-        for (Peer p : this.node.getOnlinePeers()) {
-            System.out.println(p.getPseudonyme());
-            if (this.node.getPeer().getPseudonyme().equals(p.getPseudonyme())) {
-                res = false;
-            }
-        }
-        return res;
-    }
+//    public Boolean checkNameUniq() {
+//        Boolean res = true;
+//        for (Peer p : this.node.getOnlinePeers()) {
+//            System.out.println(p.getPseudonyme());
+//            if (this.node.getPeer().getPseudonyme().equals(p.getPseudonyme())) {
+//                res = false;
+//            }
+//        }
+//        return res;
+//    }
     
     public void removeFromList(Peer p) {
         this.listFriendsOnlineModel.removeElement(p.getPseudonyme()+ ":"+ p.getHost()+":"+p.getPort());
@@ -276,6 +303,8 @@ public class Home extends javax.swing.JFrame {
         this.setVisible(true);
     }
     
+    
+    
     public DefaultListModel getFriendList() {
         return listFriendsOnlineModel;
     }
@@ -283,36 +312,7 @@ public class Home extends javax.swing.JFrame {
     public void writeNoti(String s) {
         notiBox.append(s + System.lineSeparator());
     }
-//    public void updateNotiBox() {
-//            if (this.node.getMsg() != "") {
-//                notiBox.append(this.node.getMsg() + System.lineSeparator());
-//                this.node.setMsg("");
-//            }
-//        
-//    }
-    
-//    public void updateHome() {
-//        /* Update list friends online */
-//        listFriendsOnlineModel.removeAllElements();
-//        for(Peer p : node.getOnlinePeers()){ 
-//            if (p.getStatusDisconnect() == false){ //!(this.node.getPeer().getPseudonyme().equals(p.getPseudonyme())) && 
-//                listFriendsOnlineModel.addElement(p.getPseudonyme()+ ":"+ p.getHost()+":"+p.getPort());           
-//                if (!this.node.existChatWindow(p)) {
-//                    MessageLog l = new MessageLog(node.getPeer(), p);
-//                    if (this.node.getHistory().existHistory(l)) {
-//                        l = this.node.getHistory().getMessageLog(node.getPeer().getHost(), p.getHost());
-//                    }
-//                    else {
-//                        this.node.getHistory().addHistory(l);
-//                    }
-//                    ChatWindow chatWindow = new ChatWindow(this.node, new Node(p), l);
-//                    this.node.setChatWindowForPeer(p, chatWindow);
-//                }
-////                System.out.println(p.getPseudonyme() + p.getStatusDisconnect());
-//            }
-//        }
-//        
-//    }
+
         
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> friendsList;

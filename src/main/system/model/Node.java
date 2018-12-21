@@ -50,13 +50,6 @@ public class Node {
     	this.peer = newPeer;
     }
     
-    public String getMsg() {
-        return this.msg;
-    }
-    
-    public void setMsg(String s) {
-        this.msg = s;
-    }
 
     public String userName(){
         return this.peer.getPseudonyme();
@@ -182,13 +175,10 @@ public class Node {
                 this.home.getFriendList().addElement(p.getPseudonyme()+ ":"+ p.getHost()+":"+p.getPort());           
                 if (!this.existChatWindow(p)) {
                     MessageLog l = new MessageLog(this.getPeer(), p);
-                                                                                       System.out.println("000");
                 if (this.history.existHistory(l)) {
-                                                                                           System.out.println("111");
                         l = this.history.getMessageLog(this.getPeer().getHost(), p.getHost());
                     }
                     else {
-                                                                                           System.out.println("222");
                         this.history.addHistory(l);
                     }
                     ChatWindow chatWindow = new ChatWindow(this, new Node(p), l);
@@ -199,7 +189,17 @@ public class Node {
         }
         
     }
-
+    
+    public Boolean checkNameUniq() {
+        Boolean res = true;
+        for (Peer p : this.getOnlinePeers()) {
+            System.out.println(p.getPseudonyme());
+            if (this.getPeer().getPseudonyme().equals(p.getPseudonyme())) {
+                res = false;
+            }
+        }
+        return res;
+    }
 
     
     @Override

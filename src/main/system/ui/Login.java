@@ -9,6 +9,8 @@ import java.awt.event.KeyEvent;
 import main.system.model.Node;
 import main.system.model.Peer;
 import java.io.IOException;
+import static java.lang.Thread.sleep;
+import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.WindowConstants;
@@ -67,6 +69,11 @@ public class Login extends javax.swing.JFrame {
         logInButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         hostLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         hostLabel.setText("Your host :");
@@ -136,11 +143,11 @@ public class Login extends javax.swing.JFrame {
     
     private void logInButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logInButtonActionPerformed
         try {
-            
+            this.setTitle("Connecting... Please Wait"); 
             // Create a node with the nickname and the host address
             Peer peer = new Peer(nicknameField.getText(), hostField.getText()); // port = portTCP = 9999
             this.node =  new Node(peer);
-;
+            //Home home = this.node.getHome();
 
             // Start a server thread TCP to listen 
             if (listenTCP != null && runnableTCP != null ){
@@ -165,10 +172,16 @@ public class Login extends javax.swing.JFrame {
             
             // Open homepage if the nickname is unique
 //            Home home = new Home(node,this.history);
-            Home home = this.node.getHome();
-            if (home.checkNameUniq()) {
-                new UDPSenderService().sendRename(this.node);
-                home.display();
+//            System.out.println(this.node.checkNameUniq());
+//            System.out.println(this.node);
+//            //this.node.getHome().display();
+//            System.out.println(this.node);
+//            System.out.println(this.node.checkNameUniq());
+            sleep(10);
+//            System.out.println(this.node);
+            if (this.node.checkNameUniq()) {
+                new UDPSenderService().sendBroadcast(this.node);
+                this.node.getHome().display();
                 this.setVisible(false);
                 setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
                 this.dispose();
@@ -177,6 +190,9 @@ public class Login extends javax.swing.JFrame {
                 new UDPSenderService().sendDisconnect(this.node);
                 this.setTitle("WARNING : This name has been used !");
             }
+            //sleep(10);
+            System.out.println(this.node);
+            System.out.println(this.node.checkNameUniq());
 
         } catch (IOException | InterruptedException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
@@ -185,54 +201,73 @@ public class Login extends javax.swing.JFrame {
 
     private void nicknameFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nicknameFieldKeyPressed
         // TODO add your handling code here:
-//        if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
-//            try {
-//
-//                 // Create a node with the nickname and the host address
-//                 Peer peer = new PeerM(nicknameField.getText(), hostField.getText()); // port = portTCP = 9999
-//                 this.node =  new Node(peer);
-//     ;
-//
-//                 // Start a server thread TCP to listen 
-//                 if (listenTCP != null && runnableTCP != null ){
-//                     runnableTCP.terminate();
-//                     listenTCP.join();
-//                 }
-//                 runnableTCP = new TCPListenerHandler(this.node, this.history); 
-//                 listenTCP = new Thread(runnableTCP);  
-//                 listenTCP.start();
-//
-//                 // This thread is used to reveice le broadcast by UDP
-//                 if (listenUDP != null && runnableUDP != null ){
-//                     runnableUDP.terminate();
-//                      listenUDP.join();
-//                  }
-//                 runnableUDP = new UDPListenerHandler(this.node); 
-//                 listenUDP = new Thread(runnableUDP);  
-//                 listenUDP.start();
-//
-//                // Send a broadcast when log in
-//                 new UDPSenderService().sendBroadcast(this.node);
-//
-//                 // Open homepage if the nickname is unique
-//                 Home home = new Home(node,this.history);
-//                 if (home.checkNameUniq()) {
-//                     new UDPSenderService().sendRename(this.node);
-//                     home.display();
-//                     this.setVisible(false);
-//                     setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-//                     this.dispose();
-//                 }
-//                 else {
-//                     new UDPSenderService().sendDisconnect(this.node);
-//                     this.setTitle("WARNING : This name has been used !");
-//                 }
-//
-//             } catch (IOException | InterruptedException ex) {
-//                 Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-//             }             
-//        }
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            try {
+                this.setTitle("Connecting... Please Wait"); 
+                // Create a node with the nickname and the host address
+                Peer peer = new Peer(nicknameField.getText(), hostField.getText()); // port = portTCP = 9999
+                this.node =  new Node(peer);
+                //Home home = this.node.getHome();
+
+                // Start a server thread TCP to listen 
+                if (listenTCP != null && runnableTCP != null ){
+                    runnableTCP.terminate();
+                    listenTCP.join();
+                }
+                runnableTCP = new TCPListenerHandler(this.node, this.history); 
+                listenTCP = new Thread(runnableTCP);  
+                listenTCP.start();
+
+                // This thread is used to reveice le broadcast by UDP
+                if (listenUDP != null && runnableUDP != null ){
+                    runnableUDP.terminate();
+                     listenUDP.join();
+                 }
+                runnableUDP = new UDPListenerHandler(this.node); 
+                listenUDP = new Thread(runnableUDP);  
+                listenUDP.start();
+
+               // Send a broadcast when log in
+                new UDPSenderService().sendBroadcast(this.node);
+
+                // Open homepage if the nickname is unique
+    //            Home home = new Home(node,this.history);
+    //            System.out.println(this.node.checkNameUniq());
+    //            System.out.println(this.node);
+    //            //this.node.getHome().display();
+    //            System.out.println(this.node);
+    //            System.out.println(this.node.checkNameUniq());
+                sleep(10);
+    //            System.out.println(this.node);
+                if (this.node.checkNameUniq()) {
+                    new UDPSenderService().sendBroadcast(this.node);
+                    this.node.getHome().display();
+                    this.setVisible(false);
+                    setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+                    this.dispose();
+                }
+                else {
+                    new UDPSenderService().sendDisconnect(this.node);
+                    this.setTitle("WARNING : This name has been used !");
+                }
+                //sleep(10);
+                System.out.println(this.node);
+                System.out.println(this.node.checkNameUniq());
+
+            } catch (IOException | InterruptedException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            } 
+        }
     }//GEN-LAST:event_nicknameFieldKeyPressed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        try {
+            // TODO add your handling code here:
+            new UDPSenderService().sendDisconnect(node);
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * Create methods
