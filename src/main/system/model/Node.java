@@ -21,7 +21,7 @@ public class Node {
     private String msg = "";
     
     private Home home;
-    private ChatHistory history = new ChatHistory();
+    private static ChatHistory history = new ChatHistory();
 
     /**
     * Creates construvtors
@@ -174,7 +174,7 @@ public class Node {
         return this.history;
     }
     
-       public void updateHome() {
+    public void updateHome() {
         /* Update list friends online */
         this.home.getFriendList().removeAllElements();
         for(Peer p : this.getOnlinePeers()){ 
@@ -182,10 +182,13 @@ public class Node {
                 this.home.getFriendList().addElement(p.getPseudonyme()+ ":"+ p.getHost()+":"+p.getPort());           
                 if (!this.existChatWindow(p)) {
                     MessageLog l = new MessageLog(this.getPeer(), p);
-                    if (this.history.existHistory(l)) {
+                                                                                       System.out.println("000");
+                if (this.history.existHistory(l)) {
+                                                                                           System.out.println("111");
                         l = this.history.getMessageLog(this.getPeer().getHost(), p.getHost());
                     }
                     else {
+                                                                                           System.out.println("222");
                         this.history.addHistory(l);
                     }
                     ChatWindow chatWindow = new ChatWindow(this, new Node(p), l);
