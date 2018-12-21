@@ -24,28 +24,21 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="nicknameLabel" min="-2" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="portLabel" min="-2" max="-2" attributes="0"/>
-                              <Component id="hostLabel" min="-2" max="-2" attributes="0"/>
-                              <Component id="nicknameField" alignment="0" max="32767" attributes="0"/>
-                              <Component id="hostField" alignment="0" max="32767" attributes="0"/>
-                              <Component id="portField" pref="175" max="32767" attributes="0"/>
-                          </Group>
-                          <Component id="titleLabel" alignment="0" min="-2" pref="175" max="-2" attributes="0"/>
-                      </Group>
+                  <Component id="nicknameLabel" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="portLabel" min="-2" max="-2" attributes="0"/>
+                      <Component id="hostLabel" min="-2" max="-2" attributes="0"/>
+                      <Component id="nicknameField" alignment="0" max="32767" attributes="0"/>
+                      <Component id="hostField" alignment="0" max="32767" attributes="0"/>
+                      <Component id="portField" min="-2" pref="175" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="71" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="logInButton" max="32767" attributes="0"/>
-                          <Component id="chatButton" max="32767" attributes="0"/>
-                      </Group>
+                      <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                      <Component id="logInButton" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <Component id="titleLabel" min="-2" pref="175" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="25" max="32767" attributes="0"/>
           </Group>
@@ -54,9 +47,9 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-              <Component id="titleLabel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="titleLabel" pref="32" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="nicknameLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="nicknameField" min="-2" max="-2" attributes="0"/>
@@ -70,9 +63,7 @@
               <Component id="portField" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="logInButton" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="chatButton" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="17" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -94,9 +85,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="nicknameField">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="nicknameFieldActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="hostField">
       <Properties>
@@ -127,14 +115,6 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="logInButtonActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="chatButton">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Chat"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chatButtonActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

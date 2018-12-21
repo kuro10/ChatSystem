@@ -18,57 +18,26 @@ import main.system.model.Peer;
  * @author Kuro10
  */
 public class ChangeName extends javax.swing.JFrame {
-    private ChatWindow ui;
+    
+    /**
+     * Creates attributs
+     */
+    
     private Home home;
     private Node node;
     private Boolean confirm = false;
     
     /**
      * Creates new form ChangeName
+     * @param node
      */
-    public ChangeName() {
-        initComponents();
-    }
-    
-    public ChangeName(Node node) {
-        initComponents();
-        this.node = node;
-    }
-
-//    public ChangeName(Node node, ChatWindow ui) {
-//        initComponents();
-//        this.node = node;
-//        this.ui = ui;
-//    }
-    
+ 
     public ChangeName(Node node, Home home) {
         initComponents();
         this.node = node;
         this.home = home;
     }    
     
-    public String getNewNickname(){
-        if (this.confirm)
-            return nicknameField.getText();
-        else 
-            return node.getPeer().getPseudonyme();
-    }
- 
-    public Boolean checkNameUniq(String name) {
-        Boolean res = true;
-        for (Peer p : this.home.getNode().getOnlinePeers()) {
-            System.out.println(p.getPseudonyme());
-            if (p.getPseudonyme().equals(name)) {
-                res = false;
-            }
-        }
-        return res;
-    }
-    
-    public void display(){
-        this.setLocationRelativeTo(null); 
-        this.setVisible(true);
-    }
         
     /**
      * This method is called from within the constructor to initialize the form.
@@ -141,24 +110,30 @@ public class ChangeName extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        // TODO add your handling code here:
+
+        /* Close the rename window */
         this.setVisible(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void confirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmButtonActionPerformed
+        
+        /* First, check the new name */
         String newName = nicknameField.getText();
         if (this.checkNameUniq(newName)) {
             this.node.getPeer().setPseudonyme(newName);
             this.home.setNicknameLabel("Your nickname : " + newName);
             this.confirm = true;
+            /* Ok, then sends a broadcast to inform */
             try {
                 new UDPSenderService().sendRename(node);
             } catch (UnknownHostException ex) {
                 Logger.getLogger(ChangeName.class.getName()).log(Level.SEVERE, null, ex);
             }
             //TODO Inform other users ?
+            
+            /* Done and close */
             this.setVisible(false);
             setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             this.dispose();
@@ -169,39 +144,32 @@ public class ChangeName extends javax.swing.JFrame {
     }//GEN-LAST:event_confirmButtonActionPerformed
     
     /**
-     * @param args the command line arguments
+     * Creates new methods
      */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(ChangeName.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(ChangeName.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(ChangeName.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(ChangeName.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                new ChangeName().setVisible(true);
-//            }
-//        });
-//    }
+    
+    public String getNewNickname(){
+        if (this.confirm)
+            return nicknameField.getText();
+        else 
+            return node.getPeer().getPseudonyme();
+    }
+ 
+    public Boolean checkNameUniq(String name) {
+        Boolean res = true;
+        for (Peer p : this.home.getNode().getOnlinePeers()) {
+            System.out.println(p.getPseudonyme());
+            if (p.getPseudonyme().equals(name)) {
+                res = false;
+            }
+        }
+        return res;
+    }
+    
+    public void display(){
+        this.setLocationRelativeTo(null); 
+        this.setVisible(true);
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;
