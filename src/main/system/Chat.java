@@ -30,9 +30,6 @@ public class Chat {
         
         Login loginWindow = new Login(node);
         loginWindow.display();
-        
-        //ChatWindow chatWindow = new ChatWindow();
-        //chatWindow.display();
     }
     
     private static InetAddress getLocalAddress(){
@@ -50,8 +47,6 @@ public class Chat {
     }
     
     public static String getAddressIP() {
-        
-        
         
         return null;
     }
