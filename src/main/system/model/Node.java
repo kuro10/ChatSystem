@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import main.system.data.ChatHistory;
+import main.system.data.MessageLog;
 import main.system.ui.ChatWindow;
 import main.system.ui.Home;
 
@@ -174,6 +175,29 @@ public class Node {
     
     public ChatHistory getHistory() {
         return this.history;
+    }
+    
+       public void updateHome() {
+        /* Update list friends online */
+        this.home.getFriendList().removeAllElements();
+        for(Peer p : this.getOnlinePeers()){ 
+            if (p.getStatusDisconnect() == false){ //!(this.node.getPeer().getPseudonyme().equals(p.getPseudonyme())) && 
+                this.home.getFriendList().addElement(p.getPseudonyme()+ ":"+ p.getHost()+":"+p.getPort());           
+                if (!this.existChatWindow(p)) {
+                    MessageLog l = new MessageLog(this.getPeer(), p);
+                    if (this.history.existHistory(l)) {
+                        l = this.history.getMessageLog(this.getPeer().getHost(), p.getHost());
+                    }
+                    else {
+                        this.history.addHistory(l);
+                    }
+                    ChatWindow chatWindow = new ChatWindow(this, new Node(p), l);
+                    this.setChatWindowForPeer(p, chatWindow);
+                }
+//                System.out.println(p.getPseudonyme() + p.getStatusDisconnect());
+            }
+        }
+        
     }
 
 

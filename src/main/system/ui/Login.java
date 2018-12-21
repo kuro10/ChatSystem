@@ -60,30 +60,27 @@ public class Login extends javax.swing.JFrame {
 
         hostLabel = new javax.swing.JLabel();
         nicknameLabel = new javax.swing.JLabel();
-        portLabel = new javax.swing.JLabel();
         nicknameField = new javax.swing.JTextField();
         hostField = new javax.swing.JTextField();
-        portField = new javax.swing.JTextField();
         titleLabel = new javax.swing.JLabel();
         logInButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        hostLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         hostLabel.setText("Your host :");
 
+        nicknameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         nicknameLabel.setText("Your nickname :");
 
-        portLabel.setText("Port :");
+        nicknameField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                nicknameFieldKeyPressed(evt);
+            }
+        });
 
         hostField.setEditable(false);
         hostField.setText("localhost");
-
-        portField.setEditable(false);
-        portField.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                portFieldKeyPressed(evt);
-            }
-        });
 
         titleLabel.setForeground(new java.awt.Color(250, 0, 0));
         titleLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -103,25 +100,23 @@ public class Login extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(nicknameLabel)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(portLabel)
-                        .addComponent(hostLabel)
-                        .addComponent(nicknameField)
-                        .addComponent(hostField)
-                        .addComponent(portField, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addComponent(logInButton))
-                    .addComponent(titleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(25, Short.MAX_VALUE))
+                    .addComponent(hostField)
+                    .addComponent(nicknameField)
+                    .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nicknameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(hostLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(129, 129, 129)
+                .addComponent(logInButton, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(120, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(6, 6, 6)
+                .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(nicknameLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(nicknameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -129,11 +124,7 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(hostLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(hostField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(portLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(portField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(logInButton)
                 .addContainerGap())
         );
@@ -190,10 +181,56 @@ public class Login extends javax.swing.JFrame {
         } 
     }//GEN-LAST:event_logInButtonActionPerformed
 
-    private void portFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_portFieldKeyPressed
+    private void nicknameFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nicknameFieldKeyPressed
         // TODO add your handling code here:
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            try {
 
-    }//GEN-LAST:event_portFieldKeyPressed
+                 // Create a node with the nickname and the host address
+                 Peer peer = new Peer(nicknameField.getText(), hostField.getText()); // port = portTCP = 9999
+                 this.node =  new Node(peer);
+     ;
+
+                 // Start a server thread TCP to listen 
+                 if (listenTCP != null && runnableTCP != null ){
+                     runnableTCP.terminate();
+                     listenTCP.join();
+                 }
+                 runnableTCP = new TCPListenerHandler(this.node, this.history); 
+                 listenTCP = new Thread(runnableTCP);  
+                 listenTCP.start();
+
+                 // This thread is used to reveice le broadcast by UDP
+                 if (listenUDP != null && runnableUDP != null ){
+                     runnableUDP.terminate();
+                      listenUDP.join();
+                  }
+                 runnableUDP = new UDPListenerHandler(this.node); 
+                 listenUDP = new Thread(runnableUDP);  
+                 listenUDP.start();
+
+                // Send a broadcast when log in
+                 new UDPSenderService().sendBroadcast(this.node);
+
+                 // Open homepage if the nickname is unique
+                 Home home = new Home(node,this.history);
+                 if (home.checkNameUniq()) {
+                     new UDPSenderService().sendRename(this.node);
+                     home.display();
+                     this.setVisible(false);
+                     setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+                     this.dispose();
+                 }
+                 else {
+                     new UDPSenderService().sendDisconnect(this.node);
+                     this.setTitle("WARNING : This name has been used !");
+                 }
+
+             } catch (IOException | InterruptedException ex) {
+                 Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+             }             
+        }
+    }//GEN-LAST:event_nicknameFieldKeyPressed
 
     /**
      * Create methods
@@ -215,8 +252,6 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JButton logInButton;
     private javax.swing.JTextField nicknameField;
     private javax.swing.JLabel nicknameLabel;
-    private javax.swing.JTextField portField;
-    private javax.swing.JLabel portLabel;
     private javax.swing.JLabel titleLabel;
     // End of variables declaration//GEN-END:variables
 

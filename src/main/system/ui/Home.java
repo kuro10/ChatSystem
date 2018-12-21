@@ -222,7 +222,7 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_logOutButtonActionPerformed
 
     private void friendsListMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_friendsListMouseEntered
-        this.updateHome();
+        this.node.updateHome();
     }//GEN-LAST:event_friendsListMouseEntered
 
     private void renameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_renameButtonActionPerformed
@@ -276,31 +276,43 @@ public class Home extends javax.swing.JFrame {
         this.setVisible(true);
     }
     
+    public DefaultListModel getFriendList() {
+        return listFriendsOnlineModel;
+    }
+    
     public void writeNoti(String s) {
         notiBox.append(s + System.lineSeparator());
     }
+//    public void updateNotiBox() {
+//            if (this.node.getMsg() != "") {
+//                notiBox.append(this.node.getMsg() + System.lineSeparator());
+//                this.node.setMsg("");
+//            }
+//        
+//    }
     
-    public void updateHome() {
-        /* Update list friends online */
-        listFriendsOnlineModel.removeAllElements();
-        for(Peer p : node.getOnlinePeers()){ 
-            if (p.getStatusDisconnect() == false){ //!(this.node.getPeer().getPseudonyme().equals(p.getPseudonyme())) && 
-                listFriendsOnlineModel.addElement(p.getPseudonyme()+ ":"+ p.getHost()+":"+p.getPort());           
-                if (!this.node.existChatWindow(p)) {
-                    MessageLog l = new MessageLog(node.getPeer(), p);
-                    if (this.node.getHistory().existHistory(l)) {
-                        l = this.node.getHistory().getMessageLog(node.getPeer().getHost(), p.getHost());
-                    }
-                    else {
-                        this.node.getHistory().addHistory(l);
-                    }
-                    ChatWindow chatWindow = new ChatWindow(this.node, new Node(p), l);
-                    this.node.setChatWindowForPeer(p, chatWindow);
-                }
-//                System.out.println(p.getPseudonyme() + p.getStatusDisconnect());
-            }
-        }
-    }
+//    public void updateHome() {
+//        /* Update list friends online */
+//        listFriendsOnlineModel.removeAllElements();
+//        for(Peer p : node.getOnlinePeers()){ 
+//            if (p.getStatusDisconnect() == false){ //!(this.node.getPeer().getPseudonyme().equals(p.getPseudonyme())) && 
+//                listFriendsOnlineModel.addElement(p.getPseudonyme()+ ":"+ p.getHost()+":"+p.getPort());           
+//                if (!this.node.existChatWindow(p)) {
+//                    MessageLog l = new MessageLog(node.getPeer(), p);
+//                    if (this.node.getHistory().existHistory(l)) {
+//                        l = this.node.getHistory().getMessageLog(node.getPeer().getHost(), p.getHost());
+//                    }
+//                    else {
+//                        this.node.getHistory().addHistory(l);
+//                    }
+//                    ChatWindow chatWindow = new ChatWindow(this.node, new Node(p), l);
+//                    this.node.setChatWindowForPeer(p, chatWindow);
+//                }
+////                System.out.println(p.getPseudonyme() + p.getStatusDisconnect());
+//            }
+//        }
+//        
+//    }
         
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> friendsList;

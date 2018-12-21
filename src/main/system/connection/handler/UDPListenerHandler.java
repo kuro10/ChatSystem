@@ -69,7 +69,7 @@ public class UDPListenerHandler implements Runnable {
                     System.out.println("[bcst] "+host + " sends a " + msg);
                     new UDPSenderService().sendMessageTo(host,Peer.PORT_UDP,this.node.getPeer().getPseudonyme()+ ":" + this.node.getPeer().getPort() + ":OK");
                     this.node.updatePeersList(new Peer(pseudo,host));
-                    this.node.getHome().updateHome();
+                    //this.node.getHome().updateHome();
 //                    Peer p = new Peer(pseudo,host);
 //                    p.setDisco(false);
 //                    this.node.updatePeersList(p);
@@ -80,21 +80,22 @@ public class UDPListenerHandler implements Runnable {
                     Peer p = new Peer(pseudo,host);
                     p.setDisco(true);
                     this.node.updatePeersList(p);
-                    this.node.getHome().updateHome();                    
+                    //this.node.getHome().updateHome();                    
                 }
                 
                 if (msg.equals("rename") && !host.equals(node.getPeer().getHost())){
                     System.out.println("[rnm] "+host + " sends a " + msg);
                     String oldName = this.node.findNicknameByHost(host);
                     this.node.updatePeersList(new Peer(pseudo,host));
-                    this.node.setMsg(oldName + " changed name to " + pseudo);
-                    this.node.getHome().updateHome();                    
+                    //this.node.setMsg(oldName + " changed name to " + pseudo);
+                    //this.node.getHome().updateHome();
+                    this.node.getHome().writeNoti(oldName + " changed name to " + pseudo);
                 }                
                 
                 if (msg.equals("OK")){
                     System.out.println("[bcst] "+host + " responds " + msg);
                     this.node.updatePeersList(new Peer(pseudo,host));
-                    this.node.getHome().updateHome();                    
+                    //this.node.getHome().updateHome();                    
                 }
                 
             }
