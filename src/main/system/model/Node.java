@@ -8,7 +8,9 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import main.system.data.ChatHistory;
 import main.system.ui.ChatWindow;
+import main.system.ui.Home;
 
 public class Node {
 
@@ -16,6 +18,9 @@ public class Node {
     private final ArrayList<Peer> onlinePeers;
     private final HashMap<String, ChatWindow> chatWindowForPeer;//String -> ipAddress
     private String msg = "";
+    
+    private Home home;
+    private ChatHistory history = new ChatHistory();
 
     /**
     * Creates construvtors
@@ -25,6 +30,7 @@ public class Node {
             this.peer = peer;
             this.onlinePeers = new ArrayList();
             this.chatWindowForPeer = new HashMap<>();
+            this.home = new Home(this, history);
     }
 
     /**
@@ -69,6 +75,7 @@ public class Node {
         }
         //this.onlinePeers.remove(peer);
     }
+    
     
 
     
@@ -128,6 +135,11 @@ public class Node {
             c.closeWindow();
         }
     }
+    
+    public Home getHome() {
+        return this.home;
+    }
+    
     public String findNicknameByHost (String host) {
     	// TODO
         String res = "";
@@ -160,6 +172,8 @@ public class Node {
         return null;
     }
 
+
+    
     @Override
     public String toString(){
     String str = "This peer is " + this.peer.toString()+  " and his friends list :\n";

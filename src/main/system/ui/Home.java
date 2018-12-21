@@ -33,7 +33,7 @@ public class Home extends javax.swing.JFrame {
     DefaultListModel<String> listFriendsOnlineModel;
     static Thread listenTCP = null;
     static TCPListenerHandler runnableTCP = null;
-    public static ChatHistory history = new ChatHistory();
+    public static ChatHistory history;
     
     /**
      * Creates new form Home
@@ -224,27 +224,7 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_logOutButtonActionPerformed
 
     private void friendsListMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_friendsListMouseEntered
-
-        /* Update list friends online */
-        listFriendsOnlineModel.removeAllElements();
-        for(Peer p : node.getOnlinePeers()){ 
-            if (p.getStatusDisconnect() == false){ //!(this.node.getPeer().getPseudonyme().equals(p.getPseudonyme())) && 
-                listFriendsOnlineModel.addElement(p.getPseudonyme()+ ":"+ p.getHost()+":"+p.getPort());
-                if (!this.node.existChatWindow(p)) {
-                    MessageLog l = new MessageLog(node.getPeer(), p);
-                    if (history.existHistory(l)) {
-                        l = history.getMessageLog(node.getPeer().getHost(), p.getHost());
-                    }
-                    else {
-                        history.addHistory(l);
-                    }
-                    ChatWindow chatWindow = new ChatWindow(this.node, new Node(p), l);
-                    this.node.setChatWindowForPeer(p, chatWindow);
-                }
-//                System.out.println(p.getPseudonyme() + p.getStatusDisconnect());
-            }
-        }
-        
+        this.updateHome();
     }//GEN-LAST:event_friendsListMouseEntered
 
     private void renameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_renameButtonActionPerformed
@@ -255,14 +235,7 @@ public class Home extends javax.swing.JFrame {
 //        System.out.println(this.node.getPeer().getPseudonyme());
     }//GEN-LAST:event_renameButtonActionPerformed
 
-    private void updateNotiBox() {
-        while(true) {
-            if (this.node.getMsg() != "") {
-                notiBox.append(this.node.getMsg() + System.lineSeparator());
-                this.node.setMsg("");
-            }
-        }
-    }
+
     
     private void notiBoxMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_notiBoxMouseEntered
         // TODO add your handling code here:
@@ -305,6 +278,37 @@ public class Home extends javax.swing.JFrame {
         this.setVisible(true);
     }
     
+    public void updateNotiBox() {
+        while(true) {
+            if (this.node.getMsg() != "") {
+                notiBox.append(this.node.getMsg() + System.lineSeparator());
+                this.node.setMsg("");
+            }
+        }
+    }
+    
+    public void updateHome() {
+        /* Update list friends online */
+        listFriendsOnlineModel.removeAllElements();
+        for(Peer p : node.getOnlinePeers()){ 
+            if (p.getStatusDisconnect() == false){ //!(this.node.getPeer().getPseudonyme().equals(p.getPseudonyme())) && 
+                listFriendsOnlineModel.addElement(p.getPseudonyme()+ ":"+ p.getHost()+":"+p.getPort());
+                if (!this.node.existChatWindow(p)) {
+                    MessageLog l = new MessageLog(node.getPeer(), p);
+                    if (history.existHistory(l)) {
+                        l = history.getMessageLog(node.getPeer().getHost(), p.getHost());
+                    }
+                    else {
+                        history.addHistory(l);
+                    }
+                    ChatWindow chatWindow = new ChatWindow(this.node, new Node(p), l);
+                    this.node.setChatWindowForPeer(p, chatWindow);
+                }
+//                System.out.println(p.getPseudonyme() + p.getStatusDisconnect());
+            }
+        }
+    }
+        
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> friendsList;
     private javax.swing.JLabel jLabel1;
