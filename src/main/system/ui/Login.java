@@ -163,9 +163,10 @@ public class Login extends javax.swing.JFrame {
             new UDPSenderService().sendBroadcast(this.node);
             
             // Open homepage if the nickname is unique
-            Home home = new Home(node,this.history);
+//            Home home = new Home(node,this.history);
+            Home home = this.node.getHome();
             if (home.checkNameUniq()) {
-                new UDPSenderService().sendRename(this.node);
+                new UDPSenderService().sendBroadcast(this.node);
                 home.display();
                 this.setVisible(false);
                 setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

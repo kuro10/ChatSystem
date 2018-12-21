@@ -76,10 +76,7 @@ public class Node {
         }
         //this.onlinePeers.remove(peer);
     }
-    
-    
 
-    
     /* Update list of Peers when a peer in the list has changed his nickname */
     public void updatePeersList(Peer peer1) {
     	// TODO
