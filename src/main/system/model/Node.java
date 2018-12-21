@@ -42,6 +42,10 @@ public class Node {
     public void update (Peer newPeer) {
     	this.peer = newPeer;
     }
+    
+    public String getMsg() {
+        return this.msg;
+    }
 
     public String userName(){
         return this.peer.getPseudonyme();

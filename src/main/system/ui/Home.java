@@ -163,7 +163,12 @@ public class Home extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
-    //private void update
+    private void updateNoti() {
+        while (true) {
+            if (this.node.getMsg() != null)
+            notiBox.append(this.node.getMsg() + System.lineSeparator());
+        }
+    }
     
     private void friendsListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_friendsListMouseClicked
         
