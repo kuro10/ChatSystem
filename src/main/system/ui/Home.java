@@ -292,14 +292,14 @@ public class Home extends javax.swing.JFrame {
         listFriendsOnlineModel.removeAllElements();
         for(Peer p : node.getOnlinePeers()){ 
             if (p.getStatusDisconnect() == false){ //!(this.node.getPeer().getPseudonyme().equals(p.getPseudonyme())) && 
-                listFriendsOnlineModel.addElement(p.getPseudonyme()+ ":"+ p.getHost()+":"+p.getPort());
+                listFriendsOnlineModel.addElement(p.getPseudonyme()+ ":"+ p.getHost()+":"+p.getPort());           
                 if (!this.node.existChatWindow(p)) {
                     MessageLog l = new MessageLog(node.getPeer(), p);
-                    if (history.existHistory(l)) {
-                        l = history.getMessageLog(node.getPeer().getHost(), p.getHost());
+                    if (this.node.getHistory().existHistory(l)) {
+                        l = this.node.getHistory().getMessageLog(node.getPeer().getHost(), p.getHost());
                     }
                     else {
-                        history.addHistory(l);
+                        this.node.getHistory().addHistory(l);
                     }
                     ChatWindow chatWindow = new ChatWindow(this.node, new Node(p), l);
                     this.node.setChatWindowForPeer(p, chatWindow);

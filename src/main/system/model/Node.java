@@ -171,6 +171,10 @@ public class Node {
             }
         return null;
     }
+    
+    public ChatHistory getHistory() {
+        return this.history;
+    }
 
 
     
