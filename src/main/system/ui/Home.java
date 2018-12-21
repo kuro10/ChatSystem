@@ -104,7 +104,16 @@ public class Home extends javax.swing.JFrame {
         notiBox.setEditable(false);
         notiBox.setColumns(20);
         notiBox.setRows(5);
+        notiBox.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                notiBoxMouseEntered(evt);
+            }
+        });
         jScrollPane2.setViewportView(notiBox);
+        notiBox.setWrapStyleWord(true);
+        notiBox.setLineWrap(true);
+
+        notiBox.setEditable(false);
 
         jLabel1.setText("Notifications");
 
@@ -245,6 +254,23 @@ public class Home extends javax.swing.JFrame {
         changeNameWindow.display();
 //        System.out.println(this.node.getPeer().getPseudonyme());
     }//GEN-LAST:event_renameButtonActionPerformed
+
+    private void updateNotiBox() {
+        while(true) {
+            if (this.node.getMsg() != "") {
+                notiBox.append(this.node.getMsg() + System.lineSeparator());
+                this.node.setMsg("");
+            }
+        }
+    }
+    
+    private void notiBoxMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_notiBoxMouseEntered
+        // TODO add your handling code here:
+//        if (this.node.getMsg() != "") {
+//            notiBox.append(this.node.getMsg() + System.lineSeparator());
+//            this.node.setMsg("");
+//        }
+    }//GEN-LAST:event_notiBoxMouseEntered
 
 
     /**

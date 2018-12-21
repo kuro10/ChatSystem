@@ -15,7 +15,7 @@ public class Node {
     private Peer peer;
     private final ArrayList<Peer> onlinePeers;
     private final HashMap<String, ChatWindow> chatWindowForPeer;//String -> ipAddress
-    private String msg;
+    private String msg = "";
 
     /**
     * Creates construvtors
@@ -128,9 +128,15 @@ public class Node {
             c.closeWindow();
         }
     }
-    public Peer findPeerByIPAddress (String ipAddress) {
+    public String findNicknameByHost (String host) {
     	// TODO
-    	return null;
+        String res = "";
+        for(Peer p : this.getOnlinePeers()) {
+            if (p.getHost().equals(host)) {
+                res = p.getPseudonyme();
+            }
+        }
+        return res;
     }
      
     public InetAddress getBroadcast() throws UnknownHostException {

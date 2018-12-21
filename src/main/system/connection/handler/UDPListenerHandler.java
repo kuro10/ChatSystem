@@ -83,8 +83,9 @@ public class UDPListenerHandler implements Runnable {
                 
                 if (msg.equals("rename") && !host.equals(node.getPeer().getHost())){
                     System.out.println("[rnm] "+host + " sends a " + msg);
+                    String oldName = this.node.findNicknameByHost(host);
                     this.node.updatePeersList(new Peer(pseudo,host));
-                    this.node.setMsg("Someone changed name !" + System.lineSeparator());
+                    this.node.setMsg(oldName + " changed name to " + pseudo);
                 }                
                 
                 if (msg.equals("OK")){
