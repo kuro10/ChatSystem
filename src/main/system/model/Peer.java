@@ -1,14 +1,12 @@
 package main.system.model;
 
-import java.net.InetAddress;
-import java.net.InterfaceAddress;
-import java.net.NetworkInterface;
-import java.net.SocketException;
 import java.net.UnknownHostException;
-import java.util.List;
 
 public class Peer {
 	
+    /**
+     * Attributs
+     */
     public final static int PORT_TCP = 9999;
     public final static int PORT_UDP = 4444;
 
@@ -17,7 +15,9 @@ public class Peer {
     private int port;
     private boolean disco;
 
-    //Constructors
+    /**
+     * Constructors
+     */
 
     public Peer(String host) throws UnknownHostException{
             this.host = host;
@@ -43,7 +43,9 @@ public class Peer {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    //Methods
+    /**
+     * New methods
+     */
     
     public void setPseudonyme(String pseudo) {this.pseudonyme = pseudo;}
     
@@ -67,13 +69,13 @@ public class Peer {
         return this.port;
     }
 
+    public void setPort(int localPort) {
+       this.port = localPort;
+    }
+        
     @Override
     public String toString(){
         return this.pseudonyme + " ("+ this.host+ " : "+ this.port+ ")";
     }
 
-    public void setPort(int localPort) {
-       this.port = localPort;
-    }
-    
 }

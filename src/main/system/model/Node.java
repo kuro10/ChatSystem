@@ -13,10 +13,12 @@ import main.system.ui.ChatWindow;
 public class Node {
 
     private Peer peer;
-    private ArrayList<Peer> onlinePeers;
-    private HashMap<String, ChatWindow> chatWindowForPeer;//String -> ipAddress
+    private final ArrayList<Peer> onlinePeers;
+    private final HashMap<String, ChatWindow> chatWindowForPeer;//String -> ipAddress
 
-    //constructors
+    /**
+    * Creates construvtors
+    */
 
     public Node(Peer peer) {
             this.peer = peer;
@@ -24,7 +26,9 @@ public class Node {
             this.chatWindowForPeer = new HashMap<>();
     }
 
-    //methods
+    /**
+     * Creates new methods
+     */
 
     public ArrayList<Peer> getOnlinePeers() {
         return this.onlinePeers;
