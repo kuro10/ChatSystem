@@ -52,9 +52,7 @@ public class Home extends javax.swing.JFrame {
         this.nicknameLabel.setText("Your nickname : " + node.getPeer().getPseudonyme());
     }
     
-    public void writeNoti(String s) {
-        notiBox.append(s);
-    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -278,13 +276,8 @@ public class Home extends javax.swing.JFrame {
         this.setVisible(true);
     }
     
-    public void updateNotiBox() {
-        while(true) {
-            if (this.node.getMsg() != "") {
-                notiBox.append(this.node.getMsg() + System.lineSeparator());
-                this.node.setMsg("");
-            }
-        }
+    public void writeNoti(String s) {
+        notiBox.append(s + System.lineSeparator());
     }
     
     public void updateHome() {
