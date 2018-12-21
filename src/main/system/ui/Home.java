@@ -20,7 +20,7 @@ import main.system.model.Node;
 import main.system.model.Peer;
 import static main.system.ui.Login.listenTCP;
 
-/**
+/***
  *
  * @author th_tran
  */
@@ -162,7 +162,9 @@ public class Home extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    //private void update
+    
     private void friendsListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_friendsListMouseClicked
         
         if(!friendsList.isSelectionEmpty()){
@@ -176,9 +178,9 @@ public class Home extends javax.swing.JFrame {
             try {
                 Node client = new Node(new Peer(seg[0],seg[1]));
                 this.node.getChatWindowForPeer(client.getPeer().getHost()).display();
-                this.setVisible(false);
-                setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-                this.dispose();   
+                //this.setVisible(false);
+                //setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+                //this.dispose();   
             } catch (IOException ex) {
                 Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -196,6 +198,7 @@ public class Home extends javax.swing.JFrame {
 //        System.out.println(this.node.getPeer().getStatusDisconnect());
 
         /* Then, close the homepage and back to login window */
+        this.node.closeAllChatWindow();
         this.setVisible(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.dispose();

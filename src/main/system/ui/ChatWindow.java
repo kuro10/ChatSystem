@@ -199,6 +199,11 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
         this.setLocationRelativeTo(null); 
         this.setVisible(true);
     }
+    
+    public void closeWindow() {
+        this.setVisible(false);     
+    }
+    
     public String timeStamp() {
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("[HH:mm, dd/MM/yyyy] - ");

@@ -15,6 +15,7 @@ public class Node {
     private Peer peer;
     private final ArrayList<Peer> onlinePeers;
     private final HashMap<String, ChatWindow> chatWindowForPeer;//String -> ipAddress
+    private String msg;
 
     /**
     * Creates construvtors
@@ -61,6 +62,8 @@ public class Node {
         //this.onlinePeers.remove(peer);
     }
     
+
+    
     /* Update list of Peers when a peer in the list has changed his nickname */
     public void updatePeersList(Peer peer1) {
     	// TODO
@@ -76,6 +79,7 @@ public class Node {
                 else{
                     System.out.println(" Name change "+ peerInList.getPseudonyme()+" > "+peer1.getPseudonyme());
                     peerInList.setPseudonyme(peer1.getPseudonyme());
+                    this.msg = " Name change "+ peerInList.getPseudonyme()+" > "+peer1.getPseudonyme();
                 }
 //                if (peerInList.getPort()==peer1.getPort()) {
 //                }
@@ -111,6 +115,11 @@ public class Node {
         return this.chatWindowForPeer.containsKey(p.getHost());
     }
     
+    public void closeAllChatWindow() {
+        for (ChatWindow c : chatWindowForPeer.values()) {
+            c.closeWindow();
+        }
+    }
     public Peer findPeerByIPAddress (String ipAddress) {
     	// TODO
     	return null;
