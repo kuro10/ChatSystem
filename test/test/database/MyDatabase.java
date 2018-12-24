@@ -19,7 +19,7 @@ public class MyDatabase {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             System.out.println("Le pilote JDBC MySQL a été chargé");
-            connexion = DriverManager.getConnection("jdbc:mysql://localhost/bdd", "root", "kuro");
+            connexion = DriverManager.getConnection("jdbc:mysql://localhost/DATABASE_NAME", "root", "PASSWORD");
             Statement state = connexion.createStatement();
             ResultSet result = state.executeQuery("SELECT * FROM user");
             ResultSetMetaData resultMeta = result.getMetaData();
