@@ -246,7 +246,6 @@ public class Login extends javax.swing.JFrame {
 
     private void passwordFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFieldKeyPressed
         // TODO add your handling code here:
-        // TODO add your handling code here:
         if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
             /* Check the password if it is valid*/
             if (isValid(nicknameField.getText(),String.valueOf(passwordField.getPassword()))){
