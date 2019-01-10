@@ -72,9 +72,10 @@ public class Login extends javax.swing.JFrame {
         titleLabel = new javax.swing.JLabel();
         logInButton = new javax.swing.JButton();
         passwordLabel = new javax.swing.JLabel();
-        passwordField = new javax.swing.JTextField();
+        passwordField = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setSize(new java.awt.Dimension(0, 0));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -123,17 +124,17 @@ public class Login extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(logInButton, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(111, 111, 111))
-                    .addComponent(passwordField, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(passwordLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(hostField)
                     .addComponent(nicknameField)
-                    .addComponent(nicknameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE)
-                    .addComponent(hostLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(nicknameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(hostLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(passwordField)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(logInButton, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(titleLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -149,13 +150,13 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(passwordLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(hostLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(hostField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(logInButton)
-                .addContainerGap())
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         pack();
@@ -165,7 +166,7 @@ public class Login extends javax.swing.JFrame {
     private void logInButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logInButtonActionPerformed
 
         /* Check the password if it is valid*/
-        if (isValid(nicknameField.getText(),passwordField.getText())){
+        if (isValid(nicknameField.getText(),String.valueOf(passwordField.getPassword()))){
             try {
                this.setTitle("Connecting... Please Wait");
                /* Create a node with the nickname and the host address */
@@ -223,7 +224,7 @@ public class Login extends javax.swing.JFrame {
             }
         }       
         else{ 
-            this.setTitle("ERROR : User not found or password incorrect !");
+            this.setTitle("<html>ERROR : User not found or password incorrect !</html>");
         }
 
     
@@ -245,9 +246,10 @@ public class Login extends javax.swing.JFrame {
 
     private void passwordFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFieldKeyPressed
         // TODO add your handling code here:
+        // TODO add your handling code here:
         if(evt.getKeyCode() == KeyEvent.VK_ENTER) {
             /* Check the password if it is valid*/
-            if (isValid(nicknameField.getText(),passwordField.getText())){
+            if (isValid(nicknameField.getText(),String.valueOf(passwordField.getPassword()))){
                 try {
                    this.setTitle("Connecting... Please Wait");
                    /* Create a node with the nickname and the host address */
@@ -305,7 +307,7 @@ public class Login extends javax.swing.JFrame {
                 }
             }       
             else{ 
-                this.setTitle("ERROR : User not found or password incorrect !");
+                this.setTitle("<html>ERROR : User not found or password incorrect !</html>");
             } 
         }
     }//GEN-LAST:event_passwordFieldKeyPressed
@@ -322,6 +324,7 @@ public class Login extends javax.swing.JFrame {
     public static boolean isValid (String login, String password){
         boolean valid = false;
         Connection connexion = null;
+        System.out.println("Pass: "+password);
         try {
             Class.forName("com.mysql.jdbc.Driver");
             System.out.println("Le pilote JDBC MySQL a été chargé");
@@ -363,7 +366,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JButton logInButton;
     private javax.swing.JTextField nicknameField;
     private javax.swing.JLabel nicknameLabel;
-    private javax.swing.JTextField passwordField;
+    private javax.swing.JPasswordField passwordField;
     private javax.swing.JLabel passwordLabel;
     private javax.swing.JLabel titleLabel;
     // End of variables declaration//GEN-END:variables
