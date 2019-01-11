@@ -49,7 +49,8 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
         this.hostLabel.setText("My Host : " + node.getPeer().getHost());
 //        this.portLabel.setText("Port : " + node.getPeer().getPort());
         sourceport = node.getPeer().getPort();
-        this.clientLabel.setText("To : " + this.client.getPeer().getPseudonyme() + " at " + this.client.getPeer().getHost() );
+        //this.clientLabel.setText("To : " + this.client.getPeer().getPseudonyme() + " at " + this.client.getPeer().getHost() );
+        this.clientLabel.setText("To : " + client.getPeer().getPseudonyme() + " at " + client.getPeer().getHost() );
     }
 
     
@@ -72,6 +73,7 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
         clientLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle(client.getPeer().getPseudonyme() + " - ChatSystem");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
