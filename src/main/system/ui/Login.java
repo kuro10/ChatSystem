@@ -169,7 +169,7 @@ public class Login extends javax.swing.JFrame {
         /* Check the password if it is valid*/
         if (isValid(nicknameField.getText(),String.valueOf(passwordField.getPassword()))){
             try {
-               this.setTitle("Connecting... Please Wait");
+               this.titleLabel.setText("Connecting... Please Wait");
                /* Create a node with the nickname and the host address */
                Peer peer = new Peer(nicknameField.getText(), hostField.getText()); // port = portTCP = 9999
                this.node =  new Node(peer);
@@ -214,7 +214,7 @@ public class Login extends javax.swing.JFrame {
                }
                else {
                    new UDPSenderService().sendDisconnect(this.node);
-                   this.setTitle("WARNING : This name has been used !");
+                   this.titleLabel.setText("WARNING : This name has been used !");
                }
                //sleep(10);
                System.out.println(this.node);
@@ -225,7 +225,7 @@ public class Login extends javax.swing.JFrame {
             }
         }       
         else{ 
-            this.setTitle("<html>ERROR : User not found or password incorrect !</html>");
+            this.titleLabel.setText("<html>ERROR : User not found or password incorrect !</html>");
         }
 
     
@@ -251,7 +251,7 @@ public class Login extends javax.swing.JFrame {
             /* Check the password if it is valid*/
             if (isValid(nicknameField.getText(),String.valueOf(passwordField.getPassword()))){
                 try {
-                   this.setTitle("Connecting... Please Wait");
+                   this.titleLabel.setText("Connecting... Please Wait");
                    /* Create a node with the nickname and the host address */
                    Peer peer = new Peer(nicknameField.getText(), hostField.getText()); // port = portTCP = 9999
                    this.node =  new Node(peer);
@@ -296,7 +296,7 @@ public class Login extends javax.swing.JFrame {
                    }
                    else {
                        new UDPSenderService().sendDisconnect(this.node);
-                       this.setTitle("WARNING : This name has been used !");
+                       this.titleLabel.setText("WARNING : This name has been used !");
                    }
                    //sleep(10);
                    System.out.println(this.node);
@@ -307,7 +307,7 @@ public class Login extends javax.swing.JFrame {
                 }
             }       
             else{ 
-                this.setTitle("<html>ERROR : User not found or password incorrect !</html>");
+                this.titleLabel.setText("<html>ERROR : User not found or password incorrect !</html>");
             } 
         }
     }//GEN-LAST:event_passwordFieldKeyPressed
@@ -352,7 +352,7 @@ public class Login extends javax.swing.JFrame {
             e.printStackTrace();
         }
         
-        return valid; */ return true;
+        return valid; */ return false;
     }
    
     @Override
