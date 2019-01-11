@@ -21,7 +21,7 @@ import main.system.utilities.Emoji;
  *
  */
 public class ChatWindow extends javax.swing.JFrame implements WritableUI {
-    
+
     /**
      * Creates attributs
      */
@@ -29,14 +29,14 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
     private Node client;
     private MessageLog l;
     int sourceport;
-        
+
     /**
      * Creates new form Chat Window
+     *
      * @param node
      * @param client
      * @param l
      */
-   
     public ChatWindow(Node node, Node client, MessageLog l) {
         initComponents();
         this.l = l;
@@ -50,10 +50,9 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
 //        this.portLabel.setText("Port : " + node.getPeer().getPort());
         sourceport = node.getPeer().getPort();
         //this.clientLabel.setText("To : " + this.client.getPeer().getPseudonyme() + " at " + this.client.getPeer().getHost() );
-        this.clientLabel.setText("To : " + client.getPeer().getPseudonyme() + " at " + client.getPeer().getHost() );
+        this.clientLabel.setText("To : " + client.getPeer().getPseudonyme() + " at " + client.getPeer().getHost());
     }
 
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -159,7 +158,7 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
         try {
             String msg = "[" + node.getPeer().getPseudonyme() + "] : " + message.getText();
             message.setText("");
-            new TCPSenderService().sendMessageTo(this.client.getPeer().getHost(),Peer.PORT_TCP,msg);
+            new TCPSenderService().sendMessageTo(this.client.getPeer().getHost(), Peer.PORT_TCP, msg);
             this.node.getChatWindowForPeer(client.getPeer().getHost()).write(msg);
 //            new TCPSenderService().sendMessageTo("localhost",target,msg);
 //            new TCPSenderService().sendMessageTo(ipDistant,target,msg);
@@ -173,21 +172,20 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
     }//GEN-LAST:event_sendButtonActionPerformed
 
 
-    
     private void messageKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_messageKeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-          try {
+            try {
                 String msg = "[" + node.getPeer().getPseudonyme() + "] : " + message.getText();
                 message.setText("");
-                new TCPSenderService().sendMessageTo(this.client.getPeer().getHost(),Peer.PORT_TCP,msg);
+                new TCPSenderService().sendMessageTo(this.client.getPeer().getHost(), Peer.PORT_TCP, msg);
                 this.node.getChatWindowForPeer(client.getPeer().getHost()).write(msg);
-    //            new TCPSenderService().sendMessageTo("localhost",target,msg);
-    //            new TCPSenderService().sendMessageTo(ipDistant,target,msg);
-    //            new TCPSenderService().sendMessageTo(this.client.getPeer().getHost(),this.client.getPeer().getPort(),msg);
-    //            System.out.println("Client port : " + this.client.getPeer().getPort());
-    //            new UDPSenderService().sendMessageTo(ipDistant,target,msg);
-    //            this.write(msg);
+                //            new TCPSenderService().sendMessageTo("localhost",target,msg);
+                //            new TCPSenderService().sendMessageTo(ipDistant,target,msg);
+                //            new TCPSenderService().sendMessageTo(this.client.getPeer().getHost(),this.client.getPeer().getPort(),msg);
+                //            System.out.println("Client port : " + this.client.getPeer().getPort());
+                //            new UDPSenderService().sendMessageTo(ipDistant,target,msg);
+                //            this.write(msg);
             } catch (Exception ex) {
                 Logger.getLogger(ChatWindow.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -201,42 +199,42 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        this.setVisible(false);        
+        this.setVisible(false);
     }//GEN-LAST:event_formWindowClosing
-    
+
     /**
-     *  Create methods
+     * Create methods
      */
-    
-    public String getPseudo() {return this.node.getPeer().getPseudonyme();} 
-    
-    public void setNicknameLabel (String s) {
+    public String getPseudo() {
+        return this.node.getPeer().getPseudonyme();
+    }
+
+    public void setNicknameLabel(String s) {
         this.nicknameLabel.setText(s);
     }
-    
-    
-    public void display(){
-        this.setLocationRelativeTo(null); 
+
+    public void display() {
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
-    
+
     public void closeWindow() {
-        this.setVisible(false);     
+        this.setVisible(false);
     }
-    
+
     public String timeStamp() {
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("[HH:mm, dd/MM/yyyy] - ");
         return sdf.format(cal.getTime());
     }
-    
+
     @Override
     public void write(String s) {
         String msg = timeStamp() + Emoji.replaceInText(s);
         chatBox.append(msg + System.lineSeparator());
         this.l.addMessage(msg);
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backButton;
     private javax.swing.JTextArea chatBox;
@@ -247,6 +245,5 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
     private javax.swing.JLabel nicknameLabel;
     private javax.swing.JButton sendButton;
     // End of variables declaration//GEN-END:variables
-
 
 }

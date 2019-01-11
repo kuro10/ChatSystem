@@ -22,12 +22,13 @@ import main.system.model.Node;
 import main.system.model.Peer;
 import static main.system.ui.Login.listenTCP;
 
-/***
+/**
+ * *
  *
  * @author th_tran
  */
 public class Home extends javax.swing.JFrame {
-    
+
     /**
      * Creates attributs
      */
@@ -36,24 +37,23 @@ public class Home extends javax.swing.JFrame {
     static Thread listenTCP = null;
     static TCPListenerHandler runnableTCP = null;
     public static ChatHistory history;
-    
+
     /**
      * Creates new form Home
+     *
      * @param node
      * @param history
      */
-
     public Home(Node node, ChatHistory history) {
         this.node = node;
         Home.history = history;
         this.listFriendsOnlineModel = new DefaultListModel<>();
-        for(Peer p : node.getOnlinePeers()){
-            listFriendsOnlineModel.addElement(p.getPseudonyme()+ ":"+ p.getHost()+":"+p.getPort());
+        for (Peer p : node.getOnlinePeers()) {
+            listFriendsOnlineModel.addElement(p.getPseudonyme() + ":" + p.getHost() + ":" + p.getPort());
         }
         initComponents();
         this.nicknameLabel.setText("Your nickname : " + node.getPeer().getPseudonyme());
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -179,26 +179,26 @@ public class Home extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
+
 //    private void updateNoti() {
 //        while (true) {
 //            if (this.node.getMsg() != null)
 //            notiBox.append(this.node.getMsg() + System.lineSeparator());
 //        }
 //    }
-    
+
     private void friendsListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_friendsListMouseClicked
-        
-        if(!friendsList.isSelectionEmpty()){
+
+        if (!friendsList.isSelectionEmpty()) {
             String friend = friendsList.getSelectedValue();
             String seg[] = friend.split(":");
 //            System.out.println(friend);
-            
+
             /* Find a peer/node when we know his nickname
             ** Then, open the chatwindow with him
-            */ 
+             */
             try {
-                Node client = new Node(new Peer(seg[0],seg[1]));
+                Node client = new Node(new Peer(seg[0], seg[1]));
                 this.node.getChatWindowForPeer(client.getPeer().getHost()).display();
                 //this.setVisible(false);
                 //setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -210,7 +210,7 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_friendsListMouseClicked
 
     private void logOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logOutButtonActionPerformed
-        
+
         /* Send a broadcast to inform a disconnection */
         try {
             new UDPSenderService().sendDisconnect(this.node);
@@ -226,7 +226,7 @@ public class Home extends javax.swing.JFrame {
         this.dispose();
         Login loginWindow = new Login(node);
         loginWindow.setTitle("You have disconnected.");
-        loginWindow.display();   
+        loginWindow.display();
     }//GEN-LAST:event_logOutButtonActionPerformed
 
     private void friendsListMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_friendsListMouseEntered
@@ -242,7 +242,6 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_renameButtonActionPerformed
 
 
-    
     private void notiBoxMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_notiBoxMouseEntered
         // TODO add your handling code here:
 //        if (this.node.getMsg() != "") {
@@ -268,22 +267,20 @@ public class Home extends javax.swing.JFrame {
         //this.dispose();
         Login loginWindow = new Login(node);
         loginWindow.setTitle("You have disconnected.");
-        loginWindow.display();   
+        loginWindow.display();
     }//GEN-LAST:event_formWindowClosing
-
 
     /**
      * Creates methods
      */
-    
     public void setNicknameLabel(String s) {
         nicknameLabel.setText(s);
     }
-    
+
     public Node getNode() {
         return this.node;
     }
-    
+
 //    public Boolean checkNameUniq() {
 //        Boolean res = true;
 //        for (Peer p : this.node.getOnlinePeers()) {
@@ -294,27 +291,24 @@ public class Home extends javax.swing.JFrame {
 //        }
 //        return res;
 //    }
-    
     public void removeFromList(Peer p) {
-        this.listFriendsOnlineModel.removeElement(p.getPseudonyme()+ ":"+ p.getHost()+":"+p.getPort());
+        this.listFriendsOnlineModel.removeElement(p.getPseudonyme() + ":" + p.getHost() + ":" + p.getPort());
     }
 
-    public void display(){
-        this.setLocationRelativeTo(null); 
+    public void display() {
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
-    
-    
-    
+
     public DefaultListModel getFriendList() {
         return listFriendsOnlineModel;
     }
-    
+
     public void writeNoti(String s) {
         notiBox.append(s + System.lineSeparator());
     }
 
-        
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> friendsList;
     private javax.swing.JLabel jLabel1;

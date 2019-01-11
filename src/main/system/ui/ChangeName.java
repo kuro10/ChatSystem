@@ -20,27 +20,25 @@ import main.system.model.Peer;
  * @author Kuro10
  */
 public class ChangeName extends javax.swing.JFrame {
-    
+
     /**
      * Creates attributs
      */
-    
     private Home home;
     private Node node;
     private Boolean confirm = false;
-    
+
     /**
      * Creates new form ChangeName
+     *
      * @param node
      */
- 
     public ChangeName(Node node, Home home) {
         initComponents();
         this.node = node;
         this.home = home;
-    }    
-    
-        
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -131,7 +129,7 @@ public class ChangeName extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void confirmButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmButtonActionPerformed
-        
+
         /* First, check the new name */
         String newName = nicknameField.getText();
         String oldName = this.node.getPeer().getPseudonyme();
@@ -147,13 +145,12 @@ public class ChangeName extends javax.swing.JFrame {
                 Logger.getLogger(ChangeName.class.getName()).log(Level.SEVERE, null, ex);
             }
             //TODO Inform other users ?
-            
+
             /* Done and close */
             this.setVisible(false);
             setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             this.dispose();
-        }
-        else {
+        } else {
             warningLabel.setText("This name has been used !");
         }
     }//GEN-LAST:event_confirmButtonActionPerformed
@@ -188,24 +185,23 @@ public class ChangeName extends javax.swing.JFrame {
                 this.setVisible(false);
                 setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
                 this.dispose();
-            }
-            else {
+            } else {
                 warningLabel.setText("This name has been used !");
             }
         }
     }//GEN-LAST:event_nicknameFieldKeyPressed
-    
+
     /**
      * Creates new methods
      */
-    
-    public String getNewNickname(){
-        if (this.confirm)
+    public String getNewNickname() {
+        if (this.confirm) {
             return nicknameField.getText();
-        else 
+        } else {
             return node.getPeer().getPseudonyme();
+        }
     }
- 
+
     public Boolean checkNameUniq(String name) {
         Boolean res = true;
         for (Peer p : this.home.getNode().getOnlinePeers()) {
@@ -216,9 +212,9 @@ public class ChangeName extends javax.swing.JFrame {
         }
         return res;
     }
-    
-    public void display(){
-        this.setLocationRelativeTo(null); 
+
+    public void display() {
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
 
