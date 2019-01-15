@@ -3,6 +3,7 @@ package main.system.connection.handler;
 import main.system.model.Node;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -22,13 +23,13 @@ public class TCPListenerHandler implements Runnable {
 
     /**
      * Constructors
+     *
      * @param node
      * @param history
      * @throws java.io.IOException
      */
-    
     /* this handler is used at a node of the network */
-    public TCPListenerHandler (Node node, ChatHistory history) throws IOException {	
+    public TCPListenerHandler(Node node, ChatHistory history) throws IOException {
         this.node = node;
         TCPListenerHandler.history = history;
 //        this.serverSocket = new ServerSocket(node.getPeer().getPort());
@@ -39,7 +40,6 @@ public class TCPListenerHandler implements Runnable {
     /*
      * Methods
      */
-    
     public void terminate() throws IOException {
         running = false;
         this.serverSocket.close();
@@ -48,31 +48,40 @@ public class TCPListenerHandler implements Runnable {
 
     @Override
     public void run() {
-            try {
-                while(running) {
-                    System.out.println("[TCP] " + node.getPeer().getPseudonyme() + " is listening by TCP at port " + node.getPeer().getPort() + "...");
-                    this.chatSocket = this.serverSocket.accept();
+        try {
+            while (running) {
+                System.out.println("[TCP] " + node.getPeer().getPseudonyme() + " is listening by TCP at port " + node.getPeer().getPort() + "...");
+                this.chatSocket = this.serverSocket.accept();
 
-                    /* Receive the message */
-                    BufferedReader in = new BufferedReader(new InputStreamReader(chatSocket.getInputStream()));
-                    String msgDistant = in.readLine();
+                /* Receive the message */
+                InputStream input = chatSocket.getInputStream();
 
+                BufferedReader in = new BufferedReader(new InputStreamReader(input));
+                String msgDistant = in.readLine();
+                if (msgDistant.charAt(0) == "[".charAt(0)) {
                     /* Write the message on the chat window between this node and client */
-                    Node client = new Node (new Peer(chatSocket.getInetAddress().getHostAddress()));
-                    if(msgDistant != null) {
+                    Node client = new Node(new Peer(chatSocket.getInetAddress().getHostAddress()));
+                    if (msgDistant != null) {
                         this.node.getChatWindowForPeer(client.getPeer().getHost()).write(msgDistant);
                         System.out.println(msgDistant);
                     }
-                    
-                    /* Close the socket */
-                    //chatSocket.close();
-                }
-            } catch(IOException e) {
-                e.printStackTrace();
-            }
+                } else {
+                    /*BufferedImage img = ImageIO.read(ImageIO.createImageInputStream(in));
 
+                    JFrame frame = new JFrame();
+                    frame.getContentPane().add(new JScrollPane(new JLabel(new ImageIcon(input))));
+                    frame.pack();
+                    frame.setSize(new Dimension(800, 800));
+                    frame.setLocationRelativeTo(null);
+                    frame.setVisible(true); */
+                }
+                /* Close the socket */
+                //chatSocket.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
-
 
 }

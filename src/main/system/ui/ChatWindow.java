@@ -6,13 +6,16 @@
 package main.system.ui;
 
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import main.system.model.Node;
 import main.system.connection.service.TCPSenderService;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import main.system.data.*;
@@ -224,8 +227,20 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
         if (returnValue == JFileChooser.APPROVE_OPTION) 
         {
             File selectedFile = fileChooser.getSelectedFile();
-            System.out.println(selectedFile.getAbsoluteFile());
+            
+            try {
+                BufferedImage bimg = ImageIO.read(selectedFile);
+                new TCPSenderService().sendImageTo(this.client.getPeer().getHost(), Peer.PORT_TCP, selectedFile);
+                this.node.getChatWindowForPeer(client.getPeer().getHost()).write(selectedFile.getName());
+            } catch (IOException ex) {
+                System.out.println("Error with BufferedImage");
+            } catch (Exception ex) {
+                System.out.println("Error with TCP sender");
+            }
+            
         }
+        
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

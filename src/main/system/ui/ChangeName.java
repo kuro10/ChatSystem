@@ -151,7 +151,7 @@ public class ChangeName extends javax.swing.JFrame {
             setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             this.dispose();
         } else {
-            warningLabel.setText("This name has been used !");
+            this.titreLabel.setText("This name has been used !");
         }
     }//GEN-LAST:event_confirmButtonActionPerformed
 
