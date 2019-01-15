@@ -1,12 +1,21 @@
 package main.system.connection.handler;
 
+import java.awt.Dimension;
+import java.awt.image.BufferedImage;
 import main.system.model.Node;
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Base64;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import main.system.data.ChatHistory;
 import main.system.model.Peer;
 
@@ -45,6 +54,24 @@ public class TCPListenerHandler implements Runnable {
         this.serverSocket.close();
         //this.chatSocket.close();
     }
+    
+    public static BufferedImage decodeToImage(String imageString) {
+ 
+        BufferedImage image = null;
+        byte[] imageByte;
+        try {
+            /*BASE64Decoder decoder = new BASE64Decoder();
+            imageByte = decoder.decodeBuffer(imageString);*/
+
+            imageByte = Base64.getDecoder().decode(imageString);
+            ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
+            image = ImageIO.read(bis);
+            bis.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return image;
+      }
 
     @Override
     public void run() {
@@ -66,14 +93,17 @@ public class TCPListenerHandler implements Runnable {
                         System.out.println(msgDistant);
                     }
                 } else {
-                    /*BufferedImage img = ImageIO.read(ImageIO.createImageInputStream(in));
+                    
+                    BufferedImage img = decodeToImage(msgDistant);
+                    
+                    //BufferedImage img = ImageIO.read(ImageIO.createImageInputStream(input));
 
                     JFrame frame = new JFrame();
-                    frame.getContentPane().add(new JScrollPane(new JLabel(new ImageIcon(input))));
+                    frame.getContentPane().add(new JScrollPane(new JLabel(new ImageIcon(img))));
                     frame.pack();
                     frame.setSize(new Dimension(800, 800));
                     frame.setLocationRelativeTo(null);
-                    frame.setVisible(true); */
+                    frame.setVisible(true); 
                 }
                 /* Close the socket */
                 //chatSocket.close();

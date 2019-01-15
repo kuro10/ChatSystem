@@ -1,11 +1,13 @@
 package main.system.connection.handler;
 
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import main.system.model.Peer;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Base64;
 import javax.imageio.ImageIO;
 
 public class TCPSenderHandler implements Runnable {
@@ -44,6 +46,25 @@ public class TCPSenderHandler implements Runnable {
         this.message = selectedFile.getName();
         this.type = type;
     }
+    
+    public static String encodeToString(BufferedImage image, String type) {
+        String imageString = null;
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+ 
+        try {
+            ImageIO.write(image, type, bos);
+            byte[] imageBytes = bos.toByteArray();
+ 
+            /*BASE64Encoder encoder = new BASE64Encoder();
+            imageString = encoder.encode(imageBytes);*/
+            imageString = Base64.getEncoder().encodeToString(imageBytes);
+
+            bos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return imageString;
+    }
 
     /**
      * Methods
@@ -75,8 +96,16 @@ public class TCPSenderHandler implements Runnable {
                     System.out.println("Sending Image!");
                     
                     chatSocket = new Socket(host, Peer.PORT_TCP);
-                    ImageIO.write(ImageIO.read(this.file),ext,chatSocket.getOutputStream());
-                    chatSocket.close();
+                    
+                    BufferedImage bimg = ImageIO.read(this.file);
+                    String imgAsString = encodeToString(bimg, ext);
+                    
+                    this.out = new PrintWriter(chatSocket.getOutputStream());
+                    out.println(imgAsString);
+                    out.flush();
+                    
+                    /*ImageIO.write(ImageIO.read(this.file),ext,chatSocket.getOutputStream());
+                    chatSocket.close();*/
                     
                     break;
                 default:
