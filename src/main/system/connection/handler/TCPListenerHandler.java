@@ -17,6 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import main.system.data.ChatHistory;
+import main.system.data.HistoryDB;
 import main.system.model.Peer;
 
 public class TCPListenerHandler implements Runnable {
@@ -28,7 +29,7 @@ public class TCPListenerHandler implements Runnable {
     private ServerSocket serverSocket = null;
     private Socket chatSocket;
     private volatile boolean running = true;
-    public static ChatHistory history;
+    public static HistoryDB history;
 
     /**
      * Constructors
@@ -38,7 +39,7 @@ public class TCPListenerHandler implements Runnable {
      * @throws java.io.IOException
      */
     /* this handler is used at a node of the network */
-    public TCPListenerHandler(Node node, ChatHistory history) throws IOException {
+    public TCPListenerHandler(Node node, HistoryDB history) throws IOException {
         this.node = node;
         TCPListenerHandler.history = history;
 //        this.serverSocket = new ServerSocket(node.getPeer().getPort());

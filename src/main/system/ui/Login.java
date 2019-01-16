@@ -23,6 +23,7 @@ import main.system.connection.handler.TCPListenerHandler;
 import main.system.connection.handler.UDPListenerHandler;
 import main.system.connection.service.UDPSenderService;
 import main.system.data.ChatHistory;
+import main.system.data.HistoryDB;
 
 /**
  *
@@ -37,8 +38,8 @@ public class Login extends javax.swing.JFrame {
     static Thread listenUDP = null;
     static TCPListenerHandler runnableTCP = null;
     static UDPListenerHandler runnableUDP = null;
-    public static ChatHistory history = new ChatHistory();
-
+    //public static ChatHistory history = new ChatHistory();
+    private static final HistoryDB history = HistoryDB.getInstance();
     /**
      * Creates new form Login
      */

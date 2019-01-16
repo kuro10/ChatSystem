@@ -17,6 +17,7 @@ import javax.swing.WindowConstants;
 import main.system.connection.handler.TCPListenerHandler;
 import main.system.connection.service.UDPSenderService;
 import main.system.data.ChatHistory;
+import main.system.data.HistoryDB;
 import main.system.data.MessageLog;
 import main.system.model.Node;
 import main.system.model.Peer;
@@ -36,7 +37,7 @@ public class Home extends javax.swing.JFrame {
     DefaultListModel<String> listFriendsOnlineModel;
     static Thread listenTCP = null;
     static TCPListenerHandler runnableTCP = null;
-    public static ChatHistory history;
+    public static HistoryDB history;
 
     /**
      * Creates new form Home
@@ -44,7 +45,7 @@ public class Home extends javax.swing.JFrame {
      * @param node
      * @param history
      */
-    public Home(Node node, ChatHistory history) {
+    public Home(Node node, HistoryDB history) {
         this.node = node;
         Home.history = history;
         this.listFriendsOnlineModel = new DefaultListModel<>();

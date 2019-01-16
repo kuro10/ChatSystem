@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import main.system.data.ChatHistory;
+import main.system.data.HistoryDB;
 import main.system.data.MessageLog;
 import main.system.ui.ChatWindow;
 import main.system.ui.Home;
@@ -21,7 +22,8 @@ public class Node {
     private String msg = "";
     
     private Home home;
-    private static ChatHistory history = new ChatHistory();
+//    private static ChatHistory history = new ChatHistory();
+    private static final HistoryDB history = HistoryDB.getInstance();
 
     /**
     * Creates construvtors
@@ -163,7 +165,7 @@ public class Node {
         return null;
     }
     
-    public ChatHistory getHistory() {
+    public HistoryDB getHistory() {
         return this.history;
     }
     
