@@ -17,6 +17,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JFrame;
 import main.system.data.*;
 import main.system.model.Peer;
@@ -223,6 +225,10 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
         // TODO add your handling code here:
         
         JFileChooser fileChooser = new JFileChooser();
+
+        FileFilter filter = new FileNameExtensionFilter("Images (*.jpg , *.png)","jpg", "png");
+        fileChooser.setFileFilter(filter);
+
         int returnValue = fileChooser.showOpenDialog(null);
         if (returnValue == JFileChooser.APPROVE_OPTION) 
         {
