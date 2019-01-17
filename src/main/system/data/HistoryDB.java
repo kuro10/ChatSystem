@@ -66,8 +66,8 @@ public class HistoryDB {
     public void createHistory() {
         String sql =
                 "CREATE TABLE IF NOT EXISTS history (\n"
-                + "	hostsource VARCHAR(50) PRIMARY KEY NOT NULL,\n"
-                + "	hostdest VARCHAR(50) NOT NULL,\n"
+                + "	hostsource VARCHAR(50) NOT NULL,\n"
+                + "	hostdest VARCHAR(50) PRIMARY KEY NOT NULL,\n"
                 + "	log BLOB\n"
                 + ");";
 
