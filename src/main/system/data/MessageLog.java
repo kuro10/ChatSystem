@@ -5,6 +5,7 @@
  */
 package main.system.data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import main.system.model.*;
 
@@ -12,7 +13,7 @@ import main.system.model.*;
  *
  * @author lmtran
  */
-public class MessageLog {
+public class MessageLog implements Serializable {
     
     private Peer source;
     private Peer target;

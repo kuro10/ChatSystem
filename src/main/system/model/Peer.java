@@ -1,8 +1,9 @@
 package main.system.model;
 
+import java.io.Serializable;
 import java.net.UnknownHostException;
 
-public class Peer {
+public class Peer implements Serializable {
 	
     /**
      * Attributs

@@ -88,13 +88,28 @@ public class HistoryDB {
                  PreparedStatement pstmt = conn.prepareStatement(sql)) {
                 pstmt.setString(1, l.getHostSource());
                 pstmt.setString(2, l.getHostTarget());
-                pstmt.setBytes(3, SerializationUtils.serialize((Serializable)l));
+                pstmt.setBytes(3, SerializationUtils.serialize(l));
                 pstmt.executeUpdate();
             } catch (SQLException e) {
                 System.out.println(e.getMessage());
             }
         }
     }
+    
+     public void updateHistory(MessageLog l) {
+        String sql = "UPDATE history SET hostsource = ?, hostdest = ?, log = ? WHERE hostsource = ?, hostdest = ?";
+        try (Connection conn = this.connect();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, l.getHostSource());
+            pstmt.setString(2, l.getHostTarget());
+            pstmt.setBytes(3, SerializationUtils.serialize((Serializable)l));
+            pstmt.setString(4, l.getHostSource());
+            pstmt.setString(5, l.getHostTarget());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }   
     
     public MessageLog getMessageLog(String source, String dest) {
         String sql = "SELECT history"
