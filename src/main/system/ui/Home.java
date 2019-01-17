@@ -8,12 +8,15 @@ package main.system.ui;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.net.UnknownHostException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.ListModel;
 import javax.swing.WindowConstants;
+import javax.swing.text.BadLocationException;
 import main.system.connection.handler.TCPListenerHandler;
 import main.system.connection.service.UDPSenderService;
 import main.system.data.ChatHistory;
@@ -305,8 +308,11 @@ public class Home extends javax.swing.JFrame {
         return listFriendsOnlineModel;
     }
 
-    public void writeNoti(String s) {
-        notiBox.append(s + System.lineSeparator());
+    public void writeNoti(String s) throws BadLocationException {
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("[HH:mm, dd/MM/yyyy] - ");
+        notiBox.getDocument().insertString(0, sdf.format(cal.getTime()) + s + System.lineSeparator(), null);
+        notiBox.setCaretPosition(0);
     }
 
 
