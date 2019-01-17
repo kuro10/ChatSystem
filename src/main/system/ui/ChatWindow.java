@@ -280,6 +280,7 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
         String msg = timeStamp() + Emoji.replaceInText(s);
         chatBox.append(msg + System.lineSeparator());
         this.l.addMessage(msg);
+        HistoryDB.getInstance().updateHistory(l);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
