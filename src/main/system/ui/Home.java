@@ -200,6 +200,14 @@ public class Home extends javax.swing.JFrame {
              */
             try {
                 Node client = new Node(new Peer(seg[0], seg[1]));
+                if(seg[0].charAt(0)=="[".charAt(0)){
+                   String split[] = seg[0].split("] "); 
+                   client.getPeer().setPseudonyme(split[1]);
+                }
+                
+                this.node.updatePeersList(client.getPeer());
+                
+                this.node.updateHome();
                 this.node.getChatWindowForPeer(client.getPeer().getHost()).display();
                 //this.setVisible(false);
                 //setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

@@ -103,6 +103,13 @@ public class Node {
                     System.out.println(" Status : disconnected ");
                     peerInList.setDisco(true);
                 }
+                if (peer1.getStatusNewMessage() == false) {
+                    peerInList.setNewMessage(false);
+                }
+                else {
+                    System.out.println(" New Message Status : new message ");
+                    peerInList.setNewMessage(true);
+                }
                 return;
             }
         }
@@ -174,7 +181,14 @@ public class Node {
         this.home.getFriendList().removeAllElements();
         for(Peer p : this.getOnlinePeers()){ 
             if (p.getStatusDisconnect() == false){ //!(this.node.getPeer().getPseudonyme().equals(p.getPseudonyme())) && 
-                this.home.getFriendList().addElement(p.getPseudonyme()+ ":"+ p.getHost()+":"+p.getPort());           
+                
+                if (p.getStatusNewMessage()) {
+                    this.home.getFriendList().addElement("[!] "+p.getPseudonyme()+ ":"+ p.getHost()); 
+                } else {
+                    this.home.getFriendList().addElement(p.getPseudonyme()+ ":"+ p.getHost());          
+                }
+                
+                 
                 if (!this.existChatWindow(p)) {
                     MessageLog l = new MessageLog(this.getPeer(), p);
                 if (HistoryDB.getInstance().existHistory(l)) {

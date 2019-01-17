@@ -86,15 +86,26 @@ public class TCPListenerHandler implements Runnable {
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(input));
                 String msgDistant = in.readLine();
+                
+                System.out.println(msgDistant);
+                
+
                 if (msgDistant.charAt(0) == "[".charAt(0)) {
                     /* Write the message on the chat window between this node and client */
                     Node client = new Node(new Peer(chatSocket.getInetAddress().getHostAddress()));
+                    String seg[] = msgDistant.split(":");
+                    String pseudo = seg[2];
+                    if(!this.node.getChatWindowForPeer(client.getPeer().getHost()).isVisible()){
+                        this.node.updatePeersList(new Peer(pseudo,client.getPeer().getHost(), true));
+                        this.node.updateHome();
+                    }
+                    
+                    
                     if (msgDistant != null) {
-                        this.node.getChatWindowForPeer(client.getPeer().getHost()).write(msgDistant);
-                        System.out.println(msgDistant);
+                        this.node.getChatWindowForPeer(client.getPeer().getHost()).write(seg[0]+seg[1]);
+                        System.out.println(seg[0]+seg[1]);
                     }
                 } else {
-                    
                     BufferedImage img = decodeToImage(msgDistant);
                     
                     //BufferedImage img = ImageIO.read(ImageIO.createImageInputStream(input));

@@ -9,12 +9,14 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Base64;
 import javax.imageio.ImageIO;
+import main.system.model.Node;
 
 public class TCPSenderHandler implements Runnable {
 
     /**
      * Attributs
      */
+    private Node node;
     private Socket chatSocket;
     private PrintWriter out;
     private final String message;
@@ -31,15 +33,18 @@ public class TCPSenderHandler implements Runnable {
      * @param type
      * @throws IOException
      */
-    public TCPSenderHandler(String host, int port, String message, int type) throws IOException {
+    
+    public TCPSenderHandler(Node node, String host, int port, String message, int type) throws IOException {
+        this.node = node;
         this.host = host;
         this.port = port;
         this.message = message;
         this.type = type;
         this.file = null;
-    }
+    } 
 
-    public TCPSenderHandler(String host, int port, File selectedFile, int type) throws IOException {
+    public TCPSenderHandler(Node node, String host, int port, File selectedFile, int type) throws IOException {
+        this.node = node;
         this.host = host;
         this.port = port;
         this.file = selectedFile;
@@ -81,7 +86,7 @@ public class TCPSenderHandler implements Runnable {
                     this.out = new PrintWriter(chatSocket.getOutputStream());
 
                     /* Send the message...*/
-                    out.println(message);
+                    out.println(message+":"+this.node.getPeer().getPseudonyme()+":"+this.node.getPeer().getPort()); 
                     out.flush();
 //                    System.out.println("Envoie a " + host +"(" + port + "): " + message );
 

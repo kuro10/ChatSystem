@@ -177,7 +177,7 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
         try {
             String msg = "[" + node.getPeer().getPseudonyme() + "] : " + message.getText();
             message.setText("");
-            new TCPSenderService().sendMessageTo(this.client.getPeer().getHost(), Peer.PORT_TCP, msg);
+            new TCPSenderService().sendMessageTo(this.node ,this.client.getPeer().getHost(), Peer.PORT_TCP, msg);
             this.node.getChatWindowForPeer(client.getPeer().getHost()).write(msg);
 //            new TCPSenderService().sendMessageTo("localhost",target,msg);
 //            new TCPSenderService().sendMessageTo(ipDistant,target,msg);
@@ -197,7 +197,7 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
             try {
                 String msg = "[" + node.getPeer().getPseudonyme() + "] : " + message.getText();
                 message.setText("");
-                new TCPSenderService().sendMessageTo(this.client.getPeer().getHost(), Peer.PORT_TCP, msg);
+                new TCPSenderService().sendMessageTo(this.node,this.client.getPeer().getHost(), Peer.PORT_TCP, msg);
                 this.node.getChatWindowForPeer(client.getPeer().getHost()).write(msg);
                 //            new TCPSenderService().sendMessageTo("localhost",target,msg);
                 //            new TCPSenderService().sendMessageTo(ipDistant,target,msg);
@@ -236,7 +236,7 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
             
             try {
                 BufferedImage bimg = ImageIO.read(selectedFile);
-                new TCPSenderService().sendImageTo(this.client.getPeer().getHost(), Peer.PORT_TCP, selectedFile);
+                new TCPSenderService().sendImageTo(this.node, this.client.getPeer().getHost(), Peer.PORT_TCP, selectedFile);
                 this.node.getChatWindowForPeer(client.getPeer().getHost()).write(selectedFile.getName());
             } catch (IOException ex) {
                 System.out.println("Error with BufferedImage");
@@ -275,6 +275,10 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
         return sdf.format(cal.getTime());
     }
 
+    /*public boolean isVisible(){
+        return this.isFocused();
+    
+    }*/
     @Override
     public void write(String s) {
         String msg = timeStamp() + Emoji.replaceInText(s);

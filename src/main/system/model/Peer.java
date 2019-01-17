@@ -15,6 +15,7 @@ public class Peer implements Serializable {
     private String host;
     private int port;
     private boolean disco;
+    private boolean newMsg;
 
     /**
      * Constructors
@@ -24,20 +25,31 @@ public class Peer implements Serializable {
             this.host = host;
             this.port = PORT_TCP;
             this.disco = false;
+            this.newMsg = false;
     }
 
     public Peer(String pseudo,String host) throws UnknownHostException{
             this.pseudonyme = pseudo;
             this.host = host;
             this.port = PORT_TCP;
-            this.disco = false;            
+            this.disco = false;    
+            this.newMsg = false;
     }
 
     public Peer(String pseudonyme, String host, int port) throws UnknownHostException {
         this.pseudonyme = pseudonyme;
         this.host = host;
         this.port = port;
-        this.disco = false;        
+        this.disco = false;      
+        this.newMsg = false;
+    }
+    
+    public Peer(String pseudonyme, String host, boolean newM) throws UnknownHostException {
+        this.pseudonyme = pseudonyme;
+        this.host = host;
+        this.port = PORT_TCP;
+        this.disco = false;      
+        this.newMsg = newM;
     }
 
     public Peer() {
@@ -56,6 +68,14 @@ public class Peer implements Serializable {
     
     public boolean getStatusDisconnect() {
         return this.disco;
+    }
+    
+    public void setNewMessage(boolean status) {
+        this.newMsg = status;
+    }
+    
+    public boolean getStatusNewMessage() {
+        return this.newMsg;
     }
     
     public String getPseudonyme() {
