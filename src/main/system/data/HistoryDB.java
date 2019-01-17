@@ -68,7 +68,7 @@ public class HistoryDB {
                 "CREATE TABLE IF NOT EXISTS history (\n"
                 + "	hostsource VARCHAR(50) PRIMARY KEY NOT NULL,\n"
                 + "	hostdest VARCHAR(50) NOT NULL,\n"
-                + "	log BLOB,\n"
+                + "	log BLOB\n"
                 + ");";
 
         try (Connection conn = DriverManager.getConnection(url);
@@ -77,6 +77,7 @@ public class HistoryDB {
             stmt.execute(sql);
             System.out.println("ChatLog created");
         } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
     
@@ -91,13 +92,14 @@ public class HistoryDB {
                 pstmt.setBytes(3, SerializationUtils.serialize(l));
                 pstmt.executeUpdate();
             } catch (SQLException e) {
-                System.out.println(e.getMessage());
+                //System.out.println(e.getMessage());
+                e.printStackTrace();
             }
         }
     }
     
      public void updateHistory(MessageLog l) {
-        String sql = "UPDATE history SET hostsource = ?, hostdest = ?, log = ? WHERE hostsource = ?, hostdest = ?";
+        String sql = "UPDATE history SET hostsource = ?, hostdest = ?, log = ? WHERE hostsource = ? and hostdest = ?";
         try (Connection conn = this.connect();
             PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, l.getHostSource());
@@ -107,13 +109,14 @@ public class HistoryDB {
             pstmt.setString(5, l.getHostTarget());
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
+            e.printStackTrace();
         }
     }   
     
     public MessageLog getMessageLog(String source, String dest) {
-        String sql = "SELECT history"
-                + " FROM friends WHERE hostsource = ? AND hostdest = ?";
+        String sql = "SELECT log"
+                + " FROM history WHERE hostsource = ? AND hostdest = ?";
 
         Object result = null;
         try (Connection conn = this.connect();
@@ -137,7 +140,7 @@ public class HistoryDB {
     }
 
     public boolean existHistory(MessageLog l) {
-        String sql = "SELECT ROWID FROM history WHERE hostsource = ? AND hostdist = ?";
+        String sql = "SELECT ROWID FROM history WHERE hostsource = ? AND hostdest = ?";
         
         Object result = null;
         try (Connection conn = this.connect();
@@ -151,6 +154,7 @@ public class HistoryDB {
             if (rs.next())
                 return true;
         } catch (SQLException e) {
+            e.printStackTrace();
             System.out.println(e.getMessage());
         }
 
