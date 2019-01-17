@@ -47,7 +47,7 @@ public class Home extends javax.swing.JFrame {
      */
     public Home(Node node, HistoryDB history) {
         this.node = node;
-        Home.history = history;
+        Home.history = HistoryDB.getInstance();
         this.listFriendsOnlineModel = new DefaultListModel<>();
         for (Peer p : node.getOnlinePeers()) {
             listFriendsOnlineModel.addElement(p.getPseudonyme() + ":" + p.getHost() + ":" + p.getPort());

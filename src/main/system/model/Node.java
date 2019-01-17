@@ -23,7 +23,7 @@ public class Node {
     
     private Home home;
 //    private static ChatHistory history = new ChatHistory();
-    private static final HistoryDB history = HistoryDB.getInstance();
+    private static final HistoryDB history = null;
 
     /**
     * Creates construvtors
@@ -33,7 +33,7 @@ public class Node {
             this.peer = peer;
             this.onlinePeers = new ArrayList();
             this.chatWindowForPeer = new HashMap<>();
-            this.home = new Home(this, history);
+            this.home = new Home(this, HistoryDB.getInstance());
     }
 
     /**
@@ -177,11 +177,11 @@ public class Node {
                 this.home.getFriendList().addElement(p.getPseudonyme()+ ":"+ p.getHost()+":"+p.getPort());           
                 if (!this.existChatWindow(p)) {
                     MessageLog l = new MessageLog(this.getPeer(), p);
-                if (this.history.existHistory(l)) {
-                        l = this.history.getMessageLog(this.getPeer().getHost(), p.getHost());
+                if (HistoryDB.getInstance().existHistory(l)) {
+                        l = HistoryDB.getInstance().getMessageLog(this.getPeer().getHost(), p.getHost());
                     }
                     else {
-                        this.history.addHistory(l);
+                        HistoryDB.getInstance().addHistory(l);
                     }
                     ChatWindow chatWindow = new ChatWindow(this, new Node(p), l);
                     this.setChatWindowForPeer(p, chatWindow);

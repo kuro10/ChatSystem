@@ -39,7 +39,7 @@ public class Login extends javax.swing.JFrame {
     static TCPListenerHandler runnableTCP = null;
     static UDPListenerHandler runnableUDP = null;
     //public static ChatHistory history = new ChatHistory();
-    private static final HistoryDB history = HistoryDB.getInstance();
+    private static final HistoryDB history = null;
     /**
      * Creates new form Login
      */
@@ -179,7 +179,7 @@ public class Login extends javax.swing.JFrame {
                         runnableTCP.terminate();
                         listenTCP.join();
                     }
-                    runnableTCP = new TCPListenerHandler(this.node, Login.history);
+                    runnableTCP = new TCPListenerHandler(this.node, HistoryDB.getInstance());
                     listenTCP = new Thread(runnableTCP);
                     listenTCP.start();
 
@@ -261,7 +261,7 @@ public class Login extends javax.swing.JFrame {
                             runnableTCP.terminate();
                             listenTCP.join();
                         }
-                        runnableTCP = new TCPListenerHandler(this.node, Login.history);
+                        runnableTCP = new TCPListenerHandler(this.node, HistoryDB.getInstance());
                         listenTCP = new Thread(runnableTCP);
                         listenTCP.start();
 

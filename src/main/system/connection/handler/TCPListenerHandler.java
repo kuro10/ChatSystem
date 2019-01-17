@@ -41,7 +41,7 @@ public class TCPListenerHandler implements Runnable {
     /* this handler is used at a node of the network */
     public TCPListenerHandler(Node node, HistoryDB history) throws IOException {
         this.node = node;
-        TCPListenerHandler.history = history;
+        TCPListenerHandler.history = HistoryDB.getInstance();
 //        this.serverSocket = new ServerSocket(node.getPeer().getPort());
         this.serverSocket = new ServerSocket(Peer.PORT_TCP);
         this.node.getPeer().setPort(this.serverSocket.getLocalPort());

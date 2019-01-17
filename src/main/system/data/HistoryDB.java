@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 public class HistoryDB {
     private static final String defaultName = "history.sqlite";
     private static HistoryDB instance = null;
-    private static String url = "";
+    private String url = "";
     
     private HistoryDB() {
         setName(defaultName);
@@ -41,14 +41,14 @@ public class HistoryDB {
         try {
             c = DriverManager.getConnection(url);
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         return c;
     }
 
-    public static void setName(String name) {
+    public void setName(String name) {
         String current = System.getProperty("user.dir");
-        HistoryDB.url = "jdbc:sqlite:" + current + File.separator + name;
+        url = "jdbc:sqlite:" + current + File.separator + name;
     }
 
     public void createHistoryDB() {
@@ -138,11 +138,11 @@ public class HistoryDB {
 
     public boolean existHistory(MessageLog l) {
         String sql = "SELECT ROWID FROM history WHERE hostsource = ? AND hostdist = ?";
-
+        
         Object result = null;
         try (Connection conn = this.connect();
              PreparedStatement pstmt  = conn.prepareStatement(sql)){
-
+              
             // set the value
             pstmt.setString(1,l.getHostSource());
             pstmt.setString(2,l.getHostTarget());
