@@ -237,7 +237,7 @@ public class ChatWindow extends javax.swing.JFrame implements WritableUI {
             try {
                 BufferedImage bimg = ImageIO.read(selectedFile);
                 new TCPSenderService().sendImageTo(this.node, this.client.getPeer().getHost(), Peer.PORT_TCP, selectedFile);
-                this.node.getChatWindowForPeer(client.getPeer().getHost()).write(selectedFile.getName());
+                this.node.getChatWindowForPeer(client.getPeer().getHost()).write("["+this.node.getPeer().getPseudonyme()+"] "+selectedFile.getName());
             } catch (IOException ex) {
                 System.out.println("Error with BufferedImage");
             } catch (Exception ex) {

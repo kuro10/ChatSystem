@@ -159,7 +159,8 @@ Node client = new Node(new Peer(chatSocket.getInetAddress().getHostAddress()));
                         System.out.println(seg[0] + seg[1]);
                     }
                 } else {
-                    String seg[] = msgDistant.split(":");
+                    String seg[] = msgDistant.split(":",4);
+                   System.out.println(seg[3]);
                     this.node.getChatWindowForPeer(client.getPeer().getHost()).write("["+seg[1]+"]"+" "+seg[3]);
                     BufferedImage img = decodeToImage(seg[0]);
                     
