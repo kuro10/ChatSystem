@@ -11,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
+import javax.swing.text.BadLocationException;
 import main.system.connection.service.UDPSenderService;
 import main.system.model.Node;
 import main.system.model.Peer;
@@ -136,7 +137,11 @@ public class ChangeName extends javax.swing.JFrame {
         if (this.checkNameUniq(newName) && !newName.equals("") && !newName.equals(oldName)) {
             this.node.getPeer().setPseudonyme(newName);
             this.home.setNicknameLabel("Your nickname : " + newName);
-            this.home.writeNoti(oldName + " has changed name to " + newName + System.lineSeparator());
+            try {
+                this.home.writeNoti(oldName + " has changed name to " + newName + System.lineSeparator());
+            } catch (BadLocationException ex) {
+                Logger.getLogger(ChangeName.class.getName()).log(Level.SEVERE, null, ex);
+            }
             this.confirm = true;
             /* Ok, then sends a broadcast to inform */
             try {
@@ -171,7 +176,11 @@ public class ChangeName extends javax.swing.JFrame {
             if (this.checkNameUniq(newName) && !newName.equals("") && !newName.equals(oldName)) {
                 this.node.getPeer().setPseudonyme(newName);
                 this.home.setNicknameLabel("Your nickname : " + newName);
-                this.home.writeNoti(oldName + " has changed name to " + newName + System.lineSeparator());
+                try {
+                    this.home.writeNoti(oldName + " has changed name to " + newName + System.lineSeparator());
+                } catch (BadLocationException ex) {
+                    Logger.getLogger(ChangeName.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 this.confirm = true;
                 /* Ok, then sends a broadcast to inform */
                 try {
