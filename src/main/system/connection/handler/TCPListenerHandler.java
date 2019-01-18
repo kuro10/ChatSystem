@@ -96,6 +96,7 @@ public class TCPListenerHandler implements Runnable {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 // Download file
                 JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setDialogTitle("Download");
                 fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         
 
