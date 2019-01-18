@@ -106,7 +106,7 @@ public class TCPSenderHandler implements Runnable {
                     String imgAsString = encodeToString(bimg, ext);
                     
                     this.out = new PrintWriter(chatSocket.getOutputStream());
-                    out.println(imgAsString);
+                    out.println(imgAsString+":"+this.node.getPeer().getPseudonyme()+":"+this.file.getName());
                     out.flush();
                     
                     /*ImageIO.write(ImageIO.read(this.file),ext,chatSocket.getOutputStream());

@@ -107,11 +107,14 @@ public class TCPListenerHandler implements Runnable {
                         System.out.println(seg[0]+seg[1]);
                     }
                 } else {
-                    BufferedImage img = decodeToImage(msgDistant);
+                    String seg[] = msgDistant.split(":");
+                    
+                    BufferedImage img = decodeToImage(seg[0]);
                     
                     //BufferedImage img = ImageIO.read(ImageIO.createImageInputStream(input));
 
                     JFrame frame = new JFrame();
+                    frame.setTitle(seg[2]+" by: "+seg[1]);
                     frame.getContentPane().add(new JScrollPane(new JLabel(new ImageIcon(img))));
                     frame.pack();
                     if(img.getHeight()>= 800 || img.getWidth()>=800){
