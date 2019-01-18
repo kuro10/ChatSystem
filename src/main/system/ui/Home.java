@@ -211,6 +211,7 @@ public class Home extends javax.swing.JFrame {
                 this.node.updatePeersList(client.getPeer());
                 
                 this.node.updateHome();
+                this.node.getChatWindowForPeer(client.getPeer().getHost()).setTitle(client.getPeer().getPseudonyme()+": Chat");
                 this.node.getChatWindowForPeer(client.getPeer().getHost()).display();
                 //this.setVisible(false);
                 //setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

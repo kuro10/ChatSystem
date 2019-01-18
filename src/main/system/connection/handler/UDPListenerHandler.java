@@ -91,6 +91,7 @@ public class UDPListenerHandler implements Runnable {
                     String oldName = this.node.findNicknameByHost(host);
                     this.node.updatePeersList(new Peer(pseudo,host));
                     this.node.updateHome();
+                    this.node.getChatWindowForPeer(host).setTitle(pseudo+": Chat");
                     this.node.getHome().writeNoti(oldName + " changed name to " + pseudo);
                 }                
                 

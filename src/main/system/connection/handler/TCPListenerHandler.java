@@ -94,15 +94,16 @@ public class TCPListenerHandler implements Runnable {
                     /* Write the message on the chat window between this node and client */
                     Node client = new Node(new Peer(chatSocket.getInetAddress().getHostAddress()));
                     String seg[] = msgDistant.split(":");
-                    String pseudo = seg[2];
+                    client.getPeer().setPseudonyme(seg[2]);
                     if(!this.node.getChatWindowForPeer(client.getPeer().getHost()).isVisible()){
-                        this.node.updatePeersList(new Peer(pseudo,client.getPeer().getHost(), true));
+                        this.node.updatePeersList(new Peer(client.getPeer().getPseudonyme(),client.getPeer().getHost(), true));
                         this.node.updateHome();
                     }
                     
                     
                     if (msgDistant != null) {
                         this.node.getChatWindowForPeer(client.getPeer().getHost()).write(seg[0]+seg[1]);
+                        this.node.getChatWindowForPeer(client.getPeer().getHost()).setTitle(client.getPeer().getPseudonyme()+ ": Chat");
                         System.out.println(seg[0]+seg[1]);
                     }
                 } else {
@@ -113,7 +114,9 @@ public class TCPListenerHandler implements Runnable {
                     JFrame frame = new JFrame();
                     frame.getContentPane().add(new JScrollPane(new JLabel(new ImageIcon(img))));
                     frame.pack();
-                    frame.setSize(new Dimension(800, 800));
+                    if(img.getHeight()>= 800 || img.getWidth()>=800){
+                      frame.setSize(new Dimension(800, 800));  
+                    }
                     frame.setLocationRelativeTo(null);
                     frame.setVisible(true); 
                 }
