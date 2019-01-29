@@ -33,7 +33,6 @@ public class TCPSenderHandler implements Runnable {
      * @param type
      * @throws IOException
      */
-    
     public TCPSenderHandler(Node node, String host, int port, String message, int type) throws IOException {
         this.node = node;
         this.host = host;
@@ -41,7 +40,7 @@ public class TCPSenderHandler implements Runnable {
         this.message = message;
         this.type = type;
         this.file = null;
-    } 
+    }
 
     public TCPSenderHandler(Node node, String host, int port, File selectedFile, int type) throws IOException {
         this.node = node;
@@ -51,17 +50,14 @@ public class TCPSenderHandler implements Runnable {
         this.message = selectedFile.getName();
         this.type = type;
     }
-    
+
     public static String encodeToString(BufferedImage image, String type) {
         String imageString = null;
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
- 
+
         try {
             ImageIO.write(image, type, bos);
             byte[] imageBytes = bos.toByteArray();
- 
-            /*BASE64Encoder encoder = new BASE64Encoder();
-            imageString = encoder.encode(imageBytes);*/
             imageString = Base64.getEncoder().encodeToString(imageBytes);
 
             bos.close();
@@ -86,10 +82,8 @@ public class TCPSenderHandler implements Runnable {
                     this.out = new PrintWriter(chatSocket.getOutputStream());
 
                     /* Send the message...*/
-                    out.println(message+":"+this.node.getPeer().getPseudonyme()+":"+this.node.getPeer().getPort()); 
+                    out.println(message + ":" + this.node.getPeer().getPseudonyme() + ":" + this.node.getPeer().getPort());
                     out.flush();
-//                    System.out.println("Envoie a " + host +"(" + port + "): " + message );
-
                     /* Close the socket */
                     chatSocket.close();
                     break;
@@ -99,20 +93,17 @@ public class TCPSenderHandler implements Runnable {
                     String ext = split[1];
                     System.out.println("Sending: " + path + " extension: " + ext);
                     System.out.println("Sending Image!");
-                    
+
                     chatSocket = new Socket(host, Peer.PORT_TCP);
-                    
+
                     BufferedImage bimg = ImageIO.read(this.file);
                     String imgAsString = encodeToString(bimg, ext);
-                    
+
                     this.out = new PrintWriter(chatSocket.getOutputStream());
-                    out.println(imgAsString+":"+this.node.getPeer().getPseudonyme()+":"+ext+":"+this.file.getName());
-                    System.out.println("FILE NAME: "+this.file.getName());
+                    out.println(imgAsString + ":" + this.node.getPeer().getPseudonyme() + ":" + ext + ":" + this.file.getName());
+                    System.out.println("FILE NAME: " + this.file.getName());
                     out.flush();
-                    
-                    /*ImageIO.write(ImageIO.read(this.file),ext,chatSocket.getOutputStream());
-                    chatSocket.close();*/
-                    
+                    chatSocket.close();
                     break;
                 default:
                     System.out.println("Invalid type of message");

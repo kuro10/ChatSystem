@@ -15,31 +15,24 @@ import main.system.model.Node;
  */
 public class UDPSenderService implements SenderService {
 
+    public void sendBroadcast(Node node) throws UnknownHostException {
+        Thread t = new Thread(new UDPSenderHandler(node, "broadcast"));
+        t.start();
+    }
 
-    public void sendBroadcast(Node node) throws UnknownHostException{
-        Thread t = new Thread (new UDPSenderHandler(node, "broadcast"));
+    public void sendDisconnect(Node node) throws UnknownHostException {
+        Thread t = new Thread(new UDPSenderHandler(node, "disconnect"));
         t.start();
     }
-    
-    public void sendDisconnect(Node node) throws UnknownHostException{
-        Thread t = new Thread (new UDPSenderHandler(node, "disconnect"));
+
+    public void sendRename(Node node) throws UnknownHostException {
+        Thread t = new Thread(new UDPSenderHandler(node, "rename"));
         t.start();
     }
-    
-    public void sendRename(Node node) throws UnknownHostException{
-        Thread t = new Thread (new UDPSenderHandler(node, "rename"));
-        t.start();
-    }
-    
-//    @Override
-//    public void sendMessageTo(Peer peer, String message) throws Exception {
-//        Thread t = new Thread (new UDPSenderHandler(peer,message));
-//        t.start();
-//    }
 
     @Override
     public void sendMessageTo(String host, int port, String message) throws Exception {
-        Thread t = new Thread (new UDPSenderHandler(host,port,message));
+        Thread t = new Thread(new UDPSenderHandler(host, port, message));
         t.start();
     }
 }
