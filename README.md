@@ -10,6 +10,7 @@ Chat System, written by [TRAN Trong Hieu](https://github.com/kuro10), [TRAN Le M
 
 * [Version 1.0](https://github.com/kuro10/ChatSystem/tree/f5f8efe967c91c0e383f3139d95c44cc9bb6c4b1) (without Database, Java Servlets)
 * [Version 2.0](#) (implemented Database Local)
+* [Version 1.03](https://github.com/EduardoCalvillo/ServletSystem.git) (changed to centralized architecture)
 
 
 
