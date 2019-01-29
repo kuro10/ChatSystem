@@ -200,11 +200,11 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_logInButtonActionPerformed
 
     private void nicknameFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nicknameFieldKeyPressed
-        if (this.nicknameField.getText().equals("")) {
-            this.titleLabel.setText("User nickname cannot be empty.");
-        } else {
-            if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
 
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (this.nicknameField.getText().equals("")) {
+                this.titleLabel.setText("User nickname cannot be empty.");
+            } else {
                 try {
                     this.titleLabel.setText("Connecting... Please Wait");
                     /* Create a node with the nickname and the host address */
