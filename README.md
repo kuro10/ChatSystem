@@ -14,8 +14,6 @@ As a Java program, ChatSystem requires Java Runtime Environment (JRE) version 6 
 
 ChatSystem uses the following supplementary libraries: Apache Commons Lang 3 and SQLite, which are both already included in the program download.
 
-## Principle
-
 ## Versions
 
 * [Version 1.00](https://github.com/kuro10/ChatSystem/tree/f5f8efe967c91c0e383f3139d95c44cc9bb6c4b1) (without Database, Java Servlets)
