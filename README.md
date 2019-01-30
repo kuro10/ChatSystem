@@ -4,6 +4,16 @@ Chat System, written by [TRAN Trong Hieu](https://github.com/kuro10), [TRAN Le M
 
 ## Specifications
 
+ChatSystem is tested for both Windows 10 and Unix operative systems, and in both cases showed great performances.
+
+ChatSystem requires an Internet connection to work properly.
+ 
+## Notes for the installation
+
+As a Java program, ChatSystem requires Java Runtime Environment (JRE) version 6 at the least.
+
+ChatSystem uses the following supplementary libraries: Apache Commons Lang 3 and SQLite, which are both already included in the program download.
+
 ## Principle
 
 ## Versions
@@ -15,6 +25,10 @@ Chat System, written by [TRAN Trong Hieu](https://github.com/kuro10), [TRAN Le M
 ## UML Diagrams
 
 The web folder containing our <i>Use Case</i>, <i>Sequence</i> and <i>Class</i> Diagrams can be found [here](https://drive.google.com/open?id=1cEOvVFRTnsMx5j1cMP3dhKvHZKwD9bjw) 
+
+# Download the program
+
+You can download ChatSystem v1.01 and view some extra information by clicking the "Releases" button on the bar alongside commits and contributors, or you can follow this [link](https://www.github.com/Kuro10/ChatSystem/releases) 
 
 
 
