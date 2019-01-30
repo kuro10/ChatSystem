@@ -193,7 +193,7 @@ public class ChangeName extends javax.swing.JFrame {
                     Logger.getLogger(ChangeName.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else {
-                warningLabel.setText("This name has been used !");
+                this.titreLabel.setText("This name has been used !");
             }
         }
     }//GEN-LAST:event_nicknameFieldKeyPressed
