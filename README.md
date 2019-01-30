@@ -2,6 +2,8 @@
 
 Chat System, written by [TRAN Trong Hieu](https://github.com/kuro10), [TRAN Le Minh](https://github.com/tranleminh) and [Eduardo Calvillo](https://github.com/EduardoCalvillo), who are students in 4IR, INSA Toulouse.
 
+This system provides an interface in which a group of users can chat between each other and send texts or images, as long as they are all in the same local network. More information can be found in the <a href="https://github.com/kuro10/ChatSystem/blob/master/Manuel%20Utilisateur%20ChatSystem%20v1.02.pdf">User's Manual</a> found in this same repository.
+
 ## Specifications
 
 ChatSystem is tested for both Windows 10 and Unix operative systems, and in both cases showed great performances.
